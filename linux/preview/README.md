@@ -31,7 +31,7 @@ There are no tools installed inside the container for now.  You can connect to t
 
 ## User Feedback 
 ---
-+ For issues with or questions about this image, please contact us through a [GitHub issue](https://github.com/Microsoft/sql-server-samples/issues). 
++ For issues with or questions about this image, please contact us through a [GitHub issue](https://github.com/Microsoft/mssql-docker/issues). 
 
 ## Further Reading
 ---
