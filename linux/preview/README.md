@@ -1,5 +1,4 @@
 # [mssql-server-linux](https://hub.docker.com/r/microsoft/mssql-server-linux/) 
----
 Full documentation can be found at the [SQL Server on Linux Docker image page](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker).
 
  [Microsoft SQL Server on Linux for Docker Engine](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker). Learn more about the latest release of SQL Server on Linux here: [SQL Server on Linux Documentation](https://docs.microsoft.com/en-us/sql/linux/).
