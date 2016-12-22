@@ -8,7 +8,12 @@ SQL Server in Docker comes in two different flavors:
 
 Visit the [Microsoft Docker Hub page](https://hub.docker.com/u/microsoft) for more information and additional images.
 
-## Troubleshooting & Frequently Asked Questions
-- "Unknown blob" error code: You are probably trying to run the Windows Containers-based Docker image on a Linux-based Docker Engine. You can   
+## Issues
 
-    
+For any issues, please file under this GitHub project on the [Issues section](https://github.com/Microsoft/mssql-docker/issues).
+
+## Troubleshooting & Frequently Asked Questions
+- "Unknown blob" error code: You are probably trying to run the Windows Containers-based Docker image on a Linux-based Docker Engine. If you want to continue running the Windows Container-based image, we recommend reading the following community article: [Run Linux and Windows Containers on Windows 10](https://stefanscherer.github.io/run-linux-and-windows-containers-on-windows-10/).
+
+
+
