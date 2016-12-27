@@ -27,11 +27,22 @@ There are no tools installed inside the container for now.  You can connect to t
 ######  Environment Variables
 
 - ACCEPT_EULA confirms acceptance of the [End-User Licensing Agreement](http://go.microsoft.com/fwlink/?LinkId=746388).
-- SA_PASSWORD is the system administrator (userid = 'sa') password used to connect to SQL Server once the container is running.
+- SA_PASSWORD is the database system administrator (userid = 'sa') password used to connect to SQL Server once the container is running.
+
+## Current Limitations
+---
+- Mapping volumes is not supported for Docker for Mac. 
 
 ## User Feedback 
 ---
 + For issues with or questions about this image, please contact us through a [GitHub issue](https://github.com/Microsoft/mssql-docker/issues). 
+
+## Frequently asked questions 
+---
+- **How do I map a volume using Docker for Windows?** Make sure to enable [shared drives in the settings menu](https://docs.docker.com/docker-for-windows/#shared-drives). After that, you can map a volume specifying the **Windows path:Linux path**. The following is an example of a command to map a Windows folder to the data directory in the container:
+
+> ``docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -v C:\MyWindowsVolume:/var/opt/mssql -d microsoft/mssql-server-linux``
+
 
 ## Further Reading
 ---
