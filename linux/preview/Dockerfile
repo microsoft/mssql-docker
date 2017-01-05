@@ -1,7 +1,5 @@
 # mssql-server-linux
-# Maintainers: Microsoft Corporation
-#   Luis Bosquez (lbosq@microsoft.com)
-#   Travis Wright (twright@microsoft.com)
+# Maintainers: Microsoft Corporation (LuisBosquez and twright-msft on GitHub)
 # GitRepo: https://github.com/Microsoft/mssql-docker
 
 # Base OS layer: Latest Ubuntu LTS.
