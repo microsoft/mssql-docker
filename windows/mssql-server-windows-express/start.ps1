@@ -7,11 +7,22 @@ param(
 [string]$sa_password,
 
 [Parameter(Mandatory=$false)]
+[string]$ACCEPT_EULA,
+
+[Parameter(Mandatory=$false)]
 [string]$attach_dbs
 )
 
+
+if($ACCEPT_EULA -ne "Y" -And $ACCEPT_EULA -ne "y"){
+	Write-Verbose "ERROR: You must accept the End User License Agreement before this container can start."
+	Write-Verbose "Set the environment variable ACCEPT_EULA to 'Y' if you accept the agreement."
+
+    exit 1 
+}
+
 # start the service
-Write-Verbose "Starting SQL Server..."
+Write-Verbose "Starting SQL Server"
 start-service MSSQL`$SQLEXPRESS
 
 if($sa_password -ne "_"){
@@ -35,7 +46,7 @@ if ($null -ne $dbs -And $dbs.Length -gt 0){
 		}
 		
 		$files = $files -join ","
-		$sqlcmd = "sp_detach_db $($db.dbName);CREATE DATABASE $($db.dbName) ON $($files) FOR ATTACH ;"
+		$sqlcmd = "sp_detach_db ""$($db.dbName)"";CREATE DATABASE ""$($db.dbName)"" ON $($files) FOR ATTACH ;"
 
 		Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd) -ServerInstance '.\SQLEXPRESS'"
 		Invoke-Sqlcmd -Query $sqlcmd -ServerInstance ".\SQLEXPRESS"

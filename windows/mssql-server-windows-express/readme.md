@@ -1,5 +1,5 @@
-# mssql-server-2016-express-windows
-This Dockerfile helps developers to get started using SQL Server 2016 Express in Windows Server Core Containers. The file downloads and installs SQL Server 2016 Express with the default setup parameters.
+# mssql-server-windows-express
+This Dockerfile helps developers to get started using SQL Server Express in Windows Containers. The file downloads and installs SQL Server Express with the default setup parameters.
 
 ### Contents
 
@@ -14,7 +14,7 @@ This Dockerfile helps developers to get started using SQL Server 2016 Express in
 
 ## About this sample
 
-1. **Applies to:** SQL Server 2016 Express, Windows Server 2016
+1. **Applies to:** SQL Server 2016 SP1 Express, Windows Server 2016
 5. **Authors:** Perry Skountrianos [perrysk-msft]
 
 <a name=before-you-begin></a>
@@ -25,15 +25,15 @@ To run this sample, you need the following prerequisites.
 
 **Software prerequisites:**
 
-You can run the container with the following command. 
-(Note the you'll need Windows Server 2016)
+You can run the container with the following command.
+(Note the you'll need Windows Server 2016 or Windows 10)
 
-```` 
-docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ --env sa_password=<YOUR SA PASSWORD> --env attach_dbs="<DB-JSON-CONFIG>" microsoft/mssql-server-2016-express-windows
-```` 
+````
+docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="<DB-JSON-CONFIG>" microsoft/mssql-server-windows-express
+````
 
 - **-p HostPort:containerPort** is for port-mapping a container network port to a host port.
-- **-v HostPath:containerPath** is for mounting a folder from the host inside the container. 
+- **-v HostPath:containerPath** is for mounting a folder from the host inside the container.
 
   This can be used for saving database outside of the container.
 
@@ -46,11 +46,12 @@ docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ --env sa_password=<YOUR SA PASSW
 ## Run this sample
 
 The image provides two environment variables to optionally set: </br>
+- **accepot_eula**: Confirms acceptance of the end user licensing agreement found [here](http://go.microsoft.com/fwlink/?LinkId=746388)
 - **sa_password**: Sets the sa password and enables the sa login
 - **attach_dbs**: The configuration for attaching custom DBs (.mdf, .ldf files).
 
   This should be a JSON string, in the following format (note the use of SINGLE quotes!)
-  ``` 
+  ```
   [
 	{
 		'dbName': 'MaxDb',
@@ -63,25 +64,25 @@ The image provides two environment variables to optionally set: </br>
 		'C:\\temp\\perrytest_log.ldf']
 	}
   ]
-  ``` 
+  ```
 
   This is an array of databases, which can have zero to N databases.
-  
+
   Each consisting of:
   - **dbName**: The name of the database
   - **dbFiles**: An array of one or many absolute paths to the .MDF and .LDF files.
-	
+
 	**Note:**
 	The path has double backslashes for escaping!
 	The path refers to files **within the container**. So make sure to include them in the image or mount them via **-v**!
-		
 
-This example shows all parameters in action:	
+
+This example shows all parameters in action:
 ```
-docker run -p 1433:1433 -v C:/temp/:C:/temp/ --env attach_dbs="[{'dbName':'MaxTest','dbFiles':['C:\\temp\\maxtest.mdf','C:\\temp\\maxtest_log.
-ldf']}]" microsoft/mssql-server-2016-express-windows
+docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="[{'dbName':'SampleDB','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.
+ldf']}]" microsoft/mssql-server-windows-express
 ```
-	
+
 <a name=sample-details></a>
 
 ## Sample details

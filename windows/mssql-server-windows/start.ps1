@@ -23,12 +23,12 @@ if($ACCEPT_EULA -ne "Y" -And $ACCEPT_EULA -ne "y"){
 
 # start the service
 Write-Verbose "Starting SQL Server"
-start-service MSSQL`$SQL
+start-service MSSQLSERVER
 
 if($sa_password -ne "_"){
 	Write-Verbose "Changing SA login credentials"
     $sqlcmd = "ALTER LOGIN sa with password=" +"'" + $sa_password + "'" + ";ALTER LOGIN sa ENABLE;"
-    Invoke-Sqlcmd -Query $sqlcmd -ServerInstance ".\SQL"
+    Invoke-Sqlcmd -Query $sqlcmd
 }
 
 $attach_dbs_cleaned = $attach_dbs.TrimStart('\\').TrimEnd('\\')
@@ -48,8 +48,8 @@ if ($null -ne $dbs -And $dbs.Length -gt 0){
 		$files = $files -join ","
 		$sqlcmd = "sp_detach_db $($db.dbName);CREATE DATABASE $($db.dbName) ON $($files) FOR ATTACH ;"
 
-		Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd) -ServerInstance '.\SQL'"
-		Invoke-Sqlcmd -Query $sqlcmd -ServerInstance ".\SQL"
+		Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
+		Invoke-Sqlcmd -Query $sqlcmd
 	}
 }
 
