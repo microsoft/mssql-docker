@@ -1,10 +1,12 @@
-# mssql server 2016 SP1 express image
+# mssql server express image
 FROM microsoft/windowsservercore
 
 # maintainer for image metadata
 MAINTAINER Perry Skountrianos
 
 # set environment variables
+
+# SQL Server 2016 Express SP1 Download Link
 ENV sql_express_download_url "https://go.microsoft.com/fwlink/?linkid=829176"
 
 ENV sa_password _
