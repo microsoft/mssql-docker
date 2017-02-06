@@ -54,4 +54,9 @@ if ($null -ne $dbs -And $dbs.Length -gt 0){
 }
 
 Write-Verbose "Started SQL Server."
-while ($true) { Start-Sleep -Seconds 3600 }
+$lastCheck = (Get-Date).AddSeconds(-2)
+while ($true) {
+	Get-EventLog -LogName Application -Source "MSSQL*" -After $lastCheck | Select-Object TimeGenerated, EntryType, Message	
+	$lastCheck = Get-Date
+	Start-Sleep -Seconds 2
+}
