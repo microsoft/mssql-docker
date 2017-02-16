@@ -31,7 +31,7 @@ There are no tools installed inside the container for now.  You can connect to t
 
 ## Current Limitations
 ---
-- Mapping volumes is not supported for Docker for Mac. 
+- Mapping volumes to the host using 'docker run -v' is not supported for Docker for Mac. You can use [data volume containers](https://docs.docker.com/engine/tutorials/dockervolumes/#/creating-and-mounting-a-data-volume-container) instead for data file persistence.  Resolving this limitation is tracked as issue [#12](https://github.com/Microsoft/mssql-docker/issues/12).
 
 ## User Feedback 
 ---
