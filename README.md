@@ -18,7 +18,7 @@ For any issues, please file under this GitHub project on the [Issues section](ht
 
 - When using the Windows Docker CLI you must use double quotes instead of single ticks for the environment variables, else the mssql-server-linux image won't find the `ACCEPT_EULA` or `SA_PASSWORD` variables which are required to start the container.
 
-- The 'sa' password has a minimum complexity requirements (8 characters, uppercase, lowercase, alphanumerical and/or non-alphanumerical)
+- The 'sa' password has a minimum complexity requirement (8 characters, uppercase, lowercase, alphanumerical and/or non-alphanumerical)
 
 ## License
 
