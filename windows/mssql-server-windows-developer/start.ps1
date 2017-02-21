@@ -1,4 +1,4 @@
-# The script sets the sa password and start the SQL Service 
+# The script sets the sa password and start the SQL Service
 # Also it attaches additional database from the disk
 # The format for attach_dbs
 
@@ -18,17 +18,17 @@ if($ACCEPT_EULA -ne "Y" -And $ACCEPT_EULA -ne "y"){
 	Write-Verbose "ERROR: You must accept the End User License Agreement before this container can start."
 	Write-Verbose "Set the environment variable ACCEPT_EULA to 'Y' if you accept the agreement."
 
-    exit 1 
+    exit 1
 }
 
 # start the service
 Write-Verbose "Starting SQL Server"
-start-service MSSQL`$SQLEXPRESS
+start-service MSSQLSERVER
 
 if($sa_password -ne "_"){
 	Write-Verbose "Changing SA login credentials"
     $sqlcmd = "ALTER LOGIN sa with password=" +"'" + $sa_password + "'" + ";ALTER LOGIN sa ENABLE;"
-    Invoke-Sqlcmd -Query $sqlcmd -ServerInstance ".\SQLEXPRESS" 
+    Invoke-Sqlcmd -Query $sqlcmd
 }
 
 $attach_dbs_cleaned = $attach_dbs.TrimStart('\\').TrimEnd('\\')
@@ -44,12 +44,12 @@ if ($null -ne $dbs -And $dbs.Length -gt 0){
 		{
 			$files += "(FILENAME = N'$($file)')";
 		}
-		
-		$files = $files -join ","
-		$sqlcmd = "sp_detach_db ""$($db.dbName)"";CREATE DATABASE ""$($db.dbName)"" ON $($files) FOR ATTACH ;"
 
-		Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd) -ServerInstance '.\SQLEXPRESS'"
-		Invoke-Sqlcmd -Query $sqlcmd -ServerInstance ".\SQLEXPRESS"
+		$files = $files -join ","
+		$sqlcmd = "sp_detach_db $($db.dbName);CREATE DATABASE $($db.dbName) ON $($files) FOR ATTACH ;"
+
+		Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
+		Invoke-Sqlcmd -Query $sqlcmd
 	}
 }
 

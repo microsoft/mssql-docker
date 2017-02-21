@@ -1,0 +1,33 @@
+FROM microsoft/windowsservercore
+
+# maintainer for image metadata
+MAINTAINER Perry Skountrianos
+
+# set environment variables
+
+# SQL Server 2016 Developer SP1:
+ENV exe "https://go.microsoft.com/fwlink/?linkid=840945"
+ENV box "https://go.microsoft.com/fwlink/?linkid=840944"
+
+ENV sa_password _
+ENV attach_dbs "[]"
+ENV ACCEPT_EULA _
+
+# make install files accessible
+COPY . /
+WORKDIR /
+
+# download sql server box
+RUN powershell -Command (New-Object System.Net.WebClient).DownloadFile('%box%', 'SQL.box')
+
+# download and install in one step
+RUN powershell -Command (New-Object System.Net.WebClient).DownloadFile('%exe%', 'SQL.exe') && /SQL.exe /qs /x:setup && /setup/setup.exe /q /ACTION=Install /INSTANCENAME=MSSQLSERVER /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT="NT AUTHORITY\System" /SQLSYSADMINACCOUNTS="BUILTIN\ADMINISTRATORS" /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS && del /F /Q SQL.exe && del /F /Q SQL.box && rd /q /s setup
+
+RUN powershell -Command \
+        set-strictmode -version latest ; \
+        stop-service MSSQLSERVER ; \
+        set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.MSSQLSERVER\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpdynamicports -value '' ; \
+        set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.MSSQLSERVER\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpport -value 1433 ; \
+        set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.MSSQLSERVER\mssqlserver\' -name LoginMode -value 2 ;
+
+CMD powershell ./start -sa_password %sa_password% -ACCEPT_EULA %ACCEPT_EULA% -attach_dbs \"%attach_dbs%\" -Verbose
