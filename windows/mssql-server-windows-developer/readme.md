@@ -1,5 +1,5 @@
-# mssql-server-windows
-This Dockerfile helps developers to get started using SQL Server vNext in Windows Containers. The file downloads and installs SQL Server vNext with the default setup parameters.
+# mssql-server-windows-developer
+This Dockerfile helps developers to get started using teh latest SQL Server Developer Edition for Windows Containers. The file downloads and installs SQL Server vNext with the default setup parameters.
 
 ### Contents
 
@@ -14,7 +14,7 @@ This Dockerfile helps developers to get started using SQL Server vNext in Window
 
 ## About this sample
 
-1. **Applies to:** SQL Server vNext, Windows Server 2016, Windows 10
+1. **Applies to:** SQL Server Developer Edition, Windows Server 2016, Windows 10
 5. **Authors:** Perry Skountrianos [perrysk-msft]
 
 <a name=before-you-begin></a>
@@ -29,7 +29,7 @@ You can run the container with the following command.
 (Note the you'll need Windows Server 2016 or Windows 10)
 
 ````
-docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="<DB-JSON-CONFIG>" microsoft/mssql-server-windows
+docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="<DB-JSON-CONFIG>" microsoft/mssql-server-windows-developer
 ````
 
 - **-p HostPort:containerPort** is for port-mapping a container network port to a host port.
@@ -80,18 +80,14 @@ The image provides two environment variables to optionally set: </br>
 This example shows all parameters in action:
 ```
 docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="[{'dbName':'SampleDB','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.
-ldf']}]" microsoft/mssql-server-windows
+ldf']}]" microsoft/mssql-server-windows-developer
 ```
 
 <a name=sample-details></a>
 
 ## Sample details
 
-The Dockerfile downloads and installs SQL Server 2016 Express with the following default setup parameters that could be changed (if needed) after the image is installed.
-- Collation: SQL_Latin1_General_CP1_CI_AS
-- SQL Instance Name: SQLEXPRESS
-- Root Directory: C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL
-- Language: English (United Stated)
+The Dockerfile downloads and installs the latest version of SQL Server Developer Edition.
 
 <a name=disclaimers></a>
 
