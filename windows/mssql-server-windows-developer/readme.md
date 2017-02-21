@@ -1,5 +1,5 @@
 # mssql-server-windows-developer
-This Dockerfile helps developers to get started using teh latest SQL Server Developer Edition for Windows Containers. The file downloads and installs SQL Server vNext with the default setup parameters.
+This is the Dockerfile for the latest version of SQL Server Developer Edition for Windows Containers.
 
 ### Contents
 
