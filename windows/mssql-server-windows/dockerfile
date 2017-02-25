@@ -1,9 +1,6 @@
 FROM microsoft/windowsservercore
 
-# maintainer for image metadata
-MAINTAINER Perry Skountrianos
-
-# set environment variables
+LABEL maintainer "Perry Skountrianos"
 
 # SQL Server 2016 vNext:
 ENV exe "https://go.microsoft.com/fwlink/?linkid=835677"
