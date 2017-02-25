@@ -1,4 +1,3 @@
-# mssql server express image
 FROM microsoft/windowsservercore
 
 LABEL maintainer "Perry Skountrianos"
