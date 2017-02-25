@@ -27,4 +27,6 @@ RUN stop-service MSSQLSERVER ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.MSSQLSERVER\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpport -value 1433 ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.MSSQLSERVER\mssqlserver\' -name LoginMode -value 2 ;
 
+HEALTHCHECK CMD [ "sqlcmd", "-Q", "select 1" ]
+
 CMD .\start -sa_password $env:sa_password -ACCEPT_EULA $env:ACCEPT_EULA -attach_dbs \"$env:attach_dbs\" -Verbose
