@@ -1,9 +1,6 @@
 FROM microsoft/windowsservercore
 
-# maintainer for image metadata
-MAINTAINER Perry Skountrianos
-
-# set environment variables
+LABEL maintainer "Perry Skountrianos"
 
 # SQL Server 2016 vNext:
 ENV exe "https://go.microsoft.com/fwlink/?linkid=835677"
@@ -13,21 +10,23 @@ ENV sa_password _
 ENV attach_dbs "[]"
 ENV ACCEPT_EULA _
 
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
 # make install files accessible
-COPY . /
+COPY start.ps1 /
 WORKDIR /
 
-# download sql server box
-RUN powershell -Command (New-Object System.Net.WebClient).DownloadFile('%box%', 'SQL.box')
+RUN Invoke-WebRequest -Uri $env:box -OutFile SQL.box ; \
+        Invoke-WebRequest -Uri $env:exe -OutFile SQL.exe ; \
+        Start-Process -Wait -FilePath .\SQL.exe -ArgumentList /qs, /x:setup ; \
+        .\setup\setup.exe /q /ACTION=Install /INSTANCENAME=MSSQLSERVER /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT='NT AUTHORITY\System' /SQLSYSADMINACCOUNTS='BUILTIN\ADMINISTRATORS' /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS ; \
+        Remove-Item -Recurse -Force SQL.exe, SQL.box, setup
 
-# download and install in one step
-RUN powershell -Command (New-Object System.Net.WebClient).DownloadFile('%exe%', 'SQL.exe') && /SQL.exe /qs /x:setup && /setup/setup.exe /q /ACTION=Install /INSTANCENAME=MSSQLSERVER /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT="NT AUTHORITY\System" /SQLSYSADMINACCOUNTS="BUILTIN\ADMINISTRATORS" /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS && del /F /Q SQL.exe && del /F /Q SQL.box && rd /q /s setup
-
-RUN powershell -Command \
-        set-strictmode -version latest ; \
-        stop-service MSSQLSERVER ; \
+RUN stop-service MSSQLSERVER ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql14.MSSQLSERVER\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpdynamicports -value '' ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql14.MSSQLSERVER\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpport -value 1433 ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql14.MSSQLSERVER\mssqlserver\' -name LoginMode -value 2 ;
 
-CMD powershell ./start -sa_password %sa_password% -ACCEPT_EULA %ACCEPT_EULA% -attach_dbs \"%attach_dbs%\" -Verbose
+HEALTHCHECK CMD [ "sqlcmd", "-Q", "select 1" ]
+
+CMD .\start -sa_password $env:sa_password -ACCEPT_EULA $env:ACCEPT_EULA -attach_dbs \"$env:attach_dbs\" -Verbose

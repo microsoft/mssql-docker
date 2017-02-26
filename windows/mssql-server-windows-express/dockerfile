@@ -1,10 +1,6 @@
-# mssql server express image
 FROM microsoft/windowsservercore
 
-# maintainer for image metadata
-MAINTAINER Perry Skountrianos
-
-# set environment variables
+LABEL maintainer "Perry Skountrianos"
 
 # SQL Server 2016 Express SP1 Download Link
 ENV sql_express_download_url "https://go.microsoft.com/fwlink/?linkid=829176"
@@ -13,18 +9,22 @@ ENV sa_password _
 ENV attach_dbs "[]"
 ENV ACCEPT_EULA _
 
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
 # make install files accessible
-COPY . /
+COPY start.ps1 /
 WORKDIR /
 
-# download and install Microsoft SQL 2016 Express Edition in one step
-RUN powershell -Command (New-Object System.Net.WebClient).DownloadFile('%sql_express_download_url%', 'sqlexpress.exe') && /sqlexpress.exe /qs /x:setup && /setup/setup.exe /q /ACTION=Install /INSTANCENAME=SQLEXPRESS /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT="NT AUTHORITY\System" /SQLSYSADMINACCOUNTS="BUILTIN\ADMINISTRATORS" /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS && del /F /Q sqlexpress.exe && rd /q /s setup
+RUN Invoke-WebRequest -Uri $env:sql_express_download_url -OutFile sqlexpress.exe ; \
+        Start-Process -Wait -FilePath .\sqlexpress.exe -ArgumentList /qs, /x:setup ; \
+        .\setup\setup.exe /q /ACTION=Install /INSTANCENAME=SQLEXPRESS /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT='NT AUTHORITY\System' /SQLSYSADMINACCOUNTS='BUILTIN\ADMINISTRATORS' /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS ; \
+        Remove-Item -Recurse -Force sqlexpress.exe, setup
 
-RUN powershell -Command \
-        set-strictmode -version latest ; \
-        stop-service MSSQL`$SQLEXPRESS ; \
+RUN stop-service MSSQL`$SQLEXPRESS ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.SQLEXPRESS\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpdynamicports -value '' ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.SQLEXPRESS\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpport -value 1433 ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.SQLEXPRESS\mssqlserver\' -name LoginMode -value 2 ;
 
-CMD powershell ./start -sa_password %sa_password% -ACCEPT_EULA %ACCEPT_EULA% -attach_dbs \"%attach_dbs%\" -Verbose
+HEALTHCHECK CMD [ "sqlcmd", "-Q", "select 1" ]
+
+CMD .\start -sa_password $env:sa_password -ACCEPT_EULA $env:ACCEPT_EULA -attach_dbs \"$env:attach_dbs\" -Verbose
