@@ -14,6 +14,11 @@ RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt
 # install SQL Server drivers
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql unixodbc-dev
 
+# install SQL Server tools
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN source ~/.bashrc
+
 # python libraries
 RUN apt-get update && apt-get install -y \
     python-pip python-dev python-setuptools \
@@ -30,15 +35,11 @@ RUN pip install --upgrade pip
 RUN pip install pyodbc
 
 # install additional utilities
-RUN apt-get update && apt-get install gettext -y
+RUN apt-get update && apt-get install gettext nano vim -y
 
 # add sample code
 RUN mkdir /code
 ADD . /code
 WORKDIR /code
 
-#ENV DB_USERNAME sa
-#ENV DB_HOST 'none specified'
-#ENV DB_PASSWORD 'none specified'
-
-CMD /bin/bash -c ./entrypoint.sh
+ENTRYPOINT /bin/bash ./entrypoint.sh
