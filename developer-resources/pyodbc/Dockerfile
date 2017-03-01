@@ -17,7 +17,7 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql unixodbc-dev
 # install SQL Server tools
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
 RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN source ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
 
 # python libraries
 RUN apt-get update && apt-get install -y \
@@ -42,4 +42,4 @@ RUN mkdir /code
 ADD . /code
 WORKDIR /code
 
-ENTRYPOINT /bin/bash ./entrypoint.sh
+CMD /bin/bash ./run-me.sh
