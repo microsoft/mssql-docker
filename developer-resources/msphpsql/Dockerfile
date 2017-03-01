@@ -1,6 +1,7 @@
-# php-mssql
-# PHP runtime with pdo_sqlsrv to connect to SQL Server
+# msphpsql
+# PHP runtime with sqlservr and pdo_sqlsrv to connect to SQL Server
 FROM ubuntu:16.04
+MAINTAINER SQL Server Connectivity Team
 
 # apt-get and system utilities
 RUN apt-get update && apt-get install -y \
@@ -13,6 +14,11 @@ RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt
 
 # install SQL Server drivers
 RUN apt-get update && ACCEPT_EULA=Y apt-get install -y unixodbc-dev msodbcsql 
+
+# install SQL Server tools
+RUN apt-get update && ACCEPT_EULA=Y apt-get install -y mssql-tools
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+RUN source ~/.bashrc
 
 # php libraries
 RUN apt-get update && apt-get install -y \
@@ -31,6 +37,9 @@ RUN pecl install sqlsrv pdo_sqlsrv
 # initial configuration of SQL Server PHP connector
 RUN echo "extension=/usr/lib/php/20151012/sqlsrv.so" >> /etc/php/7.0/cli/php.ini
 RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.0/cli/php.ini
+
+# install additional utilities
+RUN apt-get update && apt-get install gettext nano vim -y
 
 # add sample code
 RUN mkdir /code
