@@ -38,8 +38,8 @@ RUN pip install pyodbc
 RUN apt-get update && apt-get install gettext nano vim -y
 
 # add sample code
-RUN mkdir /code
-ADD . /code
-WORKDIR /code
+RUN mkdir /sample
+ADD . /sample
+WORKDIR /sample
 
 CMD /bin/bash ./run-me.sh

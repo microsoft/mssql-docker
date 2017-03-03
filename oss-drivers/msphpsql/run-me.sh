@@ -8,7 +8,7 @@ then
     
     envsubst <sample.php > connect.php
 
-    printf "Environment variables have been written in /code/connect.php\n\n"
+    printf "Environment variables have been written in /sample/connect.php\n\n"
 
     printf "To run the sample with the provided environment variables, run from within the container:php connect.php\n\n"
 fi

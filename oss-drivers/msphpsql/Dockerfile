@@ -42,8 +42,8 @@ RUN echo "extension=/usr/lib/php/20151012/pdo_sqlsrv.so" >> /etc/php/7.0/cli/php
 RUN apt-get update && apt-get install gettext nano vim -y
 
 # add sample code
-RUN mkdir /code
-ADD . /code
-WORKDIR /code
+RUN mkdir /sample
+ADD . /sample
+WORKDIR /sample
 
 CMD /bin/bash ./run-me.sh

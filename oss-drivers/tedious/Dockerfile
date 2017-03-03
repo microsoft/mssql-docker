@@ -31,9 +31,9 @@ RUN apt-get install -y locales \
 RUN apt-get update && apt-get install gettext nano vim -y
 
 # add sample code
-RUN mkdir /code
-ADD . /code
-WORKDIR /code
+RUN mkdir /sample
+ADD . /sample
+WORKDIR /sample
 
 # start project and install tedious
 RUN npm init -y

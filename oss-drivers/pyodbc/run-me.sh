@@ -8,7 +8,7 @@ then
     
     envsubst <sample.py > connect.py
 
-    printf "Environment variables have been written in /code/connect.py\n\n"
+    printf "Environment variables have been written in /sample/connect.py\n\n"
 
     printf "To run the sample with the provided environment variables, run from within the container:python connect.py\n\n"
 fi

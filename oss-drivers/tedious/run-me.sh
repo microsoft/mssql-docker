@@ -8,7 +8,7 @@ then
     
     envsubst <sample.js > connect.js
 
-    printf "Environment variables have been written in /code/connect.js\n\n"
+    printf "Environment variables have been written in /sample/connect.js\n\n"
 
     printf "To run the sample with the provided environment variables, run from within the container:node connect.js\n\n"
 fi
