@@ -39,4 +39,4 @@ WORKDIR /sample
 RUN npm init -y
 RUN npm install tedious
 
-CMD /bin/bash ./run-me.sh
+CMD /bin/bash ./entrypoint.sh

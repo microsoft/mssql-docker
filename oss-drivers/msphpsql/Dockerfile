@@ -46,4 +46,4 @@ RUN mkdir /sample
 ADD . /sample
 WORKDIR /sample
 
-CMD /bin/bash ./run-me.sh
+CMD /bin/bash ./entrypoint.sh
