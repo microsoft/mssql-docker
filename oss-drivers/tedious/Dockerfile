@@ -1,5 +1,5 @@
-# python-mssql
-# Python runtime with pyodbc to connect to SQL Server
+# mssql-nodejs-tedious
+# Node.js runtime with tedious to connect to SQL Server
 FROM ubuntu:16.04
 
 # apt-get and system utilities
