@@ -4,8 +4,12 @@ Full documentation can be found at the [SQL Server on Linux Docker image page](h
  [Microsoft SQL Server on Linux for Docker Engine](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker). Learn more about the latest release of SQL Server on Linux here: [SQL Server on Linux Documentation](https://docs.microsoft.com/en-us/sql/linux/).
 
 ###### Additional Microsoft SQL Server Docker Images
-+ SQL Server for Windows Containers: [microsoft/mssql-server-windows](https://hub.docker.com/r/microsoft/mssql-server-windows/)
-+ SQL Server Express for Windows Containers: [microsoft/mssql-server-windows-express](https://hub.docker.com/r/microsoft/mssql-server-windows-express/)
++ Latest *Pre-Release* Version of SQL Server *Evaluation* Edition for Windows Containers: [microsoft/mssql-server-windows](https://hub.docker.com/r/microsoft/mssql-server-windows/)
++ Latest *Released* Version of SQL Server *Developer* Edition for Windows Containers: [microsoft/mssql-server-windows-developer](https://hub.docker.com/r/microsoft/mssql-server-windows-developer/)
++ Latest *Released Version* of SQL Server *Express* Edition for Windows Containers: [microsoft/mssql-server-windows-express](https://hub.docker.com/r/microsoft/mssql-server-windows-express/)
+
+**Note:** Developer Edition is a full-featured version of SQL Server without resource limits, but can only be used in dev/test.  Express Edition is a resouce-limited edition of SQL Server that can be used in production.
+Get more information on [SQL Server Editions](https://www.microsoft.com/en-us/sql-server/sql-server-editions).
 
 ## Requirements
 ---
