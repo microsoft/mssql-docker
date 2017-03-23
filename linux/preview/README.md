@@ -26,7 +26,13 @@ Get more information on [SQL Server Editions](https://www.microsoft.com/en-us/sq
 > ``docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -d microsoft/mssql-server-linux``
 
 ######  Connect to Microsoft SQL Server
-There are no tools installed inside the container for now.  You can connect to the SQL Server instance from outside the container by using various command line and GUI tools on the host or remote computers.  See the [Connect and Query](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-connect-and-query-sqlcmd) topic in the SQL Server on Linux documentation.
+Starting with the CTP 1.4 (March 17, 2017) release the mssql-tools package including sqlcmd, bcp are included in the image.  You can connect to the SQL Server using the sqlcmd tool inside of the container by using the following command on the host:
+```
+docker exec -it <container_id|container_name> /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <your_password>
+```
+You can also use the tools in an entrypoint.sh script to do things like create databases or logins, attach databases, import data, or other setup tasks.  See this example of [using an entrypoint.sh script to create a database and schema and bcp in some data](https://github.com/twright-msft/mssql-node-docker-demo-app).
+
+You can connect to the SQL Server instance in the container from outside the container by using various command line and GUI tools on the host or remote computers.  See the [Connect and Query](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-connect-and-query-sqlcmd) topic in the SQL Server on Linux documentation.
 
 ######  Environment Variables
 
