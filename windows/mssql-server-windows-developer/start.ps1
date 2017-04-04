@@ -37,12 +37,31 @@ $dbs = $attach_dbs_cleaned | ConvertFrom-Json
 
 if ($null -ne $dbs -And $dbs.Length -gt 0){
 	Write-Verbose "Attaching $($dbs.Length) database(s)"
-	Foreach($db in $dbs)
+	    
+
+    Foreach($db in $dbs)
 	{
+        
+        if($db.saskey.length -gt 0){ 
+            $saskey = $true 
+        }
+        else{ 
+            $saskey = $false 
+        }
+         
 		$files = @();
-		Foreach($file in $db.dbFiles)
-		{
+		Foreach($file in $db.dbFiles){
 			$files += "(FILENAME = N'$($file)')";
+            
+            # check for a saskey and create one credential per blob Container                  
+            if($saskey){
+                $container = (Split-Path $file).Replace('\','/');                                         
+                $sql_credential = "IF NOT EXISTS (SELECT 1 FROM SYS.CREDENTIALS WHERE NAME = '" + $container + "') BEGIN CREATE CREDENTIAL [" + $container + "] WITH IDENTITY='SHARED ACCESS SIGNATURE', SECRET= '" + $db.saskey + "' END;"              
+            
+                Write-Verbose "Invoke-Sqlcmd -Query $($sql_credential)"
+		        Invoke-Sqlcmd -Query $sql_credential
+            }
+
 		}
 
 		$files = $files -join ","
