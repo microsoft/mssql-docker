@@ -5,11 +5,18 @@
 # Base OS layer: Latest Ubuntu LTS.
 FROM ubuntu:16.04
 
+# For initialization scripts.
+VOLUME /docker-entrypoint-initdb.d
+
 # Default SQL Server TCP/Port.
 EXPOSE 1433
 
 # Copy all SQL Server runtime files from build drop into image.
 COPY ./install /
 
+# Copy initialization scripts.
+COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint-initdb.sh /usr/local/bin/
+
 # Run SQL Server process.
-CMD /opt/mssql/bin/sqlservr.sh
+ENTRYPOINT ["docker-entrypoint.sh"]
