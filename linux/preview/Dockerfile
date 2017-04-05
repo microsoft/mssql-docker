@@ -14,6 +14,9 @@ EXPOSE 1433
 # Copy all SQL Server runtime files from build drop into image.
 COPY ./install /
 
+# Add symlink for sqlcmd on PATH
+RUN ln -s /opt/mssql-tools/bin/sqlcmd /usr/local/bin/sqlcmd
+
 # Copy initialization scripts.
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY docker-entrypoint-initdb.sh /usr/local/bin/
