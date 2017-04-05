@@ -28,7 +28,7 @@ start-service MSSQLSERVER
 
 if($sa_password -ne "_")
 {
-	Write-Verbose "Changing SA login credentials"
+    Write-Verbose "Changing SA login credentials"
     $sqlcmd = "ALTER LOGIN sa with password=" +"'" + $sa_password + "'" + ";ALTER LOGIN sa ENABLE;"
     Invoke-Sqlcmd -Query $sqlcmd
 }
@@ -43,7 +43,6 @@ if ($null -ne $dbs -And $dbs.Length -gt 0)
 	    
     Foreach($db in $dbs) 
     {
-        
         if($db.saskey.length -gt 0)
         { 
             $saskey = $true 
@@ -52,9 +51,9 @@ if ($null -ne $dbs -And $dbs.Length -gt 0)
         { 
             $saskey = $false 
         }
-         
-		$files = @();
-		Foreach($file in $db.dbFiles)
+            
+        $files = @();
+        Foreach($file in $db.dbFiles)
         {
             $files += "(FILENAME = N'$($file)')";
             
@@ -65,15 +64,15 @@ if ($null -ne $dbs -And $dbs.Length -gt 0)
                 $sql_credential = "IF NOT EXISTS (SELECT 1 FROM SYS.CREDENTIALS WHERE NAME = '" + $blob_container + "') BEGIN CREATE CREDENTIAL [" + $blob_container + "] WITH IDENTITY='SHARED ACCESS SIGNATURE', SECRET= '" + $db.saskey + "' END;"              
             
                 Write-Verbose "Invoke-Sqlcmd -Query $($sql_credential)"
-	            Invoke-Sqlcmd -Query $sql_credential
+                Invoke-Sqlcmd -Query $sql_credential
             }
-		}
+        }
 
-		$files = $files -join ","
-		$sqlcmd = "sp_detach_db $($db.dbName);CREATE DATABASE $($db.dbName) ON $($files) FOR ATTACH ;"
+        $files = $files -join ","
+        $sqlcmd = "sp_detach_db $($db.dbName);CREATE DATABASE $($db.dbName) ON $($files) FOR ATTACH ;"
 
-		Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
-		Invoke-Sqlcmd -Query $sqlcmd
+        Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
+        Invoke-Sqlcmd -Query $sqlcmd
 	}
 }
 
