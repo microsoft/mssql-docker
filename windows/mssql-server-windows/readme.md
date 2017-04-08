@@ -46,7 +46,7 @@ docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD
 ## Run this sample
 
 The image provides two environment variables to optionally set: </br>
-- **accepot_eula**: Confirms acceptance of the end user licensing agreement found [here](http://go.microsoft.com/fwlink/?LinkId=746388)
+- **accept_eula**: Confirms acceptance of the end user licensing agreement found [here](http://go.microsoft.com/fwlink/?LinkId=746388)
 - **sa_password**: Sets the sa password and enables the sa login
 - **attach_dbs**: The configuration for attaching custom DBs (.mdf, .ldf files).
 
