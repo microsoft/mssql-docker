@@ -1,5 +1,7 @@
 # SQL Server in Docker
 
+[![Join the chat at https://gitter.im/Microsoft/mssql-docker](https://badges.gitter.im/Microsoft/mssql-docker.svg)](https://gitter.im/Microsoft/mssql-docker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This GitHub repository aims to provide a centralized location for community engagement. In here you will find documentation, Dockerfiles and additional developer resources. 
 
 SQL Server in Docker comes in two different flavors:
