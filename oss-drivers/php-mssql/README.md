@@ -1,4 +1,4 @@
-# DEPRECATED. Please go to [msphpsql](https://github.com/Microsoft/mssql-docker/blob/master/developer-resources/msphpsql)
+# DEPRECATED. Please go to [msphpsql](https://github.com/Microsoft/mssql-docker/tree/master/oss-drivers/msphpsql)
 
 # PHP + SQL Server Runtime Environment
 
