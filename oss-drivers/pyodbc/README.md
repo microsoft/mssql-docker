@@ -2,7 +2,7 @@
 
 This image provides an integrated development environment for Python with connectivity to a remote SQL Server database. Learn more about [SQL Server on Linux](https://hub.docker.com/r/microsoft/mssql-server-linux/). To report issues or provide feedback, please file an issue in the [SQL Server in Docker GitHub Repository](https://github.com/Microsoft/mssql-docker).
 
-### [Dockerfile](https://github.com/Microsoft/mssql-docker/blob/master/developer-resources/pyodbc/Dockerfile)
+### [Dockerfile](https://github.com/Microsoft/mssql-docker/blob/master/oss-drivers/pyodbc/Dockerfile)
 
 The following components are included:
 - Ubuntu 16.04 OS layer.
@@ -40,7 +40,3 @@ After passing the above environment variables Within the container, you can run 
 + [SQL Server - Developer Getting Started Tutorials](https://www.microsoft.com/en-us/sql-server/developer-get-started/?utm_source=DockerHub)
 + [SQL Server Docker GitHub Repository](https://github.com/Microsoft/mssql-docker)
 
-
- ![Docker Stars](https://img.shields.io/docker/stars/microsoft/tedious.svg)
-
- ![Docker Pulls](https://img.shields.io/docker/pulls/microsoft/tedious.svg)
