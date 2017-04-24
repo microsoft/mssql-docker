@@ -2,12 +2,12 @@
 
 This image provides an integrated development environment for PHP with connectivity to a remote SQL Server database. Learn more about [SQL Server on Linux](https://hub.docker.com/r/microsoft/mssql-server-linux/). To report issues or provide feedback, please file an issue in the [SQL Server in Docker GitHub Repository](https://github.com/Microsoft/mssql-docker).
 
-### [Dockerfile](https://github.com/Microsoft/mssql-docker/blob/master/developer-resources/msphpsql/Dockerfile)
+### [Dockerfile](https://github.com/Microsoft/mssql-docker/blob/master/oss-drivers//msphpsql/Dockerfile)
 
 The following components are included:
 - Ubuntu 16.04 OS layer.
 - Pre-configured PHP7.0 runtime environment.
-- [sqlsrv](http://php.net/manual/en/book.sqlsrv.php) and [pdo_sqlservr](http://php.net/manual/en/ref.pdo-sqlsrv.php) for SQL Server.
+- [sqlsrv](http://php.net/manual/en/book.sqlsrv.php) and [pdo_sqlsrv](http://php.net/manual/en/ref.pdo-sqlsrv.php) for SQL Server.
 - A working PHP to SQL Server code sample.
 - SQL Server command-line utilities (sqlcmd and bcp).
 - Command-line text editor tools (nano and vim).
@@ -15,7 +15,7 @@ The following components are included:
 ## Usage
 To run an interactive bash session in this container simply run:
 
-        docker run -it microsoft/tedious
+        docker run -it microsoft/msphpsql
 
 The following optional environment variables can be provided to create the code sample:
 - `$DB_HOST`: The IP address or hostname where the SQL Server instance is running.
@@ -39,8 +39,3 @@ After passing the above environment variables Within the container, you can run 
 + [SQL Server on Linux for Docker documentation](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker)
 + [SQL Server - Developer Getting Started Tutorials](https://www.microsoft.com/en-us/sql-server/developer-get-started/?utm_source=DockerHub)
 + [SQL Server Docker GitHub Repository](https://github.com/Microsoft/mssql-docker)
-
-
- ![Docker Stars](https://img.shields.io/docker/stars/microsoft/msphpsql.svg)
-
- ![Docker Pulls](https://img.shields.io/docker/pulls/microsoft/msphpsql.svg)
