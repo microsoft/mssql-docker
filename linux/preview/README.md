@@ -30,7 +30,13 @@ Starting with the CTP 1.4 (March 17, 2017) release the mssql-tools package inclu
 ```
 docker exec -it <container_id|container_name> /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <your_password>
 ```
-You can also use the tools in an entrypoint.sh script to do things like create databases or logins, attach databases, import data, or other setup tasks.  See this example of [using an entrypoint.sh script to create a database and schema and bcp in some data](https://github.com/twright-msft/mssql-node-docker-demo-app).
+
+~~You can also use the tools in an entrypoint.sh script to do things like create databases or logins, attach databases, import data, or other setup tasks.  See this example of [using an entrypoint.sh script to create a database and schema and bcp in some data](https://github.com/twright-msft/mssql-node-docker-demo-app).~~
+
+You can also mount scripts to into the container to do things like create databases or logins, attach databases, import data, or other setup tasks. When a container is started for the first time, it will execute any files with extensions .sh or .sql that are found in /docker-entrypoint-initdb.d. Files will be executed in alphabetical order. You can easily populate your SQL Server services by mounting scripts into that directory and provide custom images with contributed data.
+
+For example:
+> ``docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -v $PWD/initdb:/docker-entrypoint-initdb.d -d microsoft/mssql-server-linux``
 
 You can connect to the SQL Server instance in the container from outside the container by using various command line and GUI tools on the host or remote computers.  See the [Connect and Query](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-connect-and-query-sqlcmd) topic in the SQL Server on Linux documentation.
 
