@@ -30,7 +30,7 @@ if($sa_password -ne "_")
 {
     Write-Verbose "Changing SA login credentials"
     $sqlcmd = "ALTER LOGIN sa with password=" +"'" + $sa_password + "'" + ";ALTER LOGIN sa ENABLE;"
-    Invoke-Sqlcmd -Query $sqlcmd
+    & sqlcmd -Q $sqlcmd
 }
 
 $attach_dbs_cleaned = $attach_dbs.TrimStart('\\').TrimEnd('\\')
@@ -64,15 +64,15 @@ if ($null -ne $dbs -And $dbs.Length -gt 0)
                 $sql_credential = "IF NOT EXISTS (SELECT 1 FROM SYS.CREDENTIALS WHERE NAME = '" + $blob_container + "') BEGIN CREATE CREDENTIAL [" + $blob_container + "] WITH IDENTITY='SHARED ACCESS SIGNATURE', SECRET= '" + $db.saskey + "' END;"              
             
                 Write-Verbose "Invoke-Sqlcmd -Query $($sql_credential)"
-                Invoke-Sqlcmd -Query $sql_credential
+                & sqlcmd -Q $sql_credential
             }
         }
 
         $files = $files -join ","
-        $sqlcmd = "sp_detach_db $($db.dbName);CREATE DATABASE $($db.dbName) ON $($files) FOR ATTACH ;"
+        $sqlcmd = "sp_detach_db ""$($db.dbName)"";CREATE DATABASE ""$($db.dbName)"" ON $($files) FOR ATTACH ;"
 
         Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
-        Invoke-Sqlcmd -Query $sqlcmd
+        & sqlcmd -Q $sqlcmd
 	}
 }
 
