@@ -17,5 +17,4 @@ RUN yum install -y mssql-server
 EXPOSE 1433
 
 # Run SQL Server process
-# NOTE: Use this Dockerfile only AFTER SQL Server 2017 CTP 2.1 comes out
 CMD /opt/mssql/bin/sqlservr
