@@ -22,10 +22,22 @@ There is a [Dockerfile](https://github.com/twright-msft/mssql-server-rhel/blob/m
 
 ## To build an RHEL-based image
 To build an image locally on your Docker host follow these steps:
+```shell
+$ cd linux/preview/RHEL
+# build a centos7 image
+$ make
+
+# OR
+
+# build a rhel7 image
+$ make TARGET=rhel7
 ```
-<cd into or mkdir and cd into a new directory>
-$ git clone https://github.com/twright-msft/mssql-server-rhel
-$ docker build -t mssql-server-rhel .
+```shell
+$ make test
+# make test TARGET=rhel7
+
+$ make run
+# make run TARGET=rhel7
 ```
 
 # Requirements

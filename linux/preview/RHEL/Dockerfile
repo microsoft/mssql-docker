@@ -32,5 +32,7 @@ ENV PATH=${PATH}:/opt/mssql/bin:/opt/mssql-tools/bin
 # Default SQL Server TCP/Port
 EXPOSE 1433
 
+VOLUME /var/opt/mssql
+
 # Run SQL Server process
 CMD sqlservr
