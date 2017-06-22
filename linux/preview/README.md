@@ -11,6 +11,15 @@ Learn more about the latest release of SQL Server on Linux here: [SQL Server on 
 
  This Ubunt-based image is built and maintened by Microsoft, and published on [Docker Hub](https://hub.docker.com/r/microsoft/mssql-server-linux/).
 
+## To build an CentOS-based image
+To build an image locally on your Docker host follow these steps:
+```shell
+$ cd linux/preview/RHEL
+$ make
+$ make test
+$ make run
+```
+
 # mssql-server-rhel
 There is a [Dockerfile](https://github.com/twright-msft/mssql-server-rhel/blob/master/Dockerfile) on this project published for those that would like to build their own image based on the [official Red Hat Enterprise Linux 7 image](https://access.redhat.com/containers/#/registry.access.redhat.com/rhel7/rhel).
 
@@ -24,20 +33,9 @@ There is a [Dockerfile](https://github.com/twright-msft/mssql-server-rhel/blob/m
 To build an image locally on your Docker host follow these steps:
 ```shell
 $ cd linux/preview/RHEL
-# build a centos7 image
-$ make
-
-# OR
-
-# build a rhel7 image
 $ make TARGET=rhel7
-```
-```shell
-$ make test
-# make test TARGET=rhel7
-
-$ make run
-# make run TARGET=rhel7
+$ make test TARGET=rhel7
+$ make run TARGET=rhel7
 ```
 
 # Requirements
