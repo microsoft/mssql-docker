@@ -1,7 +1,7 @@
 CONTEXT = microsoft
 VERSION = v14.0
 IMAGE_NAME = mssql-server-linux
-TARGET = rhel7
+TARGET = centos7
 REGISTRY = docker-registry.default.svc.cluster.local
 OC_USER = developer
 OC_PASS = developer
