@@ -3,7 +3,7 @@
 This GitHub repository aims to provide a centralized location for community engagement. In here you will find documentation, Dockerfiles and additional developer resources. 
 
 SQL Server in Docker comes in two different flavors:
-- [Linux-based containers](https://github.com/Microsoft/mssql-docker/tree/master/linux): This Docker image uses [SQL Server on Linux](https://docs.microsoft.com/en-us/sql/linux/) on top of an Ubuntu 16.04 base image. This is meant to be run on [Docker Engine](https://www.docker.com/products/overview) on its multiple platforms.  There is also a [Dockerfile](https://github.com/Microsoft/mssql-docker/blob/master/linux/preview/RHEL/Dockerfile) here that you can use to build a RHEL-based image.
+- [Linux-based containers](https://github.com/Microsoft/mssql-docker/tree/master/linux): This Docker image uses [SQL Server on Linux](https://docs.microsoft.com/en-us/sql/linux/) on top of an Ubuntu 16.04 base image. This is meant to be run on [Docker Engine](https://www.docker.com/products/overview) on its multiple platforms.  There are also Dockerfiles here for building [CentOS](linux/preview/CentOS/Dockerfile) & [RHEL](linux/preview/RHEL/Dockerfile) based images.
 - [Windows-based containers](https://github.com/Microsoft/mssql-docker/tree/master/windows): These Docker images use SQL Server 2016 SP1 Express Edition, SQL Server 2016 SP1 Developer Edition and SQL Server 2017 Evaluation Edition. All three images are based on Windows Container technology and can only be run using [Docker Engine for Windows Containers](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/docker/configure_docker_daemon).
 
 Visit the [Microsoft Docker Hub page](https://hub.docker.com/u/microsoft) for more information and additional images.

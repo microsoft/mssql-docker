@@ -1,7 +1,8 @@
 # Introduction
-There are two Linux-based Docker container images documented here:
+There are three Linux-based Docker container images documented here:
 * The Ubuntu-based image [mssql-server-linux](https://hub.docker.com/r/microsoft/mssql-server-linux/)  which is available at Docker Hub.
-* A [Dockerfile](https://github.com/twright-msft/mssql-server-rhel/blob/master/Dockerfile) for building a RHEL-based image
+* A [Dockerfile](CentOS/Dockerfile) for building a CentOS-based image
+* A [Dockerfile](RHEL/Dockerfile) for building a RHEL-based image
 
 Full documentation can be found at the [SQL Server on Linux Docker image page](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker).
 
@@ -11,8 +12,17 @@ Learn more about the latest release of SQL Server on Linux here: [SQL Server on 
 
  This Ubunt-based image is built and maintened by Microsoft, and published on [Docker Hub](https://hub.docker.com/r/microsoft/mssql-server-linux/).
 
+## To build a CentOS-based image
+To build an image locally on your Docker host follow these steps:
+```shell
+$ cd linux/preview/CentOS
+$ make
+$ make test
+$ make run
+```
+
 # mssql-server-rhel
-There is a [Dockerfile](https://github.com/twright-msft/mssql-server-rhel/blob/master/Dockerfile) on this project published for those that would like to build their own image based on the [official Red Hat Enterprise Linux 7 image](https://access.redhat.com/containers/#/registry.access.redhat.com/rhel7/rhel).
+There is a [Dockerfile](RHEL/Dockerfile) on this project published for those that would like to build their own image based on the [official Red Hat Enterprise Linux 7 image](https://access.redhat.com/containers/#/registry.access.redhat.com/rhel7/rhel).
 
 ## Prerequisites for building a RHEL-based image
 * You will need access to the [Red Hat Container Catalog](https://access.redhat.com/containers) via a Red Hat subscription.
@@ -20,12 +30,13 @@ There is a [Dockerfile](https://github.com/twright-msft/mssql-server-rhel/blob/m
 * You will also need to provide your Red Hat subscription credentials in the Dockerfile before you build.
 * You will also need to build the image yourself using Docker's command line tool '[docker](https://docs.docker.com/engine/reference/commandline/cli/)'.
 
-## To build an RHEL-based image
+## To build a RHEL-based image
 To build an image locally on your Docker host follow these steps:
-```
-<cd into or mkdir and cd into a new directory>
-$ git clone https://github.com/twright-msft/mssql-server-rhel
-$ docker build -t mssql-server-rhel .
+```shell
+$ cd linux/preview/RHEL
+$ make
+$ make test
+$ make run
 ```
 
 # Requirements
