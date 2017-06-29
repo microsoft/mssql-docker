@@ -10,7 +10,7 @@ Learn more about the latest release of SQL Server on Linux here: [SQL Server on 
 
 # mssql-server-linux
 
- This Ubunt-based image is built and maintened by Microsoft, and published on [Docker Hub](https://hub.docker.com/r/microsoft/mssql-server-linux/).
+ This Ubuntu-based image is built and maintened by Microsoft, and published on [Docker Hub](https://hub.docker.com/r/microsoft/mssql-server-linux/).
 
 ## To build a CentOS-based image
 To build an image locally on your Docker host follow these steps:
