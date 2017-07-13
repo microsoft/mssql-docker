@@ -7,12 +7,16 @@ ENV sql_express_download_url "https://go.microsoft.com/fwlink/?linkid=829176"
 
 ENV sa_password _
 ENV attach_dbs "[]"
+ENV restore_dbs "[]"
+ENV base_db_folder _
+ENV use_hostname_folder "false"
 ENV ACCEPT_EULA _
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # make install files accessible
 COPY start.ps1 /
+COPY scripts c:/scripts
 WORKDIR /
 
 RUN Invoke-WebRequest -Uri $env:sql_express_download_url -OutFile sqlexpress.exe ; \
@@ -25,4 +29,6 @@ RUN stop-service MSSQL`$SQLEXPRESS ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.SQLEXPRESS\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpport -value 1433 ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql13.SQLEXPRESS\mssqlserver\' -name LoginMode -value 2 ;
 
-CMD .\start -sa_password $env:sa_password -ACCEPT_EULA $env:ACCEPT_EULA -attach_dbs \"$env:attach_dbs\" -Verbose
+CMD .\start -sa_password $env:sa_password -ACCEPT_EULA $env:ACCEPT_EULA -attach_dbs \"$env:attach_dbs\" \
+    -restore_dbs \"$env:restore_dbs\" -base_db_folder $env:base_db_folder -use_hostname_folder $env:use_hostname_folder \
+    -Verbose
