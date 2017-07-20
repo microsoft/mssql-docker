@@ -58,7 +58,7 @@ $ make run
 ##  Connect to Microsoft SQL Server
 Starting with the CTP 1.4 (March 17, 2017) release the mssql-tools package including sqlcmd, bcp are included in the image.  You can connect to the SQL Server using the sqlcmd tool inside of the container by using the following command on the host:
 ```
-docker exec -it <container_id|container_name> /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <your_password>
+docker exec -it <container_id|container_name> sqlcmd -S localhost -U sa -P <your_password>
 ```
 You can also use the tools in an entrypoint.sh script to do things like create databases or logins, attach databases, import data, or other setup tasks.  See this example of [using an entrypoint.sh script to create a database and schema and bcp in some data](https://github.com/twright-msft/mssql-node-docker-demo-app).
 

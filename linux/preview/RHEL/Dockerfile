@@ -40,6 +40,9 @@ RUN REPOLIST=rhel-7-server-rpms,rhel-7-server-optional-rpms,packages-microsoft-c
     go-md2man -in /tmp/help.md -out /help.1 && rm -f /tmp/help.md && \
     yum clean all
 
+# Symlink sqlcmd for easier usage
+RUN ln -s /opt/mssql-tools/bin/sqlcmd /usr/bin/sqlcmd
+
 ENV PATH=${PATH}:/opt/mssql/bin:/opt/mssql-tools/bin
 
 # Default SQL Server TCP/Port
