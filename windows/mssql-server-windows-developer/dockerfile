@@ -2,7 +2,7 @@ FROM microsoft/windowsservercore
 
 LABEL maintainer "Perry Skountrianos"
 
-# SQL Server 2016 Developer SP1:
+# SQL Server 2017:
 ENV exe "https://go.microsoft.com/fwlink/?linkid=840945"
 ENV box "https://go.microsoft.com/fwlink/?linkid=840944"
 
