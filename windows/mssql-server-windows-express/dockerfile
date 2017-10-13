@@ -2,7 +2,7 @@ FROM microsoft/windowsservercore
 
 LABEL maintainer "Perry Skountrianos"
 
-# SQL Server 2017
+# Download Links:
 ENV sql_express_download_url "https://go.microsoft.com/fwlink/?linkid=829176"
 
 ENV sa_password _
