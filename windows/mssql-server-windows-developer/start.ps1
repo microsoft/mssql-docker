@@ -50,7 +50,7 @@ if ($null -ne $dbs -And $dbs.Length -gt 0)
         }
 
         $files = $files -join ","
-        $sqlcmd = "IF NOT EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = '" + $($db.dbName) + "') BEGIN EXEC sp_detach_db [$($db.dbName)] END;CREATE DATABASE [$($db.dbName)] ON $($files) FOR ATTACH;"
+        $sqlcmd = "IF EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = '" + $($db.dbName) + "') BEGIN EXEC sp_detach_db [$($db.dbName)] END;CREATE DATABASE [$($db.dbName)] ON $($files) FOR ATTACH;"
 
         Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
         & sqlcmd -Q $sqlcmd
