@@ -1,40 +1,58 @@
-% IMAGE_NAME(1)
-% MAINTAINER
-% DATE
+.TH "IMAGE_NAME" "1" "" "MAINTAINER" "DATE" 
+.nh
+.ad l
 
-# DESCRIPTION
+
+.SH DESCRIPTION
+.PP
 Describe in greater detail the role or purpose of the image.  This can include more specifics about the
 packages that make up the image.  You can also describe whether image is meant to be interactive
 or more service oriented.
 
-# USAGE
+
+.SH USAGE
+.PP
 Describe how to run the image as a container and what factors might influence the behaviour of the image
 itself. For example:
 
+.PP
 To set up the host system for use by the XYZ container, run:
 
-  atomic install XYZimage
+.PP
+atomic install XYZimage
 
+.PP
 To run the XYZ container (after it is installed), run:
 
-  atomic run XYZimage
+.PP
+atomic run XYZimage
 
+.PP
 To remove the XYZ container (not the image) from your system, run:
 
-  atomic uninstall XYZimage
+.PP
+atomic uninstall XYZimage
 
+.PP
 To upgrade the XYZ container from your system, run:
 
-  atomic upgrade XYZimage
+.PP
+atomic upgrade XYZimage
 
-# LABELS
+
+.SH LABELS
+.PP
 Describe LABEL settings (from the Dockerfile that created the image) that contains pertinent information.
 For containers run by atomic, that could include INSTALL, RUN, UNINSTALL, and UPDATE LABELS. Others could
 include BZComponent, Name, Version, Release, and Architecture.
 
-# SECURITY IMPLICATIONS
+
+.SH SECURITY IMPLICATIONS
+.PP
 If you expose ports or run with privileges, it would be warranted to briefly note those and provide
 an explanation if needed.
 
-# HISTORY
+
+.SH HISTORY
+.PP
 Similar to a Changelog of sorts which can be as detailed as the maintainer wishes.
