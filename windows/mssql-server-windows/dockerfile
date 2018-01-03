@@ -6,9 +6,10 @@ LABEL maintainer "Perry Skountrianos"
 ENV exe "https://go.microsoft.com/fwlink/?linkid=835677"
 ENV box "https://go.microsoft.com/fwlink/?linkid=835679"
 
-ENV sa_password _
-ENV attach_dbs "[]"
-ENV ACCEPT_EULA _
+ENV sa_password="_" \
+    attach_dbs="[]" \
+    ACCEPT_EULA="_" \
+    sa_password_path="C:\ProgramData\Docker\secrets\sa-password"
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
