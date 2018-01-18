@@ -12,4 +12,4 @@ EXPOSE 1433
 COPY ./install /
 
 # Run SQL Server process.
-CMD /opt/mssql/bin/sqlservr
+CMD [ "/opt/mssql/bin/sqlservr" ]
