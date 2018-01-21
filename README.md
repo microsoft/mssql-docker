@@ -11,6 +11,10 @@ This GitHub repository aims to provide a centralized location for community enga
 
 Visit the [Microsoft Docker Hub page](https://hub.docker.com/u/microsoft) for more information and additional images.
 
+## Documentation
+[Getting started guide for the SQL Server on Linux container] (https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker)
+[Best practices guide](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-docker)
+
 ## Take our survey
 
 Let us know more about how you would like to use SQL containers by taking our survey:
