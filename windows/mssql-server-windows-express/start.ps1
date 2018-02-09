@@ -27,7 +27,8 @@ Write-Verbose "Starting SQL Server"
 start-service MSSQL`$SQLEXPRESS
 
 if($sa_password -eq "_") {
-    if (Test-Path $env:sa_password_path) {
+    $secretPath = $env:sa_password_path
+    if (Test-Path $secretPath) {
         $sa_password = Get-Content -Raw $secretPath
     }
     else {
