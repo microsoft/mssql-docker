@@ -104,7 +104,7 @@ The code included in this sample is not intended to be a set of best practices o
 <!-- Links to more articles. Remember to delete "en-us" from the link path. -->
 
 For more information, see these articles:
-- [Windows Containers] (https://msdn.microsoft.com/en-us/virtualization/windowscontainers/about/about_overview)
-- [Windows-based containers: Modern app development with enterprise-grade control] (https://www.youtube.com/watch?v=Ryx3o0rD5lY&feature=youtu.be)
-- [Windows Containers: What, Why and How] (https://channel9.msdn.com/Events/Build/2015/2-704)
-- [SQL Server in Windows Containers] (https://blogs.msdn.microsoft.com/sqlserverstorageengine/2016/03/21/sql-server-in-windows-containers/#comments)
+- [Windows Containers](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/about/about_overview)
+- [Windows-based containers: Modern app development with enterprise-grade control](https://www.youtube.com/watch?v=Ryx3o0rD5lY&feature=youtu.be)
+- [Windows Containers: What, Why and How](https://channel9.msdn.com/Events/Build/2015/2-704)
+- [SQL Server in Windows Containers](https://blogs.msdn.microsoft.com/sqlserverstorageengine/2016/03/21/sql-server-in-windows-containers/#comments)
