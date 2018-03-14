@@ -26,6 +26,15 @@ if($ACCEPT_EULA -ne "Y" -And $ACCEPT_EULA -ne "y")
 Write-Verbose "Starting SQL Server"
 start-service MSSQL`$SQLEXPRESS
 
+if($sa_password -eq "_") {
+    if (Test-Path $env:sa_password_path) {
+        $sa_password = Get-Content -Raw $secretPath
+    }
+    else {
+        Write-Verbose "WARN: Using default SA password, secret file not found at: $secretPath"
+    }
+}
+
 if($sa_password -ne "_")
 {
     Write-Verbose "Changing SA login credentials"
