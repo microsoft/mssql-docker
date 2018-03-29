@@ -21,10 +21,6 @@ LABEL name="microsoft/mssql-server-linux" \
       io.k8s.description="MS SQL Server is ....." \
       io.k8s.display-name="MS SQL Server Developer Edition"
 
-### Atomic Help File - Write in Markdown, it will be converted to man format at build time.
-### https://github.com/projectatomic/container-best-practices/blob/master/creating/help.adoc
-COPY help.1 /
-
 ### add licenses to this directory
 COPY licenses /licenses
 
@@ -47,7 +43,7 @@ USER 10001
 # Default SQL Server TCP/Port
 EXPOSE 1433
 
-VOLUME /var/opt/mssql
+VOLUME /var/opt/mssql/data
 
 ### user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
 ENTRYPOINT [ "uid_entrypoint" ]
