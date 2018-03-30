@@ -27,6 +27,9 @@ RUN curl https://packages.microsoft.com/config/rhel/7/mssql-server.repo > /etc/y
     ACCEPT_EULA=Y yum install -y mssql-server mssql-tools && \
     yum clean all
 
+# Symlink sqlcmd for easier usage
+RUN ln -s /opt/mssql-tools/bin/sqlcmd /usr/bin/sqlcmd
+
 ENV PATH=${PATH}:/opt/mssql/bin:/opt/mssql-tools/bin
 
 # Default SQL Server TCP/Port

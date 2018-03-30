@@ -11,5 +11,8 @@ EXPOSE 1433
 # Copy all SQL Server runtime files from build drop into image.
 COPY ./install /
 
+# Symlink sqlcmd for easier usage
+RUN ln -s /opt/mssql-tools/bin/sqlcmd /usr/bin/sqlcmd
+
 # Run SQL Server process.
 CMD /opt/mssql/bin/sqlservr
