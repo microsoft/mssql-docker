@@ -38,7 +38,7 @@ USER 10001
 # Default SQL Server TCP/Port
 EXPOSE 1433
 
-VOLUME /var/opt/mssql/data
+VOLUME /var/opt/mssql
 
 ### user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
 ENTRYPOINT [ "uid_entrypoint" ]
