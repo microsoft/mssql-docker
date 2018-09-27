@@ -11,5 +11,9 @@ EXPOSE 1433
 # Copy all SQL Server runtime files from build drop into image.
 COPY ./install /
 
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
 # Run SQL Server process.
-CMD [ "/opt/mssql/bin/sqlservr" ]
+CMD [ "/entrypoint.sh" ]
