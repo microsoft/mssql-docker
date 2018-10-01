@@ -5,23 +5,22 @@
 # Base OS layer: Latest Ubuntu LTS
 FROM ubuntu:16.04
 
-#Install curl since it is needed to get repo config
-# Get official Microsoft repository configuration
+# Install prerequistes since it is needed to get repo config for SQL server
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
-    apt-get install -y curl && \
-    apt-get install apt-transport-https && \
+    apt-get install -yq curl apt-transport-https && \
+    # Get official Microsoft repository configuration
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2017.list | tee /etc/apt/sources.list.d/mssql-server.list && \
-    apt-get update
-
-# Install SQL Server which a prerequisite for the optional packages below.
-RUN apt-get install -y mssql-server
-
-# Install optional packages.  Comment out the ones you don't need
-#RUN apt-get install -y mssql-server-agent - The agent is included in the mssql-server package starting from 2017 CU4 and beyond.
-RUN apt-get install -y mssql-server-ha
-RUN apt-get install -y mssql-server-fts
+    apt-get update && \
+    # Install SQL Server from apt
+    apt-get install -y mssql-server && \
+    # Install optional packages
+    apt-get install -y mssql-server-ha && \
+    apt-get install -y mssql-server-fts && \
+    # Cleanup the Dockerfile
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists
 
 # Run SQL Server process
 CMD /opt/mssql/bin/sqlservr
