@@ -9,7 +9,7 @@ RUN mkdir /var/opt/mssql && \
 
 USER mssql
 
-ENV HOME=/var/opt/mssql
-ENV APP_HOME=/var/opt/mssql
+ENV HOME=/var/opt/mssql \
+    APP_HOME=/var/opt/mssql
 
 CMD ["/opt/mssql/bin/sqlservr"]
