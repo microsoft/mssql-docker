@@ -79,8 +79,7 @@ The image provides two environment variables to optionally set: </br>
 
 This example shows all parameters in action:
 ```
-docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="[{'dbName':'SampleDB','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.
-ldf']}]" microsoft/mssql-server-windows-developer
+docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="[{'dbName':'SampleDB','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.ldf']}]" microsoft/mssql-server-windows-developer
 ```
 
 <a name=sample-details></a>
