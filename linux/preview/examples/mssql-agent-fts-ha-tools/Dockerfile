@@ -6,8 +6,7 @@
 FROM ubuntu:16.04
 
 # Install prerequistes since it is needed to get repo config for SQL server
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -yq curl apt-transport-https && \
     # Get official Microsoft repository configuration
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
