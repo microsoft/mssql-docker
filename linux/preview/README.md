@@ -1,8 +1,10 @@
 # Introduction
-There are three Linux-based Docker container images documented here:
+There are five Linux-based Docker container images documented here:
 * A representation of the actual [Dockerfile](Ubuntu/Dockerfile) that is used by Microsoft to build the Ubuntu-based image [mssql-server-linux](https://hub.docker.com/r/microsoft/mssql-server-linux/)  which is available at Docker Hub.
 * A [Dockerfile](CentOS/Dockerfile) for building a CentOS-based image on your own
 * A [Dockerfile](RHEL/Dockerfile) for building a RHEL-based image on your own
+* A [Dockerfile](SLES/Dockerfile) for building a SLES-based image on your own
+* A [Dockerfile](openSUSE/Dockerfile) for building an openSUSE-based image on your own
 
 Full documentation can be found at the [SQL Server on Linux Docker image page](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker).
 
