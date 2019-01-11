@@ -37,6 +37,16 @@ $passwordSecureString = ConvertTo-SecureString -String $sa_password -AsPlainText
 Write-Verbose "Starting SQL Server"
 start-service $service
 
+if($sa_password -eq "_") {
+    $secretPath = $env:sa_password_path
+    if (Test-Path $secretPath) {
+        $sa_password = Get-Content -Raw $secretPath
+    }
+    else {
+        Write-Verbose "WARN: Using default SA password, secret file not found at: $secretPath"
+    }
+}
+
 if($sa_password -ne "_")
 {
     Write-Verbose "Changing SA login credentials"
@@ -59,11 +69,11 @@ if (($attach_dbs) -and ($attach_dbs -ne ""))
             $files = @();
             Foreach($file in $db.dbFiles)
             {
-                $files += "(FILENAME = N'$($file)')";            
+                $files += "(FILENAME = N'$($file)')";           
             }
 
             $files = $files -join ","
-            $sqlcmd = "sp_detach_db ""$($db.dbName)"";CREATE DATABASE ""$($db.dbName)"" ON $($files) FOR ATTACH ;"
+            $sqlcmd = "IF EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = '" + $($db.dbName) + "') BEGIN EXEC sp_detach_db [$($db.dbName)] END;CREATE DATABASE [$($db.dbName)] ON $($files) FOR ATTACH;"
 
             Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
             & sqlcmd -Q $sqlcmd

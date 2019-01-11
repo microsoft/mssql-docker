@@ -1,8 +1,10 @@
 # Introduction
-There are three Linux-based Docker container images documented here:
+There are five Linux-based Docker container images documented here:
 * A representation of the actual [Dockerfile](Ubuntu/Dockerfile) that is used by Microsoft to build the Ubuntu-based image [mssql-server-linux](https://hub.docker.com/r/microsoft/mssql-server-linux/)  which is available at Docker Hub.
 * A [Dockerfile](CentOS/Dockerfile) for building a CentOS-based image on your own
 * A [Dockerfile](RHEL/Dockerfile) for building a RHEL-based image on your own
+* A [Dockerfile](SLES/dockerfile) for building a SLES-based image on your own
+* A [Dockerfile](openSUSE/dockerfile) for building an openSUSE-based image on your own
 
 Full documentation can be found at the [SQL Server on Linux Docker image page](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker).
 
@@ -97,5 +99,5 @@ Additional, optional environment variables are documented in the [product docume
 + Latest *Released* Version of SQL Server *Developer* Edition for Windows Containers: [microsoft/mssql-server-windows-developer](https://hub.docker.com/r/microsoft/mssql-server-windows-developer/)
 + Latest *Released Version* of SQL Server *Express* Edition for Windows Containers: [microsoft/mssql-server-windows-express](https://hub.docker.com/r/microsoft/mssql-server-windows-express/)
 
-**Note:** Developer Edition is a full-featured version of SQL Server without resource limits, but can only be used in dev/test.  Express Edition is a resouce-limited edition of SQL Server that can be used in production.
+**Note:** Developer Edition is a full-featured version of SQL Server without resource limits, but can only be used in dev/test.  Express Edition is a resource-limited edition of SQL Server that can be used in production.
 Get more information on [SQL Server Editions](https://www.microsoft.com/en-us/sql-server/sql-server-editions).
