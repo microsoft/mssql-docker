@@ -1,6 +1,6 @@
 List of files:
     - Dockerfile - main template file
-    - ./overlay/tmp/instal.sh - helper file to install mssql-server, mssql-server-extensibility and mssql-mlservices R and python.
+    - ./overlay/tmp/install.sh - helper file to install mssql-server, mssql-server-extensibility and mssql-mlservices R and python.
     - ./overlay/tmp/supervisord.conf - config file to start mssql-server and launchpadd services with supervisord
     - build.sh - script to build mssql-server-mlservices docker image.
     - run.sh - script to start docker container.
