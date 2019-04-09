@@ -6,7 +6,7 @@
 # E.g., To use the Developer edition: MSSQL_PID='Developer'
 #
 if [ -z "$MSSQL_PID" ]; then
-    echo "Error: Please set MSSQL_PID to specify SQL Server edition to use."
+    echo "Error: Please edit this script to set MSSQL_PID to specify SQL Server edition to use."
     exit 1
 fi
 
@@ -19,12 +19,12 @@ fi
 # E.g., to accept the EULA ML: ACCEPT_EULA_ML='Y'
 #
 if [ -z "$ACCEPT_EULA" ]; then
-    echo "Error: Please set ACCEPT_EULA to specify whether or not you accept the EULA."
+    echo "Error: Please edit this script to set ACCEPT_EULA to specify whether or not you accept the EULA."
     exit 1
 fi
 
 if [ -z "$ACCEPT_EULA_ML" ]; then
-    echo "Error: Please set ACCEPT_EULA_ML to specify whether or not you accept the Machine Learning Services EULA."
+    echo "Error: Please edit this script to set ACCEPT_EULA_ML to specify whether or not you accept the Machine Learning Services EULA."
     exit 1
 fi
 
@@ -37,7 +37,7 @@ read -s SA_PASSWORD
 #
 PATH_TO_MSSQL="${HOME}/mssql"
 if [ ! -d "${PATH_TO_MSSQL}" ]; then
-    echo "Error: ${PATH_TO_MSSQL} does not exist."
+    echo "Error: ${PATH_TO_MSSQL} does not exist. Please create the directory or edit this script to set PATH_TO_MSSQL to an existing directory."
     exit 1
 fi
 
@@ -46,5 +46,5 @@ fi
 MSSQL_ML_DOCKER_IMG='mssql-server-mlservices:latest'
 
 # Start
-DOCKER_RUN="docker run -e MSSQL_PID=${MSSQL_PID} -e ACCEP_EULA=${ACCEPT_EULA} -e ACCEPT_EULA_ML=${ACCEPT_EULA_ML} -e SA_PASSWORD=${SA_PASSWORD} -v ${PATH_TO_MSSQL}:/var/opt/mssql -p 1433:1433 ${MSSQL_ML_DOCKER_IMG}"
+DOCKER_RUN="docker run -e MSSQL_PID=${MSSQL_PID} -e ACCEPT_EULA=${ACCEPT_EULA} -e ACCEPT_EULA_ML=${ACCEPT_EULA_ML} -e SA_PASSWORD=${SA_PASSWORD} -v ${PATH_TO_MSSQL}:/var/opt/mssql -p 1433:1433 ${MSSQL_ML_DOCKER_IMG}"
 eval $DOCKER_RUN
