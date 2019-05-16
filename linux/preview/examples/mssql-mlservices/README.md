@@ -9,9 +9,24 @@
 # Usage
 
 1. Download all these files and maintain the dir structure.
-2. Run the script `./build.sh` to build the image. By default, both R and Python Services are installed into the image. If you just want to install R Services, edit `./overlay/tmp/install.sh` and set MLSERVICES_PKGS="mssql-mlservices-packages-r" in the script. If you just want to install Python Services, set MLSERVICES_PKGS="mssql-mlservices-packages-py".
-3. Edit `run.sh` script to set variables MSSQL_PID, ACCEPT_EULA, ACCEPT_EULA_ML and PATH_TO_MSSQL. Make sure the folder specified by PATH_TO_MSSQL does exist. If not, create one.
-4. Run the script `./run.sh` to start the container.
+2. Run the following script to build the image:
+```
+./build.sh
+```
+> Note:
+> By default, both R and Python Services are installed into the image. If you just want to install R Services, edit `./overlay/tmp/install.sh` and set MLSERVICES_PKGS="mssql-mlservices-packages-r" in the script. If you just want to install Python Services, set MLSERVICES_PKGS="mssql-mlservices-packages-py".
+3. Edit `run.sh` script to set variables MSSQL_PID, ACCEPT_EULA, ACCEPT_EULA_ML and PATH_TO_MSSQL. Make sure the folder specified by PATH_TO_MSSQL does exist. If not, create one. Example configuration to be included in the run.sh file:
+```
+MSSQL_PID='Developer'
+ACCEPT_EULA='Y'
+ACCEPT_EULA_ML='Y'
+PATH_TO_MSSQL='/home/john/mssql/'
+```
+
+4. Run the the following script to start the container.
+```
+./run.sh
+```
 5. Connect to Linux SQL Server in the container and enable the external script by running the following TSQL statement:
 ```
 EXEC sp_configure  'external scripts enabled', 1
