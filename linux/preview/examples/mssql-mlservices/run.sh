@@ -4,11 +4,15 @@
 #####################################
 # Set all variables for 'docker run '
 #####################################
+# Example Configs with explanation below
+# MSSQL_PID='Developer'
+# ACCEPT_EULA='Y'
+# ACCEPT_EULA_ML='Y'
+# PATH_TO_MSSQL='/home/john/mssql/'
 
 # set MSSQL_PID to specify SQL Server edition to use
 # Details about editions can be found at https://go.microsoft.com/fwlink/?LinkId=852748&clcid=0x409
 # E.g., To use the Developer edition: MSSQL_PID='Developer'
-#
 
 # set ACCEPT_EULA to specify if you accept the EULA
 # set ACCEPT_EULA_ML to specify if you accept the Machine Learning EULA
@@ -17,11 +21,9 @@
 # The privacy statement can be viewed at: https://go.microsoft.com/fwlink/?LinkId=853010&clcid=0x409
 # E.g., to accept the EULA: ACCEPT_EULA='Y'
 # E.g., to accept the EULA ML: ACCEPT_EULA_ML='Y'
-#
 
 # Path to mssql host dir which will be mapped to /var/opt/mssql
 # E.g., PATH_TO_MSSQL="${HOME}/mssql"
-#
 
 #####################################
 # Verify variables are all set
