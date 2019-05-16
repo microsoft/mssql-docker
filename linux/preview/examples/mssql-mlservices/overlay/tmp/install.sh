@@ -22,15 +22,10 @@ apt-get update
 apt-get install -y --allow-unauthenticated mssql-server
 
 # install mssql-server-extensibility
-# WORKAROUND to skip running postinst script to not start systemd services
-# TODO: once mssql-server-extensibility setup pkg is fixed and publish,
-#       change this step to 'apt-get install -y mssql-server-extensibility'
+#
+chmod 1777 /tmp
 cd /tmp/
-apt-get -y --allow-unauthenticated download mssql-server-extensibility
-dpkg --unpack --ignore-depends="mssql-server" mssql-server-extensibility*.deb
-rm /var/lib/dpkg/info/mssql-server-extensibility.postinst -f
-dpkg --configure mssql-server-extensibility
-apt-get install -yf --allow-unauthenticated
+apt-get install -y --allow-unauthenticated mssql-server-extensibility
 
 # run checkinstallextensibility
 #
@@ -50,8 +45,15 @@ dpkg -i packages-microsoft-prod.deb
 # for r, mssql-mlservices-packages-r
 # for python, mssql-mlservices-packages-python
 #
+MLSERVICES_PKGS="mssql-mlservices-packages-r mssql-mlservices-packages-py"
 apt-get update
-apt-get install -y --allow-unauthenticated mssql-mlservices-packages-r mssql-mlservices-packages-py
+apt-get install -y --allow-unauthenticated $MLSERVICES_PKGS
+
+chown -R root:root /opt/mssql/bin/launchpadd
+chown -R root:root /opt/mssql/bin/setnetbr
+rm -rf /var/opt/mssql-extensibility
+mkdir -p /var/opt/mssql-extensibility/data
+mkdir -p /var/opt/mssql-extensibility/log
 
 # cleanup
 #
