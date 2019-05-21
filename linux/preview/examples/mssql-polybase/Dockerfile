@@ -13,8 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-preview.list | tee /etc/apt/sources.list.d/mssql-server-preview.list && \
     apt-get update && \
-    # Install SQL Server and PolyBase
-    apt-get install -y mssql-server && \
+    # Install PolyBase will also install SQL Server via dependency mechanism.
     apt-get install -y mssql-server-polybase && \
     # Cleanup the Dockerfile
     apt-get clean && \
