@@ -85,6 +85,13 @@ ldf']}]" microsoft/mssql-server-windows-developer
 
 <a name=sample-details></a>
 
+## Rebuild the image
+
+```
+docker build --memory 4g .
+```
+
+
 ## Sample details
 
 The Dockerfile downloads and installs the latest version of SQL Server Developer Edition.
