@@ -1,3 +1,5 @@
+## Note: The SQL Server Express on Windows image is not supported for production use. If you have a need to use SQL Server on Windows containers in production, please sign up for the Early Adoption Preview at https://aka.ms/sqleap
+
 # mssql-server-windows-express
 This Dockerfile helps developers to get started using SQL Server Express in Windows Containers. The file downloads and installs SQL Server Express with the default setup parameters.
 
