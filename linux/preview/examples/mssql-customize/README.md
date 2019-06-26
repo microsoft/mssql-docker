@@ -14,10 +14,10 @@ git clone https://github.com/microsoft/mssql-docker.git
 modify the `mssql-docker/linux/preview/examples/mssql-customize/setup.sql` file with the TSQL that you want to customize the SQL Server container with.
 
 ## Build the image 
-Build with `docker run`:
+Build with `docker build`:
 ```
 cd mssql-docker/linux/preview/examples/mssql-customize
-docker run -t mssql-custom .
+docker build -t mssql-custom .
 ```
 
 ## Run the container
