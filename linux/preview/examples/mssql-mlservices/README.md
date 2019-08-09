@@ -45,7 +45,7 @@ docker ps -a
 <button type="button" class="btn btn-primary" href="ConfigureAndTestMLServices.ipynb">Open Notebook in Azure Data Studio</button>  [Don't have Azure Data Studio yet?](https://docs.microsoft.com/en-us/sql/azure-data-studio/download) [Open Notebook](azuredatastudio://microsoft.notebook/open?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fmssql-docker%2Fmaster%2Flinux%2Fpreview%2Fexamples%2Fmssql-mlservices%2FConfigureAndTestMLServices.ipynb)
 
 
-<a class="btn btn-info" role="button" href="azuredatastudio://microsoft.notebook/open?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fmssql-docker%2Fmaster%2Flinux%2Fpreview%2Fexamples%2Fmssql-mlservices%2FConfigureAndTestMLServices.ipynb">open me</a>
+<a class="btn btn-info" role="button" href="/ConfigureAndTestMLServices.ipynb">open me</a>
 
 <!-- Place this tag where you want the button to render. -->
 <a href="azuredatastudio://microsoft.notebook/open?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fmssql-docker%2Fmaster%2Flinux%2Fpreview%2Fexamples%2Fmssql-mlservices%2FConfigureAndTestMLServices.ipynb" data-icon="octicon-cloud-download" aria-label="Download notebook">Open in Azure Data Studio</a>
