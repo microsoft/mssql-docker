@@ -1,8 +1,3 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-
 SQL Server container images do not include Machine Learning Services to keep the image size down for typical use cases of SQL Server.  This Dockerfile provides an example of how to build a container image that does include ML Services.
 
 # Usage
@@ -42,13 +37,7 @@ docker ps -a
 ```
 
 ## Use
-<button type="button" class="btn btn-primary" href="ConfigureAndTestMLServices.ipynb">Open Notebook in Azure Data Studio</button>  [Don't have Azure Data Studio yet?](https://docs.microsoft.com/en-us/sql/azure-data-studio/download) [Open Notebook](azuredatastudio://microsoft.notebook/open?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fmssql-docker%2Fmaster%2Flinux%2Fpreview%2Fexamples%2Fmssql-mlservices%2FConfigureAndTestMLServices.ipynb)
-
-
 [Open Notebook](/linux/preview/examples/mssql-mlservices/ConfigureAndTestMLServices.ipynb)
-
-<!-- Place this tag where you want the button to render. -->
-<a href="azuredatastudio://microsoft.notebook/open?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fmssql-docker%2Fmaster%2Flinux%2Fpreview%2Fexamples%2Fmssql-mlservices%2FConfigureAndTestMLServices.ipynb" data-icon="octicon-cloud-download" aria-label="Download notebook">Open in Azure Data Studio</a>
 
 
 1. Connect to Linux SQL Server in the container and enable external script execution by running the following T-SQL statement:
