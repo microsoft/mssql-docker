@@ -4,7 +4,7 @@ SQL Server container images do not include Machine Learning Services to keep the
 
 ## Build
 1. Git clone or download all these files and maintain the directory structure.
-2. In the same directory as this readme.md file, run the following command
+2. In the same directory as this readme file, run the following command
 ```
 docker build -t mssql-server-mlservices .
 ```
