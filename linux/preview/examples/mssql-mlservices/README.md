@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 SQL Server container images do not include Machine Learning Services to keep the image size down for typical use cases of SQL Server.  This Dockerfile provides an example of how to build a container image that does include ML Services.
 
 # Usage
@@ -37,7 +39,7 @@ docker ps -a
 ```
 
 ## Use
-
+<button type="button" class="btn btn-primary" href="azuredatastudio://microsoft.notebook/open?url=./ConfigureAndTestMLServices.ipynb">Open Notebook in Azure Data Studio</button>  [Don't have Azure Data Studio yet?](https://docs.microsoft.com/en-us/sql/azure-data-studio/download)
 1. Connect to Linux SQL Server in the container and enable external script execution by running the following T-SQL statement:
 ```
 EXEC sp_configure  'external scripts enabled', 1
