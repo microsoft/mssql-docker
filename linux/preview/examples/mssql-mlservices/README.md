@@ -11,11 +11,8 @@ docker build -t mssql-server-mlservices .
 > **Note:**
 > mssql-server-mlservices is just a suggested name for the container image.  You can use a different name if you want to.
 
-> **Note:**
-> By default, both R and Python Services are installed into the image. If you just want to install R Services, edit `./overlay/tmp/install.sh` and set MLSERVICES_PKGS="mssql-mlservices-packages-r" in the script. If you just want to install Python Services, set MLSERVICES_PKGS="mssql-mlservices-packages-py".
-
 ## Run
-1. Once you have built the container image you can use it by running the following command:
+1. Once you have built the container image, you can run it by running the following command:
 ```
 docker run -d -e MSSQL_PID=Developer -e ACCEPT_EULA=Y -e ACCEPT_EULA_ML=Y -e SA_PASSWORD=<some password> -v <some directory on the host OS>:/var/opt/mssql -p 1433:1433 mssql-server-mlservices
 ```
@@ -23,16 +20,16 @@ docker run -d -e MSSQL_PID=Developer -e ACCEPT_EULA=Y -e ACCEPT_EULA_ML=Y -e SA_
 > You can use any of the following values for MSSQL_PID:  Developer (free), Express (free), Enteprise (paid), Standard (paid).  If you are using a paid edition, please ensure that you have purchased a license.
 
 > **Note:**
-> Choose an SA_PASSWORD value that meets the [SQL Server password complexity policy](https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-2017).
+> Provide an SA_PASSWORD value that meets the [SQL Server password complexity policy](https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-2017).  Replace \<some password\> with your actual password.
 
 > **Note:**
 > Volume mounting using -v is optional.  **Be sure to use volume mounting if you are concerned with preserving the data if the container is ever deleted.**  Replace \<some directory on the host OS\> with an actual directory where you want to mount the database data and log files.  
 
 > **Note:**
-> Volume mounting does work on macOS right now.  [Tracking issue](https://github.com/microsoft/mssql-docker/issues/12)
+> Volume mounting does work on macOS right now.  ([Tracking issue](https://github.com/microsoft/mssql-docker/issues/12))
 
 > **Note:**
-> By setting the ACCEPT_EULA and ACCEPT_EULA environment variables values to Y you are accepting the licensing terms for SQL Server and Machine Learning Services.
+> By setting the ACCEPT_EULA and ACCEPT_EULA environment variables values to "Y", you are accepting the licensing terms for SQL Server and Machine Learning Services.
 
 2. Confirm that the container is running by running the following command:
 ```
