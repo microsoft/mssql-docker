@@ -49,7 +49,7 @@
             CREATE EXTERNAL DATA SOURCE loopback_data_src WITH (LOCATION = 'sqlserver://127.0.0.1', CREDENTIAL = SaCredential)
             GO
 
-            CREATE EXTERNAL TABLE T1_external (c1 nvarchar(50))  with (location='PolyTestDb..T1', DATA_SOURCE=loopback_data_src)
+            CREATE EXTERNAL TABLE T1_external (column1 nvarchar(50))  with (location='PolyTestDb..T1', DATA_SOURCE=loopback_data_src)
             GO
 
             select * from T1_external
