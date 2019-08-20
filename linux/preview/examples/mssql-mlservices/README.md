@@ -29,7 +29,7 @@ docker run -d -e MSSQL_PID=Developer -e ACCEPT_EULA=Y -e ACCEPT_EULA_ML=Y -e SA_
 > Volume mounting does work on macOS right now.  ([Tracking issue](https://github.com/microsoft/mssql-docker/issues/12))
 
 > **Note:**
-> By setting the ACCEPT_EULA and ACCEPT_EULA environment variables values to "Y", you are accepting the licensing terms for SQL Server and Machine Learning Services.
+> By setting the ACCEPT_EULA and ACCEPT_EULA_ML environment variables values to "Y", you are accepting the licensing terms for SQL Server and Machine Learning Services.
 
 2. Confirm that the container is running by running the following command:
 ```
