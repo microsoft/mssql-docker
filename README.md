@@ -17,13 +17,13 @@ Visit the [Microsoft Docker Hub page](https://hub.docker.com/u/microsoft) for mo
 
 ## Take our survey
 
-Let us know more about how you would like to use SQL containers by taking our survey:
-
-<a href="https://www.surveymonkey.com/r/XXSY536"><img style="float: right;"  height="67" width="156" src="https://meetsstorenew.blob.core.windows.net/contianerhd/survey.png?st=2017-02-17T22%3A03%3A00Z&se=2100-02-18T22%3A03%3A00Z&sp=rl&sv=2015-12-11&sr=b&sig=DJSFoihBptSvO%2BjvWzwpHecf8o5yfAbJoD2qW5oB8tc%3D"></a>
+Let us know more about how you would like to use SQL containers by taking our [survey](https://www.surveymonkey.com/r/XXSY536).
 
 ## Issues
 
-For any issues, please file under this GitHub project on the [Issues section](https://github.com/Microsoft/mssql-docker/issues).
+For any issues with the repo, please file under this GitHub project on the [Issues section](https://github.com/Microsoft/mssql-docker/issues).
+
+If you require support with a production related issue, then please raise a support incident with Microsoft [here](https://support.microsoft.com/en-us/hub/4343728/support-for-business.
 
 There is also a [Gitter channel for SQL Server in DevOps](https://gitter.im/Microsoft/mssql-devops?utm_source=share-link&utm_medium=link&utm_campaign=share-link) that you can join and discuss interesting topics with other container, SQL Server, and DevOps enthusiasts.
 
