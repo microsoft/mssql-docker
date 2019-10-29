@@ -42,6 +42,8 @@ RUN chown -R root:root /opt/mssql/bin/launchpadd
 RUN chown -R root:root /opt/mssql/bin/setnetbr
 RUN mkdir -p /var/opt/mssql-extensibility/data
 RUN mkdir -p /var/opt/mssql-extensibility/log
+RUN chown -R root:root /var/opt/mssql-extensibility
+RUN chmod -R 777 /var/opt/mssql-extensibility
 
 # cleanup
 RUN apt-get clean
