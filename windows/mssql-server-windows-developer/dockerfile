@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+FROM microsoft/windowsservercore
 
 LABEL maintainer "Perry Skountrianos"
 
@@ -9,7 +9,6 @@ ENV box "https://go.microsoft.com/fwlink/?linkid=840944"
 ENV sa_password="_" \
     attach_dbs="[]" \
     ACCEPT_EULA="_" \
-    COLLATION="SQL_Latin1_General_CP1_CI_AS" \
     sa_password_path="C:\ProgramData\Docker\secrets\sa-password"
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -21,7 +20,7 @@ WORKDIR /
 RUN Invoke-WebRequest -Uri $env:box -OutFile SQL.box ; \
         Invoke-WebRequest -Uri $env:exe -OutFile SQL.exe ; \
         Start-Process -Wait -FilePath .\SQL.exe -ArgumentList /qs, /x:setup ; \
-        .\setup\setup.exe /q /SQLCOLLATION=$env:COLLATION /ACTION=Install /INSTANCENAME=MSSQLSERVER /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT='NT AUTHORITY\NETWORK SERVICE' /SQLSYSADMINACCOUNTS='BUILTIN\ADMINISTRATORS' /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS ; \
+        .\setup\setup.exe /q /ACTION=Install /INSTANCENAME=MSSQLSERVER /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT='NT AUTHORITY\NETWORK SERVICE' /SQLSYSADMINACCOUNTS='BUILTIN\ADMINISTRATORS' /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS ; \
         Remove-Item -Recurse -Force SQL.exe, SQL.box, setup
 
 RUN stop-service MSSQLSERVER ; \
