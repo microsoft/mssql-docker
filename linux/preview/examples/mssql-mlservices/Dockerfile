@@ -5,8 +5,7 @@ FROM ubuntu:16.04
 COPY ./supervisord.conf /usr/local/etc/supervisord.conf
 
 # install supporting packages
-RUN apt-get update
-RUN apt-get install -y supervisor \
+RUN apt-get update && apt-get install -y supervisor \
                        fakechroot \
                        locales \
                        iptables \
@@ -31,8 +30,7 @@ RUN add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu
 
 # install SQL Server ML services R and Python packages which will also install the mssql-server pacakge, the package for SQL Server itself
 # if you want to install only Python or only R, you can add/remove the package as needed below
-RUN apt-get update
-RUN apt-get install -y mssql-mlservices-packages-r  mssql-mlservices-packages-py
+RUN apt-get update && apt-get install -y mssql-mlservices-packages-r  mssql-mlservices-packages-py
 
 # run checkinstallextensibility.sh
 RUN /opt/mssql/bin/checkinstallextensibility.sh
