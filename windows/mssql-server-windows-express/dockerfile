@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/windows/servercore
+ARG OSVersion
+FROM mcr.microsoft.com/windows/servercore:${OSVersion}
 
 LABEL maintainer "Perry Skountrianos"
 
