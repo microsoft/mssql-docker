@@ -25,9 +25,8 @@ RUN apt-get install -y supervisor \
                        software-properties-common
 
 # register Microsoft package repository
-#TODO: This needs to be updated when SQL Server 2019 is generally available
 RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-preview.list)"
+RUN add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2019.list)"
 
 # install SQL Server ML services R and Python packages which will also install the mssql-server pacakge, the package for SQL Server itself
 # if you want to install only Python or only R, you can add/remove the package as needed below
