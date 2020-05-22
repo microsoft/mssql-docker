@@ -11,16 +11,30 @@ docker build -t mssql-server-mlservices .
 > **Note:**
 > mssql-server-mlservices is just a suggested name for the container image.  You can use a different name if you want to.
 
+> **Note:**
+> The Dockerfile does not install the mssql-tools (e.g. sqlcmd) - to add them to the dockerfile or install on the host, see https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15
+
+
 ## Run
 1. Once you have built the container image, you can run it by running the following command:
 ```
-docker run -d -e MSSQL_PID=Developer -e ACCEPT_EULA=Y -e ACCEPT_EULA_ML=Y -e SA_PASSWORD=<some password> -v <some directory on the host OS>:/var/opt/mssql -p 1433:1433 mssql-server-mlservices
+docker run -d \
+    -e MSSQL_PID=Developer \
+    -e ACCEPT_EULA=Y \
+    -e ACCEPT_EULA_ML=Y \
+    -e MSSQL_SA_PASSWORD=<some password> \    # !! fixed from original instructions !!
+    -v <some directory on the host OS>:/var/opt/mssql \
+    -p 1433:1433 \
+    mssql-server-mlservices
 ```
+> **Note:**
+> For more configuration options, see https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-docker
+
 > **Note:**
 > You can use any of the following values for MSSQL_PID:  Developer (free), Express (free), Enteprise (paid), Standard (paid).  If you are using a paid edition, please ensure that you have purchased a license.
 
 > **Note:**
-> Provide an SA_PASSWORD value that meets the [SQL Server password complexity policy](https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-2017).  Replace \<some password\> with your actual password.
+> Provide an MSSQL_SA_PASSWORD value that meets the [SQL Server password complexity policy](https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-2017).  Replace \<some password\> with your actual password.
 
 > **Note:**
 > Volume mounting using -v is optional.  **Be sure to use volume mounting if you are concerned with preserving the data if the container is ever deleted.**  Replace \<some directory on the host OS\> with an actual directory where you want to mount the database data and log files.  
@@ -37,13 +51,17 @@ docker ps -a
 ```
 
 ## Use
+The repository contains an IPython notebook which can be used from Azure Data Studio (see https://docs.microsoft.com/en-us/sql/azure-data-studio). 
+
 [Open Notebook](/linux/preview/examples/mssql-mlservices/ConfigureAndTestMLServices.ipynb)
 
 
 1. Connect to Linux SQL Server in the container and enable external script execution by running the following T-SQL statement:
 ```
 EXEC sp_configure  'external scripts enabled', 1
-RECONFIGURE WITH OVERRIDE
+GO
+RECONFIGURE WITH OVERRIDE;
+GO
 ```
 2. Verify ML Services is working by running the following simple R/Python sp_execute_external_script:
 ```
