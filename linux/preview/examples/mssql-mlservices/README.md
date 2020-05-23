@@ -1,4 +1,5 @@
 SQL Server container images do not include Machine Learning Services to keep the image size down for typical use cases of SQL Server.  This Dockerfile provides an example of how to build a container image that does include ML Services.
+This sample includes Machine Learning Services including R and python - the resulting image is about 9GB.
 
 # Usage
 
@@ -14,6 +15,14 @@ docker build -t mssql-server-mlservices .
 > **Note:**
 > The Dockerfile does not install the mssql-tools (e.g. sqlcmd) - to add them to the dockerfile or install on the host, see https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15
 
+> **NOTE**
+> The dockerfile uses the Ubuntu 16.04 base image and the matching SQL server repository for SQL server 2019
+> in the "CU" version. See https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-change-repo for more info about available repository types (2017/2019 and preview, CU and GDR)
+
+> **NOTE**
+> According to the official documentation for SQL Server on Linux (at https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-linux-ver15),
+> now also Ubuntu 18.04 is supported - also Docker for Windows is listed (but not which variant: WSL, LCOW, Hyper-V Moby, ... what a mess for _write once ship everywhere_)
+
 
 ## Run
 1. Once you have built the container image, you can run it by running the following command:
@@ -22,7 +31,7 @@ docker run -d \
     -e MSSQL_PID=Developer \
     -e ACCEPT_EULA=Y \
     -e ACCEPT_EULA_ML=Y \
-    -e MSSQL_SA_PASSWORD=<some password> \    # !! fixed from original instructions !!
+    -e MSSQL_SA_PASSWORD=<some password> \  
     -v <some directory on the host OS>:/var/opt/mssql \
     -p 1433:1433 \
     mssql-server-mlservices
@@ -59,10 +68,12 @@ The repository contains an IPython notebook which can be used from Azure Data St
 1. Connect to Linux SQL Server in the container and enable external script execution by running the following T-SQL statement:
 ```
 EXEC sp_configure  'external scripts enabled', 1
-GO
-RECONFIGURE WITH OVERRIDE;
-GO
+RECONFIGURE WITH OVERRIDE
 ```
+
+> **NOTE**
+> If running with sqlcmd, then add semikolons and the GO command after each line.
+
 2. Verify ML Services is working by running the following simple R/Python sp_execute_external_script:
 ```
 execute sp_execute_external_script 
