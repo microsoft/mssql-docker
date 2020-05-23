@@ -6,12 +6,9 @@ COPY ./supervisord.conf /usr/local/etc/supervisord.conf
 
 # install supporting packages
 RUN apt-get update && \
-    apt-get install -y apt-transport-https curl && \
-    # Adding custom MS repository
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2019.list > /etc/apt/sources.list.d/mssql-server-2019.list
-    
-RUN apt-get install -y supervisor \
+    apt-get install -y apt-transport-https \
+                       curl \
+                       supervisor \
                        fakechroot \
                        locales \
                        iptables \
@@ -29,6 +26,10 @@ RUN apt-get install -y supervisor \
                        libsss-nss-idmap-dev \
                        software-properties-common
 
+# Adding custom MS repository
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2019.list > /etc/apt/sources.list.d/mssql-server-2019.list
+
 # install SQL Server ML services R and Python packages which will also install the mssql-server pacakge, the package for SQL Server itself
 # if you want to install only Python or only R, you can add/remove the package as needed below
 RUN apt-get update && \
@@ -40,19 +41,16 @@ RUN apt-get update && \
     
 
 # run checkinstallextensibility.sh
-RUN /opt/mssql/bin/checkinstallextensibility.sh
-
-# set directory permissions and create default directories
-RUN chown -R root:root /opt/mssql/bin/launchpadd
-RUN chown -R root:root /opt/mssql/bin/setnetbr
-RUN mkdir -p /var/opt/mssql-extensibility/data
-RUN mkdir -p /var/opt/mssql-extensibility/log
-RUN chown -R root:root /var/opt/mssql-extensibility
-RUN chmod -R 777 /var/opt/mssql-extensibility
-
-
-# locale-gen
-RUN locale-gen en_US.UTF-8
+RUN /opt/mssql/bin/checkinstallextensibility.sh && \
+    # set/fix directory permissions and create default directories
+    chown -R root:root /opt/mssql/bin/launchpadd && \
+    chown -R root:root /opt/mssql/bin/setnetbr && \
+    mkdir -p /var/opt/mssql-extensibility/data && \
+    mkdir -p /var/opt/mssql-extensibility/log && \
+    chown -R root:root /var/opt/mssql-extensibility && \
+    chmod -R 777 /var/opt/mssql-extensibility && \
+    # locale-gen
+    locale-gen en_US.UTF-8
 
 # expose SQL Server port
 EXPOSE 1433
