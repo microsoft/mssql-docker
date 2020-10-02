@@ -67,6 +67,11 @@ if ($null -ne $dbs -And $dbs.Length -gt 0)
     }
 }
 
+if ($(Test-Path c:\.initialized) -eq $False) {
+    Get-ChildItem -ErrorAction SilentlyContinue C:\docker-entrypoint-initdb\ *.sql | % { Write-Verbose "Executing $($_.FullName) file"; sqlcmd -U sa -P $env:sa_password -i $_.FullName | Out-Null }
+    echo ok > c:\.initialized
+}
+
 Write-Verbose "Started SQL Server."
 
 $lastCheck = (Get-Date).AddSeconds(-2) 
