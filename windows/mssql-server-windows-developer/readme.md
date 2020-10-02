@@ -76,6 +76,27 @@ The image provides two environment variables to optionally set: </br>
 	The path has double backslashes for escaping!
 	The path refers to files **within the container**. So make sure to include them in the image or mount them via **-v**!
 
+## Alternative : init sql scripts
+
+The previous sample describes how to mount the ldf and mdf files into the container. 
+Another approach consists of running setup script at sql server startup.
+By mounting a volume from local folder scripts to c:/docker-entrypoint-initdb, the container will execute all .sql scripts files
+The volume should be a directory
+````
+version: "3.8"
+
+services:
+  sqlserver:
+    platform: windows/amd64
+    environment: 
+      - sa_password=<YourPassword>
+      - ACCEPT_EULA=Y
+    image: microsoft/mssql-server-windows-developer
+    volumes: 
+      - ./dockerfiles/sqlserver/initdb:c:/docker-entrypoint-initdb:ro
+    ports:
+      - "1433:1433"
+```
 
 This example shows all parameters in action:
 ```
