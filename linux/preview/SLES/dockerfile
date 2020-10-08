@@ -1,7 +1,6 @@
-##
-# Assumptions
+## 
 # Thank you to our SUSE Partners for helping with this :)
-##
+##Assumptions
 # 1. use a matching version to the underlying build host
 # 2. ensure it is registered to have access to needed repos
 #	then leveraging container-suseconnect-zypp
