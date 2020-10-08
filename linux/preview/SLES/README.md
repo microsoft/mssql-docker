@@ -4,6 +4,11 @@
 
 2. Please ensure the host machine is registered using the SUSEConnect command as documented here: https://www.suse.com/support/kb/doc/?id=000018564
 
+3. You can verify that the host machine is registered using a command shown below, the output you should see the status as registered and other details like the regcode.
+    ```
+    SUSEConnect -s
+    ```
+
 **Steps to building SQL Server on SLES container image**
 
 1.	Create the dockerfile as shown in the dockerfile command and save it into your working directory
