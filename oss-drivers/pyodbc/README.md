@@ -1,6 +1,6 @@
 # Python Development Environment for SQL Server
 
-This image provides an integrated development environment for Python with connectivity to a remote SQL Server database. Learn more about [SQL Server on Linux](https://hub.docker.com/r/microsoft/mssql-server-linux/). To report issues or provide feedback, please file an issue in the [SQL Server in Docker GitHub Repository](https://github.com/Microsoft/mssql-docker).
+This image provides an integrated development environment for Python with connectivity to a remote SQL Server database. Learn more about [SQL Server on Linux](https://hub.docker.com/_/microsoft-mssql-server). To report issues or provide feedback, please file an issue in the [SQL Server in Docker GitHub Repository](https://github.com/Microsoft/mssql-docker).
 
 ### [Dockerfile](https://github.com/Microsoft/mssql-docker/blob/master/oss-drivers/pyodbc/Dockerfile)
 
