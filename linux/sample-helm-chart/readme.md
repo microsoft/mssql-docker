@@ -9,8 +9,7 @@ This HELM chart is a sample "as-is" chart provided for reference to help guide w
 3.	For minimum hardware requirement for the host to run SQL Server containers please refer to the system requirements section for SQL on Linux. 
 4.	Requires the following variables to be set or changed in the values.yaml file :<br/> 
     a.  Please ensure that you accept the EULA for SQL Server, by changing the value of ACCEPT_EULA.value=y in values.yaml file or set it during the helm install command --set ACCEPT_EULA.value=Y.<br/> 
-    b.	Please do choose the right edition of SQL Server that you would like to install you can change the value of the MSSQL_PID.value in the values file to the edition that you want to install or you can also 
-        change it during the helm install command using the option --set MSSQL_PID.value=Enterprise, If you do not pass the flag and do not change it in the yaml, then by default it is going to install developer edition.<br/>  
+    b.	Please do choose the right edition of SQL Server that you would like to install you can change the value of the MSSQL_PID.value in the values file to the edition that you want to install or you can also change it during the helm install command using the option --set MSSQL_PID.value=Enterprise, If you do not pass the flag and do not change it in the yaml, then by default it is going to install developer edition.<br/>  
     c.	Also please do provide your customized value for the sa_password, if you do not provide it then by default the sa_password will the value as shown in the below table.<br/> 
  
 Note: Once you deploy SQL server containers using the chart below, please log into SQL Server using sa account and change the password as mentioned here, this ensures that as DBA you have the control of the sa user and password.  
