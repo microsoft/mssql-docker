@@ -1,0 +1,60 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+     name: azure-disk
+provisioner: kubernetes.io/azure-disk
+parameters:
+  storageaccounttype: Standard_LRS
+  kind: Managed
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-data
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass | quote }}
+spec:
+  accessModes:
+  - {{ .Values.pvc.mssqldataaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.mssqldbsize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-userdb
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
+spec:
+  accessModes:
+  - {{ .Values.pvc.userdbaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.userdbsize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-log
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
+spec:
+  accessModes:
+   - {{ .Values.pvc.userlogaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.userlogsize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-temp
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
+spec:
+  accessModes:
+   - {{ .Values.pvc.tempdbaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.tempsize}}
