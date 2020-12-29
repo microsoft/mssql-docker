@@ -47,7 +47,7 @@ On the client machine where you have the Helm tools installed, download the char
 
 ## Deployment details:
  
-> [!NOTE]
+> [NOTE]
 > Here are my deployment details, please make changes to the values.yaml or other files as per your requirement.
  
 In this scenario, I am deploying SQL Server containers on a Azure Kubernetes Service (AKS). You can follow Setup and connect to AKS documentation to read instructions on setup and connections. Also the storage class that I am using here is "Azure-disk". Please do find details below for each of the yaml file used in the template folder of this chart.
