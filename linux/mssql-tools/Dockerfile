@@ -17,8 +17,8 @@ RUN apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
 
 # Install SQLPackage for Linux and make it executable
 RUN wget -O /tmp/sqlpackage.zip https://go.microsoft.com/fwlink/?linkid=2113331 \
-    && unzip -qq sqlpackage.zip -d /opt/sqlpackage \
-    && chmod +x /opt/sqlpackage/sqlpackage
+    && unzip -qq /tmp/sqlpackage.zip -d /opt/sqlpackage \
+    && chmod +x /opt/sqlpackage/sqlpackage \
     && rm /tmp/sqlpackage.zip
 
 # Add mssql-tools and sqlpackage paths
