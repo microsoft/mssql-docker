@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-mirror-0
+spec:
+  selector:
+    statefulset.kubernetes.io/pod-name: mssql-sql-statefull-deploy-0
+  ports:
+  - protocol: TCP
+    port: 5022
+    targetPort: 5022
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-mirror-1
+spec:
+  selector:
+    statefulset.kubernetes.io/pod-name: mssql-sql-statefull-deploy-1
+  ports:
+  - protocol: TCP
+    port: 5022
+    targetPort: 5022
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-mirror-2
+spec:
+  selector:
+    statefulset.kubernetes.io/pod-name: mssql-sql-statefull-deploy-2
+  ports:
+  - protocol: TCP
+    port: 5022
+    targetPort: 5022
