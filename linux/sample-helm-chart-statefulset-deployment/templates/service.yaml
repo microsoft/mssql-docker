@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sql-statefull-deploy.fullname" . }}
+  labels:
+    {{- include "sql-statefull-deploy.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+  selector:
+    {{- include "sql-statefull-deploy.selectorLabels" . | nindent 4 }}
