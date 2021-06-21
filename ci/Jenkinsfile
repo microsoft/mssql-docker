@@ -1,0 +1,64 @@
+properties([
+  buildDiscarder(
+    logRotator(
+      artifactDaysToKeepStr: '',
+      artifactNumToKeepStr: '',
+      daysToKeepStr: '',
+      numToKeepStr: '5',
+    ),
+  ),
+])
+
+def buildParams
+
+pipeline {
+    agent {
+        label 'ec2-windows'
+    }
+    stages {
+        stage('Load Branch-Specific Variables') {
+            steps {
+                script {
+                    def buildVariablesFile = "./ci/build-variables-${BRANCH_NAME}.groovy"
+                    echo "Looking for branch specific environment variables file: ${buildVariablesFile}"
+                    if(fileExists(buildVariablesFile)) {
+                        echo "Found file.  Loading branch specific environment variables."
+                        buildParams = load buildVariablesFile
+                    } else {
+                        echo "There are no branch specific environment variables.  Looking for default environment variables file."
+                        buildVariablesFile = "./ci/build-variables.groovy"
+                        if(fileExists(buildVariablesFile)) {
+                            echo "Found file.  Loading default environment variables file."
+                            buildParams = load buildVariablesFile
+                        } else {
+                            echo "There is no default environment variables file."
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build MSSQL Windows Developer Image') {
+            steps {
+                bat "docker build windows\\mssql-server-windows-developer"
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                if (currentBuild?.getPreviousBuild()?.result == 'FAILURE') {
+                    withCredentials([string(credentialsId: "${GCHAT_CREDENTIALS_ID}", variable: 'GCHAT_WEBHOOK' )]) {
+                        googlechatnotification url: "$GCHAT_WEBHOOK", message: "*Build Recovered And Passed*\n${env.JOB_NAME} [${env.BUILD_NUMBER}]\n- Build: ${env.BUILD_URL}\n- Git Commit: ${GIT_REPO_URL}/commit/${env.GIT_COMMIT}\n- Git Branch: ${GIT_REPO_URL}/tree/${env.GIT_BRANCH}"
+                    }
+                }
+            }
+        }
+        failure {
+            withCredentials([string(credentialsId: "${GCHAT_CREDENTIALS_ID}", variable: 'GCHAT_WEBHOOK' )]) {
+                googlechatnotification url: "$GCHAT_WEBHOOK", message: "*Build Failed*\n${env.JOB_NAME} [${env.BUILD_NUMBER}]\n- Build: ${env.BUILD_URL}\n- Git Commit: ${GIT_REPO_URL}/commit/${env.GIT_COMMIT}\n- Git Branch: ${GIT_REPO_URL}/tree/${env.GIT_BRANCH}"
+            }
+        }
+    }
+
+}

@@ -1,6 +1,6 @@
-FROM microsoft/windowsservercore
+FROM mcr.microsoft.com/windows/servercore:1809-amd64
 
-LABEL maintainer "Perry Skountrianos"
+LABEL maintainer "The Galeo Group"
 
 # Download Links:
 ENV exe "https://go.microsoft.com/fwlink/?linkid=840945"
