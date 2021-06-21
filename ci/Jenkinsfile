@@ -42,6 +42,26 @@ pipeline {
                 bat "docker build windows\\mssql-server-windows-developer"
             }
         }
+        stage('Push Images') {
+            when {
+                allOf {
+                    expression { buildParams != null }
+                    expression { buildParams.AWS_ECR_CONFIGS.size() > 0 }
+                }
+            }
+            steps {
+                script {
+                    buildParams.AWS_ECR_CONFIGS.each { ECR_CONFIG ->
+                        docker.withRegistry("${ECR_CONFIG.ECR_REGISTRY}", "ecr:${buildParams.AWS_REGION_DEPLOY}:aws-builduser-${buildParams.AWS_ACCOUNT_ID_DEPLOY}") {
+                            bat "docker tag ${ECR_CONFIG.LOCAL_REPO}:latest ${ECR_CONFIG.REMOTE_REPO}:latest"
+                            bat "docker tag ${ECR_CONFIG.LOCAL_REPO}:latest ${ECR_CONFIG.REMOTE_REPO}:${env.VERSION_NUMBER}"
+                            bat "docker push ${ECR_CONFIG.REMOTE_REPO}:latest"
+                            bat "docker push ${ECR_CONFIG.REMOTE_REPO}:${env.VERSION_NUMBER}"
+                        }
+                    }
+                }
+            }
+        }
     }
 
     post {
