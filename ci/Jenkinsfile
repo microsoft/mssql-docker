@@ -39,7 +39,7 @@ pipeline {
         }
         stage('Build MSSQL Windows Developer Image') {
             steps {
-                bat "docker build windows\\mssql-server-windows-developer"
+                bat "docker build -t microsoft/mssql-server-windows-developer:2017-GA-servercore-1809-amd64 windows\\mssql-server-windows-developer"
             }
         }
         stage('Push Images') {
