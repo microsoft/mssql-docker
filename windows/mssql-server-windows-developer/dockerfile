@@ -1,4 +1,5 @@
-FROM microsoft/windowsservercore
+ARG  FROM_TAG=ltsc2019
+FROM mcr.microsoft.com/windows/servercore:${FROM_TAG}
 
 LABEL maintainer "Perry Skountrianos"
 
