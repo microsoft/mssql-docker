@@ -8,12 +8,16 @@ ENV sql_express_download_url "https://go.microsoft.com/fwlink/?linkid=829176"
 ENV sa_password="_" \
     attach_dbs="[]" \
     ACCEPT_EULA="_" \
-    sa_password_path="C:\ProgramData\Docker\secrets\sa-password"
+    sa_password_path="C:\ProgramData\Docker\secrets\sa-password" \
+    restore_dbs="[]" \
+    base_db_folder="_" \
+    use_hostname_folder="false"
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # make install files accessible
 COPY start.ps1 /
+COPY scripts c:/scripts
 WORKDIR /
 
 RUN Invoke-WebRequest -Uri $env:sql_express_download_url -OutFile sqlexpress.exe ; \
@@ -26,4 +30,6 @@ RUN stop-service MSSQL`$SQLEXPRESS ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql14.SQLEXPRESS\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpport -value 1433 ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql14.SQLEXPRESS\mssqlserver\' -name LoginMode -value 2 ;
 
-CMD .\start -sa_password $env:sa_password -ACCEPT_EULA $env:ACCEPT_EULA -attach_dbs \"$env:attach_dbs\" -Verbose
+CMD .\start -sa_password $env:sa_password -ACCEPT_EULA $env:ACCEPT_EULA -attach_dbs \"$env:attach_dbs\" \
+    -restore_dbs \"$env:restore_dbs\" -base_db_folder $env:base_db_folder -use_hostname_folder $env:use_hostname_folder \
+    -Verbose
