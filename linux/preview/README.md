@@ -89,6 +89,8 @@ Additional, optional environment variables are documented in the [product docume
 
 > ``docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -v C:\MyWindowsVolume:/var/opt/mssql -d microsoft/mssql-server-linux``
 
+*NOTE: This will significantly reduce performance on Windows and MacOS.  You will be better off using a volume only for backup files or use `docker cp` to copy backup files in and out of the running container.*
+
 # Further reading
 ---
 + [SQL Server on Linux for Docker documentation](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker)
