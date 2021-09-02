@@ -25,6 +25,12 @@ To run this sample, you need the following prerequisites.
 
 **Software prerequisites:**
 
+The docker hub repos are unavailable as SQL Server on windows container preview program is suspended. You therefore have to build an image from the Dockerfile:
+
+````
+docker build -t microsoft/mssql-server-windows-developer .
+````
+
 You can run the container with the following command.
 (Note the you'll need Windows Server 2016 or Windows 10)
 
