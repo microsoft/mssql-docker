@@ -4,6 +4,8 @@
 
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
+ENV ssei "https://go.microsoft.com/fwlink/?linkid=866662"
+
 ENV sa_password="_" \
     attach_dbs="[]" \
     ACCEPT_EULA="_" \
