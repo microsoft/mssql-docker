@@ -2,8 +2,6 @@
 ## Warning: Restarting windows container causes the machine key to change and hence if you have any encryption configured then restarting SQL On Windows containers
 ## breaks the encryption key chain in SQL Server. 
 
-# Download the SQL Developer from the following location  https://go.microsoft.com/fwlink/?linkid=866662 and extract the .box and .exe files using the option: "Download Media"
-
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 ENV sa_password="_" \
@@ -13,17 +11,16 @@ ENV sa_password="_" \
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-# make install files accessible
+RUN Invoke-WebRequest -Uri $env:ssei -OutFile SQL2019-SSEI-Dev.exe
+RUN ./SQL2019-SSEI-Dev.exe /ACTION=Download /MEDIAPATH=C:/ /MEDIATYPE=CAB /QUIET
+
 COPY start.ps1 /
-COPY SQLServer2019-DEV-x64-ENU.box /
-COPY SQLServer2019-DEV-x64-ENU.exe /
-COPY SQLServer2019-DEV-x64-ENU /
 
 WORKDIR /
 
 RUN Start-Process -Wait -FilePath .\SQLServer2019-DEV-x64-ENU.exe -ArgumentList /qs, /x:setup ; \
         .\setup\setup.exe /q /ACTION=Install /INSTANCENAME=MSSQLSERVER /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT='NT AUTHORITY\NETWORK SERVICE' /SQLSYSADMINACCOUNTS='BUILTIN\ADMINISTRATORS' /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS ; \
-        Remove-Item -Recurse -Force SQLServer2019-DEV-x64-ENU.exe, SQLServer2019-DEV-x64-ENU.box, setup
+        Remove-Item -Recurse -Force SQLServer2019-DEV-x64-ENU.exe, SQLServer2019-DEV-x64-ENU.box, SQL2019-SSEI-Dev.exe, setup
 
 RUN stop-service MSSQLSERVER ; \
         set-itemproperty -path 'HKLM:\software\microsoft\microsoft sql server\mssql15.MSSQLSERVER\mssqlserver\supersocketnetlib\tcp\ipall' -name tcpdynamicports -value '' ; \
