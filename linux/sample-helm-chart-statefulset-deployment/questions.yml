@@ -1,7 +1,7 @@
 questions:
   - variable: edition
-    description: >
-      Edition of SQL Server, aka. `MSSQL_PID` one of:
+    description: |
+      SQL Server Edition aka. MSSQL_PID one of:
         Evaluation
         Developer
         Express
@@ -21,6 +21,7 @@ questions:
 
   - variable: defaultContainerImage
     label: Use default SQL Server container image
+    type: boolean
     default: true
     show_subquestion_if: false
     group: Container image
@@ -37,14 +38,14 @@ questions:
         label: Image Tag
 
   - variable: replicas
-    description: Replicas of the SQL Server workload
+    description: Replicas of the SQL Server StatefulSet
     default: 3
     label: Replicas
     type: int
     group: Kubernetes StatefulSet options
   
   - variable: podSecurityContext.fsGroup
-    description: >
+    description: |
       Specifies a supplementary group id for all processes of the container. 
       See https://kubernetes.io/docs/tasks/configure-pod-container/security-context for 
       additional details.
@@ -59,7 +60,7 @@ questions:
     group: Kubernetes Pod options
 
   - variable: service.port
-    description: Port for Kubernetes service port for SQL Server
+    description: Kubernetes service port for SQL Server
     group: Kubernetes Service Options
     label: Kubernetes Service Port
     type: int
