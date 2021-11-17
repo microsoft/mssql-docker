@@ -1,0 +1,66 @@
+questions:
+  - variable: edition
+    description: >
+      Edition of SQL Server, aka. `MSSQL_PID` one of:
+        Evaluation
+        Developer
+        Express
+        Web
+        Standard
+        Enterprise
+        Product Key of the format "#####-#####-#####-#####-#####"
+    default: Developer
+    group: SQL Server
+
+  - variable: MSSQL_AGENT_ENABLED
+    label: Enable SQL Server Agent
+    description: Enables the SQL Server Agent
+    type: boolean
+    default: false
+    group: SQL Server
+
+  - variable: defaultContainerImage
+    label: Use default SQL Server container image
+    default: true
+    show_subquestion_if: false
+    group: Container image
+    subquestions:
+      - variable: image.repository
+        default: mcr.microsoft.com/mssql/server
+        description: Image Repository
+        label: Image Repository
+      - variable: image.pullPolicy
+        default: IfNotPresent
+        label: Image Pull Policy
+      - variable: image.tag
+        default: 2019-latest
+        label: Image Tag
+
+  - variable: replicas
+    description: Replicas of the SQL Server workload
+    default: 3
+    label: Replicas
+    type: int
+    group: Kubernetes StatefulSet options
+  
+  - variable: podSecurityContext.fsGroup
+    description: >
+      Specifies a supplementary group id for all processes of the container. 
+      See https://kubernetes.io/docs/tasks/configure-pod-container/security-context for 
+      additional details.
+    label: podSecurityContext.fsGroup
+    group: Kubernetes Pod options
+
+  - variable: containers.ports.containerPort
+    description: >
+      Specifies containerPort for SQL Server
+    label: SQL Server Container Port
+    default: 1433
+    group: Kubernetes Pod options
+
+  - variable: service.port
+    description: Port for Kubernetes service port for SQL Server
+    group: Kubernetes Service Options
+    label: Kubernetes Service Port
+    type: int
+    default: 1433
