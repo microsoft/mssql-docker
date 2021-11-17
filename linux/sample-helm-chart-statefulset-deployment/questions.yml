@@ -10,21 +10,21 @@ questions:
         Enterprise \n
         Product Key of the format "#####-#####-#####-#####-#####"
     default: Developer
-    group: SQL Server
+    group: SQL Server Options
 
   - variable: MSSQL_AGENT_ENABLED
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
     type: boolean
     default: false
-    group: SQL Server
+    group: SQL Server Options
 
   - variable: defaultContainerImage
     label: Use default SQL Server container image
     type: boolean
     default: true
     show_subquestion_if: false
-    group: Container image
+    group: Container image Options
     subquestions:
       - variable: image.repository
         default: mcr.microsoft.com/mssql/server
@@ -62,7 +62,7 @@ questions:
       Specifies containerPort for SQL Server
     label: SQL Server Container Port
     default: 1433
-    group: Kubernetes Pod options
+    group: Kubernetes Pod Options
 
   - variable: service.port
     description: Kubernetes service port for SQL Server
