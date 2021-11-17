@@ -1,13 +1,13 @@
 questions:
   - variable: edition
     description: >
-      SQL Server Edition aka. MSSQL_PID one of: \n
-        Evaluation \n
-        Developer \n
-        Express \n
-        Web \n
-        Standard \n
-        Enterprise \n
+      SQL Server Edition aka. MSSQL_PID one of: <br />
+        Evaluation <br />
+        Developer <br />
+        Express <br />
+        Web <br />
+        Standard <br />
+        Enterprise <br />
         Product Key of the format "#####-#####-#####-#####-#####"
     default: Developer
     group: SQL Server Options
@@ -24,7 +24,7 @@ questions:
     type: boolean
     default: true
     show_subquestion_if: false
-    group: Container image Options
+    group: Container Image Options
     subquestions:
       - variable: image.repository
         default: mcr.microsoft.com/mssql/server
