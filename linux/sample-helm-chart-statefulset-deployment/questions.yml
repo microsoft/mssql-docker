@@ -1,13 +1,13 @@
 questions:
-  - variable: edition
+  - variable: SQL Server edition aka. MSSQL_PID
     description: >
-      SQL Server Edition aka. MSSQL_PID one of: \\n
-        Evaluation \\n
-        Developer \\n
-        Express \\n
-        Web \\n
-        Standard \\n
-        Enterprise \\n
+      SQL Server Edition, one of:
+        Evaluation
+        Developer
+        Express
+        Web
+        Standard
+        Enterprise
         Product Key of the format "#####-#####-#####-#####-#####"
     default: Developer
     group: SQL Server Options
