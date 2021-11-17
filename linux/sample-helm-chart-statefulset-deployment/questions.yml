@@ -1,13 +1,13 @@
 questions:
   - variable: edition
-    description: |
-      SQL Server Edition aka. MSSQL_PID one of:
-        Evaluation
-        Developer
-        Express
-        Web
-        Standard
-        Enterprise
+    description: >
+      SQL Server Edition aka. MSSQL_PID one of: \n
+        Evaluation \n
+        Developer \n
+        Express \n
+        Web \n
+        Standard \n
+        Enterprise \n
         Product Key of the format "#####-#####-#####-#####-#####"
     default: Developer
     group: SQL Server
@@ -33,6 +33,11 @@ questions:
       - variable: image.pullPolicy
         default: IfNotPresent
         label: Image Pull Policy
+        type: enum
+        options: 
+          - IfNotPresent
+          - Always
+          - Never
       - variable: image.tag
         default: 2019-latest
         label: Image Tag
