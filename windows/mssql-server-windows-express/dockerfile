@@ -17,7 +17,9 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 COPY start.ps1 /
 WORKDIR /
 
-RUN Invoke-WebRequest -Uri $env:sql_express_download_url -OutFile sqlexpress.exe ; \
+# This bonkers workaround is here because Microsoft hasn't fixed a six year old bug with HTTPS -> HTTP redirects
+RUN $Uri = try{ Invoke-WebRequest $env:sql_express_download_url }catch{ $_.Exception.Response.Headers.Location } ; \
+        Invoke-WebRequest -Uri $Uri -OutFile sqlexpress.exe ; \
         Start-Process -Wait -FilePath .\sqlexpress.exe -ArgumentList /qs, /x:setup ; \
         .\setup\setup.exe /q /ACTION=Install /INSTANCENAME=SQLEXPRESS /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT='NT AUTHORITY\System' /SQLSYSADMINACCOUNTS='BUILTIN\ADMINISTRATORS' /TCPENABLED=1 /NPENABLED=0 /IACCEPTSQLSERVERLICENSETERMS ; \
         Remove-Item -Recurse -Force sqlexpress.exe, setup
