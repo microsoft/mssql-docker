@@ -1,8 +1,9 @@
 questions:
   - variable: ACCEPT_EULA
     label: Accept the SQL Server EULA
-    description: Accept the SQL Server EULA
+    description: Accepts the SQL Server EULA
     type: enum
+    default: Yes
     options:
       - Yes
     group: SQL Server Options
