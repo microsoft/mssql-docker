@@ -33,11 +33,11 @@ spec:
            - containerPort: {{ .Values.containers.ports.containerPort}}
           env:
            - name: MSSQL_PID
-             value: "{{ .Values.MSSQL_PID.value}}"
+             value: "{{ .Values.MSSQL_PID}}"
            - name: ACCEPT_EULA
-             value: "{{ .Values.ACCEPT_EULA.value | upper}}"
+             value: "{{ .Values.ACCEPT_EULA | upper}}"
            - name: MSSQL_AGENT_ENABLED
-             value: "{{ .Values.MSSQL_AGENT_ENABLED.value}}"
+             value: "{{ .Values.MSSQL_AGENT_ENABLED}}"
            - name: SA_PASSWORD
              valueFrom:
               secretKeyRef:
