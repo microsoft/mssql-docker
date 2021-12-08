@@ -1,13 +1,20 @@
 questions:
-  - variable: SQL Server edition aka. MSSQL_PID
-    description: >
-      SQL Server Edition, one of:
-        Evaluation
-        Developer
-        Express
-        Web
-        Standard
-        Enterprise
+  - variable: ACCEPT_EULA
+    label: Accept the SQL Server EULA
+    description: Accept the SQL Server EULA
+    type: enum
+    options:
+      - Yes
+    group: SQL Server Options
+
+  - variable: SQL Server Edition aka. MSSQL_PID
+    description: |
+        Evaluation |
+        Developer |
+        Express |
+        Web |
+        Standard |
+        Enterprise | 
         Product Key of the format "#####-#####-#####-#####-#####"
     default: Developer
     group: SQL Server Options
@@ -16,6 +23,10 @@ questions:
     label: MSSQL SA user password
     description: Sets the SA user password
     type: secret
+    min: 8
+    max: 128
+    default: ""
+    valid_chars: a-zA-Z0-9(`~!@#$%^&*_-+=|\\{}[]:;\"'<>,.?)/
     group: SQL Server Options
 
   - variable: MSSQL_AGENT_ENABLED
