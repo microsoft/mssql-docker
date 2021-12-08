@@ -3,9 +3,9 @@ questions:
     label: Accept the SQL Server EULA
     description: Accepts the SQL Server EULA
     type: enum
-    default: Yes
+    default: "Yes"
     options:
-      - Yes
+      - "Yes"
     group: SQL Server Options
 
   - variable: SQL Server Edition aka. MSSQL_PID
@@ -23,7 +23,7 @@ questions:
   - variable: MSSQL_SA_PASSWORD
     label: MSSQL SA user password
     description: Sets the SA user password
-    type: secret
+    type: password
     min: 8
     max: 128
     default: ""
