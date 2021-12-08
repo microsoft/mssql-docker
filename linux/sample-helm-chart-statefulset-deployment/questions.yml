@@ -12,6 +12,12 @@ questions:
     default: Developer
     group: SQL Server Options
 
+  - variable: MSSQL_SA_PASSWORD
+    label: MSSQL SA user password
+    description: Sets the SA user password
+    type: secret
+    group: SQL Server Options
+
   - variable: MSSQL_AGENT_ENABLED
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
