@@ -38,11 +38,11 @@ spec:
              value: "{{ .Values.ACCEPT_EULA | upper}}"
            - name: MSSQL_AGENT_ENABLED
              value: "{{ .Values.MSSQL_AGENT_ENABLED}}"
-           - name: SA_PASSWORD
+           - name: MSSQL_SA_PASSWORD
              valueFrom:
               secretKeyRef:
                name: mssql-secret
-               key: SA_PASSWORD 
+               key: mssql_sa_password 
           volumeMounts:
            - name: mssql
              mountPath: "/var/opt/mssql"

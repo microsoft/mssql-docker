@@ -3,7 +3,7 @@ questions:
     label: ACCEPT_EULA
     description: Accepts the SQL Server EULA (any value confirms acceptance)
     default: "Yes"
-    group: SQL Server Options
+    group: SQL Server options
 
   - variable: SQL Server Edition aka. MSSQL_PID
     description: |
@@ -15,7 +15,7 @@ questions:
         Enterprise | 
         Product Key of the format "#####-#####-#####-#####-#####"
     default: Developer
-    group: SQL Server Options
+    group: SQL Server options
 
   - variable: MSSQL_SA_PASSWORD
     label: MSSQL SA user password
@@ -25,14 +25,14 @@ questions:
     max: 128
     default: ""
     valid_chars: a-zA-Z0-9(`~!@#$%^&*_-+=|\\{}[]:;\"'<>,.?)/
-    group: SQL Server Options
+    group: SQL Server options
 
   - variable: MSSQL_AGENT_ENABLED
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
     type: boolean
     default: false
-    group: SQL Server Options
+    group: SQL Server options
 
   - variable: defaultContainerImage
     label: Use default SQL Server container image
