@@ -11,7 +11,8 @@ image:
   tag: 2019-latest
 
 ACCEPT_EULA: "Yes"
-MSSQL_PID: {{ tpl .Values.Product_KEY . | default "Developer" }}
+MSSQL_PID: Developer
+PRODUCT_KEY: null
 MSSQL_AGENT_ENABLED: false
 
 containers:
