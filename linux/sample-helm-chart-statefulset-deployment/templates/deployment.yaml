@@ -30,14 +30,14 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-           - containerPort: {{ .Values.containers.ports.containerPort}}
+           - containerPort: {{ .Values.containers.ports.containerPort }}
           env:
            - name: MSSQL_PID
-             value: "{{ .Values.MSSQL_PID}}"
+             value: "{{ .Values.MSSQL_PID }}"
            - name: ACCEPT_EULA
-             value: "{{ .Values.ACCEPT_EULA | upper}}"
+             value: "{{ .Values.ACCEPT_EULA | upper }}"
            - name: MSSQL_AGENT_ENABLED
-             value: "{{ .Values.MSSQL_AGENT_ENABLED}}"
+             value: "{{ .Values.MSSQL_AGENT_ENABLED }}"
            - name: MSSQL_SA_PASSWORD
              valueFrom:
               secretKeyRef:
@@ -45,7 +45,7 @@ spec:
                key: mssql_sa_password 
           volumeMounts:
            - name: mssql
-             mountPath: "/var/opt/mssql"
+             mountPath: /var/opt/mssql
            - name: mssql-config-volume
              mountPath: /var/opt/config
       volumes:        

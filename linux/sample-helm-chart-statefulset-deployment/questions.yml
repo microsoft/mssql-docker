@@ -3,18 +3,32 @@ questions:
     label: ACCEPT_EULA
     description: Accepts the SQL Server EULA (any value confirms acceptance)
     default: "Yes"
+    required: true
     group: SQL Server options
 
-  - variable: SQL Server Edition aka. MSSQL_PID
-    description: |
-        Evaluation |
-        Developer |
-        Express |
-        Web |
-        Standard |
-        Enterprise | 
-        Product Key of the format "#####-#####-#####-#####-#####"
+  - variable: MSSQL_PID
+    label: SQL Server Edition aka. MSSQL_PID
+    description: Selects SQL Server Edition or choose Product Key to enter a product key.
+    type: enum
+    options: 
+      - Evaluation
+      - Developer
+      - Express
+      - Web
+      - Standard
+      - Enterprise
+      - Product Key
     default: Developer
+    required: true
+    group: SQL Server options
+
+  - variable: PRODUCT_KEY
+    label: SQL Server Product Key
+    description: SQL Server Product Key of the format "#####-#####-#####-#####-#####"
+    min: 29
+    max: 29
+    valid_chars: a-zA-Z0-9-
+    show_if: MSSQL_PID="Product Key"
     group: SQL Server options
 
   - variable: MSSQL_SA_PASSWORD
@@ -25,6 +39,7 @@ questions:
     max: 128
     default: ""
     valid_chars: a-zA-Z0-9(`~!@#$%^&*_-+=|\\{}[]:;\"'<>,.?)/
+    required: true
     group: SQL Server options
 
   - variable: MSSQL_AGENT_ENABLED
