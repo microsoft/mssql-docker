@@ -8,10 +8,10 @@ image:
   repository: mcr.microsoft.com/mssql/server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2019-latest"
+  tag: 2019-latest
 
 ACCEPT_EULA: "Yes"
-MSSQL_PID: {{ .Product_KEY | default "Developer" }}
+MSSQL_PID: {{ tpl .Values.Product_KEY . | default "Developer" }}
 MSSQL_AGENT_ENABLED: false
 
 containers:
