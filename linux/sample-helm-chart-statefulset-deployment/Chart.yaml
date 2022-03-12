@@ -22,4 +22,4 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 1.16.0
 
-icon: https://raw.githubusercontent.com/jamesongithub/mssql-docker/jy/rancher/linux/sample-helm-chart-statefulset-deployment/10130-icon-service-SQL-Database.svg
+icon: https://docs.microsoft.com/vi-vn/troubleshoot/media/hub-landing/sql-database-blue.svg
