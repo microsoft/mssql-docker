@@ -2,7 +2,7 @@ questions:
   - variable: ACCEPT_EULA
     label: ACCEPT_EULA
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
-    description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted <a href="http://go.microsoft.com/fwlink/?LinkId=746388">here</a>
+    description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted <a href="http://go.microsoft.com/fwlink/?LinkId=746388">here</a>.
     required: true
     group: SQL Server options
 
@@ -24,13 +24,15 @@ questions:
       - Web
       - Standard
       - Enterprise
+    required: true      
     show_if: USE_PRODUCT_KEY=false
     group: SQL Server options
 
   - variable: MSSQL_PID
     label: SQL Server License Key
     description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
-    show_if: USE_PRODUCT_KEY=true
+    required: true
+    show_if: USE_PRODUCT_KEY=true    
     default: ""
     group: SQL Server options
 
