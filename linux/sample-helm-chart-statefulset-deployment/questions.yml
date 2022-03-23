@@ -34,7 +34,6 @@ questions:
     description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
     required: true
     show_if: USE_PRODUCT_KEY=true    
-    default: ""
     group: SQL Server options
 
   - variable: MSSQL_SA_PASSWORD
