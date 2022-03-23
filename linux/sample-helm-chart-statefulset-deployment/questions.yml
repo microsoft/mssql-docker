@@ -1,7 +1,8 @@
 questions:
   - variable: ACCEPT_EULA
     label: ACCEPT_EULA
-    description: Accepts the SQL Server EULA (any value confirms acceptance). You can review the EULA <a href="http://go.microsoft.com/fwlink/?LinkId=746388">here</a>
+    # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
+    description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted <a href="http://go.microsoft.com/fwlink/?LinkId=746388">here</a>
     required: true
     group: SQL Server options
 
