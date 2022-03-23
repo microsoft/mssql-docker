@@ -1,14 +1,15 @@
 questions:
   - variable: ACCEPT_EULA
     label: ACCEPT_EULA
+    # no current support for html
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
-    description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted <a href="http://go.microsoft.com/fwlink/?LinkId=746388">here</a>.
+    description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
     required: true
     group: SQL Server options
 
   - variable: USE_PRODUCT_KEY
     label: Use a SQL Server Product Key
-    description: Enter a Product Key instead of choosing an SQL Server Edition
+    description: Enter a Product Key instead of choosing a SQL Server Edition
     type: boolean
     default: false
     group: SQL Server options
@@ -38,7 +39,7 @@ questions:
 
   - variable: MSSQL_SA_PASSWORD
     label: MSSQL SA user password
-    description: Sets the SA user password. Password requirements - https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity
+    description: Sets the SA user password. Password requirements @ https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity
     type: password
     min: 8
     max: 128
