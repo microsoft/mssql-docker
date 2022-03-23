@@ -27,9 +27,10 @@ questions:
     group: SQL Server options
 
   - variable: MSSQL_PID
-    label: SQL Server Edition aka. MSSQL_PID
+    label: SQL Server License Key
     description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
     show_if: USE_PRODUCT_KEY=true
+    default: ""
     group: SQL Server options
 
   - variable: MSSQL_SA_PASSWORD
