@@ -35,7 +35,7 @@ questions:
 
   - variable: MSSQL_SA_PASSWORD
     label: MSSQL SA user password
-    description: Sets the SA user password
+    description: Sets the SA user password. Password requirements - https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity
     type: password
     min: 8
     max: 128
