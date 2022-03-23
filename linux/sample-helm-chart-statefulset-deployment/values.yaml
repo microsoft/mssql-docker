@@ -12,7 +12,6 @@ image:
 
 ACCEPT_EULA: "Yes"
 MSSQL_PID: Developer
-PRODUCT_KEY: null
 MSSQL_AGENT_ENABLED: false
 
 containers:

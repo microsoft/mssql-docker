@@ -33,7 +33,7 @@ spec:
            - containerPort: {{ .Values.containers.ports.containerPort }}
           env:
            - name: MSSQL_PID
-             value: "{{ .Values.PRODUCT_KEY | default .Values.MSSQL_PID }}"
+             value: "{{ .Values.MSSQL_PID }}"
            - name: ACCEPT_EULA
              value: "{{ .Values.ACCEPT_EULA | upper }}"
            - name: MSSQL_AGENT_ENABLED

@@ -1,14 +1,20 @@
 questions:
   - variable: ACCEPT_EULA
     label: ACCEPT_EULA
-    description: Accepts the SQL Server EULA (any value confirms acceptance)
-    default: "Yes"
+    description: Accepts the SQL Server EULA (any value confirms acceptance). You can review the EULA <a href="http://go.microsoft.com/fwlink/?LinkId=746388">here</a>
     required: true
+    group: SQL Server options
+
+  - variable: USE_PRODUCT_KEY
+    label: Use a SQL Server Product Key
+    description: Enter a Product Key instead of choosing an SQL Server Edition
+    type: boolean
+    default: false
     group: SQL Server options
 
   - variable: MSSQL_PID
     label: SQL Server Edition aka. MSSQL_PID
-    description: Selects SQL Server Edition or choose the last option "Product Key" to enter a product key.
+    description: Select a SQL Server Edition
     type: enum
     options: 
       - Evaluation
@@ -17,18 +23,13 @@ questions:
       - Web
       - Standard
       - Enterprise
-      - Product Key
-    default: Developer
-    required: true
+    show_if: USE_PRODUCT_KEY=false
     group: SQL Server options
 
-  - variable: PRODUCT_KEY
-    label: SQL Server Product Key
-    description: SQL Server Product Key of the format "#####-#####-#####-#####-#####"
-    min: 29
-    max: 29
-    valid_chars: a-zA-Z0-9-
-    show_if: MSSQL_PID=Product Key
+  - variable: MSSQL_PID
+    label: SQL Server Edition aka. MSSQL_PID
+    description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
+    show_if: USE_PRODUCT_KEY=true
     group: SQL Server options
 
   - variable: MSSQL_SA_PASSWORD
@@ -46,7 +47,6 @@ questions:
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
     type: boolean
-    default: false
     group: SQL Server options
 
   - variable: defaultContainerImage
@@ -74,7 +74,6 @@ questions:
 
   - variable: replicas
     description: Replicas of the SQL Server StatefulSet
-    default: 3
     label: Replicas
     type: int
     group: Kubernetes StatefulSet options
@@ -91,7 +90,6 @@ questions:
     description: >
       Specifies containerPort for SQL Server
     label: SQL Server Container Port
-    default: 1433
     group: Kubernetes Pod Options
 
   - variable: service.port
@@ -99,4 +97,3 @@ questions:
     group: Kubernetes Service Options
     label: Kubernetes Service Port
     type: int
-    default: 1433
