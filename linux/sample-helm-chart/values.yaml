@@ -34,6 +34,7 @@ podSecurityContext:
 service:
   type: LoadBalancer
   port: 1433
+  annotations: {}
 
 pvc:
  StorageClass: "azure-disk"
