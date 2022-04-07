@@ -19,10 +19,12 @@ spec:
         {{- include "mssql-latest.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.nodeSelector }}
-      nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
       {{- end }}
       {{- if .Values.tolerations }}
-      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 6 }}
       {{- end }}
       hostname: {{ .Values.hostname}}
       securityContext:
