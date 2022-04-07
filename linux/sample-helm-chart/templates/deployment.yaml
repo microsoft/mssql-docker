@@ -18,6 +18,13 @@ spec:
       labels:
         {{- include "mssql-latest.selectorLabels" . | nindent 8 }}
     spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+      - key: "cattle.io/os"
+        operator: "Equal"
+        value: "linux"
+        effect: "NoSchedule"
       hostname: {{ .Values.hostname}}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
