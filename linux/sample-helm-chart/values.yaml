@@ -10,6 +10,10 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "2019-latest"
 
+nodeSelector: {}
+
+tolerations: []
+
 ACCEPT_EULA:
     value: "y"
 MSSQL_PID:
