@@ -19,7 +19,7 @@ data:
     lcid = 1033
     
     [filelocation]
-    defaultdatadir = /var/opt/mssql/data/db
-    defaultlogdir = /var/opt/mssql/data/log
-    defaultdumpdir = /var/opt/mssql/data/dump
-    defaultbackupdir = /var/opt/mssql/data/backup
+    defaultdatadir = /var/opt/mssql/db/data
+    defaultlogdir = /var/opt/mssql/db/log
+    defaultdumpdir = /var/opt/mssql/db/dump
+    defaultbackupdir = /var/opt/mssql/db/backup

@@ -53,13 +53,13 @@ spec:
                 key: {{  template "mssql.sapassword" . }}
           volumeMounts:
            - name: mssqldata
-             mountPath: /var/opt/mssql/data/db
+             mountPath: /var/opt/mssql/db/data
            - name: mssqllog
-             mountPath: /var/opt/mssql/data/log
+             mountPath: /var/opt/mssql/db/log
            - name: mssqldump
-             mountPath: /var/opt/mssql/data/dump
+             mountPath: /var/opt/mssql/db/dump
            - name: mssqlbackup
-             mountPath: /var/opt/mssql/data/basckup
+             mountPath: /var/opt/mssql/db/basckup
            - name: mssql-config-volume
              mountPath: /var/opt/config
       volumes:
