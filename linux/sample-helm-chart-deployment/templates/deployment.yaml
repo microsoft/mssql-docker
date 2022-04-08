@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mssql-server.fullname" . }}
+  name: {{ include "mssql-server.name" . }}
   labels:
     {{- include "mssql-server.labels" . | nindent 4 }}
 spec:
@@ -52,24 +52,24 @@ spec:
                 name: {{ include "mssql-server.name" . }}-secret
                 key: {{  template "mssql-server.sapassword" . }}
           volumeMounts:
-           - name: {{ include "mssql-server.name" . }}data-volume
+           - name: {{ include "mssql-server.name" . }}-data-volume
              mountPath: /var/opt/mssql/db/data
-           - name: {{ include "mssql-server.name" . }}log-volume
+           - name: {{ include "mssql-server.name" . }}-log-volume
              mountPath: /var/opt/mssql/db/log
-           - name: {{ include "mssql-server.name" . }}dump-volume
+           - name: {{ include "mssql-server.name" . }}-dump-volume
              mountPath: /var/opt/mssql/db/dump
-           - name: {{ include "mssql-server.name" . }}backup-volume
+           - name: {{ include "mssql-server.name" . }}-backup-volume
              mountPath: /var/opt/mssql/db/basckup
            - name: {{ include "mssql-server.name" . }}-config-volume
              mountPath: /var/opt/config
       volumes:
-       - name: {{ include "mssql-server.name" . }}data-volume
+       - name: {{ include "mssql-server.name" . }}-data-volume
          persistentVolumeClaim:
            claimName: {{ include "mssql-server.name" . }}-data
-       - name: {{ include "mssql-server.name" . }}log-volume
+       - name: {{ include "mssql-server.name" . }}-log-volume
          persistentVolumeClaim:
            claimName: {{ include "mssql-server.name" . }}-log
-       - name: {{ include "mssql-server.name" . }}dump-volume
+       - name: {{ include "mssql-server.name" . }}-dump-volume
          persistentVolumeClaim:
            claimName: {{ include "mssql-server.name" . }}-dump
        - name: {{ include "mssql-server.name" . }}-backup-volume

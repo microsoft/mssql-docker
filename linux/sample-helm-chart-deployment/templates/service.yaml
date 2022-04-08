@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "mssql-server.fullname" . }}
+  name: {{ include "mssql-server.name" . }}
   labels:
     {{- include "mssql-server.labels" . | nindent 4 }}
   {{- with .Values.service.annotations }}
