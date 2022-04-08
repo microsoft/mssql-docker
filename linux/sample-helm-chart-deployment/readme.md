@@ -65,35 +65,35 @@ directory of the CLI to the directory where you have the chart downloaded and to
 
 
 ``` bash 
-helm install mssql-latest-deploy . --set ACCEPT_EULA.value=Y --set MSSQL_PID.value=Developer
+helm install mssql-server-deploy . --set ACCEPT_EULA.value=Y --set MSSQL_PID.value=Developer
 ```
 
  
 After a few seconds this should deploy the SQL Server containers and you can see all the artifacts using the command :
 
 ```bash
-D:\helm-charts\mssql-latest\mssql-latest>kubectl get all
+D:\helm-charts\mssql-server\mssql-server>kubectl get all
 ```
 
 The output should look as shown below:
 
 ```bash
 NAME                                       READY   STATUS    RESTARTS   AGE
-pod/mssql-latest-deploy-645c4dddd8-647zk   1/1     Running   4          23h
+pod/mssql-server-deploy-645c4dddd8-647zk   1/1     Running   4          23h
 
 NAME                          TYPE           CLUSTER-IP   EXTERNAL-IP    PORT(S)          AGE
 service/kubernetes            ClusterIP      10.0.0.1     <none>         443/TCP          140d
-service/mssql-latest-deploy   LoadBalancer   10.0.57.19   20.44.43.212   1433:30544/TCP   23h
+service/mssql-server-deploy   LoadBalancer   10.0.57.19   20.44.43.212   1433:30544/TCP   23h
 
 NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/mssql-latest-deploy   1/1     1            1           23h
+deployment.apps/mssql-server-deploy   1/1     1            1           23h
 
 NAME                                             DESIRED   CURRENT   READY   AGE
-replicaset.apps/mssql-latest-deploy-645c4dddd8   1         1         1       23h
+replicaset.apps/mssql-server-deploy-645c4dddd8   1         1         1       23h
 ```
 
 ## Connect to SQL Server
 
-Now you are ready to connect to the SQL Server using any of the familiar tools that you work with, like the [SSMS](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15) (SQL Server Management Studio) or [SQLCMD](https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15) or [ADS](https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15) (Azure Data Studio), etc. The IP address that you will use to connect is the External-IP address for the mssql-latest-deploy service which in this case is 20.44.43.212 that will be used to connect to SQL Server.
+Now you are ready to connect to the SQL Server using any of the familiar tools that you work with, like the [SSMS](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15) (SQL Server Management Studio) or [SQLCMD](https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15) or [ADS](https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15) (Azure Data Studio), etc. The IP address that you will use to connect is the External-IP address for the mssql-server-deploy service which in this case is 20.44.43.212 that will be used to connect to SQL Server.
 
 For more details on the SQL Server deployment on AKS using manual method please refer [Deploy a SQL Server container in Kubernetes with Azure Kubernetes Services (AKS)](https://docs.microsoft.com/en-us/sql/linux/tutorial-sql-server-containers-kubernetes?view=sql-server-ver15).

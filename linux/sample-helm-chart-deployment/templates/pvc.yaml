@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mssql-data
+  name: {{ include "mssql-server.name" . }}-data
   annotations:
     volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass | quote }}
 spec:
@@ -14,7 +14,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mssql-log
+  name: {{ include "mssql-server.name" . }}-log
   annotations:
     volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
 spec:
@@ -27,7 +27,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mssql-dump
+  name: {{ include "mssql-server.name" . }}-dump
   annotations:
     volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
 spec:
@@ -40,7 +40,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mssql-backup
+  name: {{ include "mssql-server.name" . }}-backup
   annotations:
     volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
 spec:

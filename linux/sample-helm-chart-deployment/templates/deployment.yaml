@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mssql-latest.fullname" . }}
+  name: {{ include "mssql-server.fullname" . }}
   labels:
-    {{- include "mssql-latest.labels" . | nindent 4 }}
+    {{- include "mssql-server.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicas}}
   selector:
     matchLabels:
-      {{- include "mssql-latest.selectorLabels" . | nindent 6 }}
+      {{- include "mssql-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -16,7 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "mssql-latest.selectorLabels" . | nindent 8 }}
+        {{- include "mssql-server.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.nodeSelector }}
       nodeSelector:
@@ -49,32 +49,32 @@ spec:
            - name: SA_PASSWORD
              valueFrom:
                secretKeyRef:
-                name: mssql-secret
-                key: {{  template "mssql.sapassword" . }}
+                name: {{ include "mssql-server.name" . }}-secret
+                key: {{  template "mssql-server.sapassword" . }}
           volumeMounts:
-           - name: mssqldata
+           - name: {{ include "mssql-server.name" . }}data-volume
              mountPath: /var/opt/mssql/db/data
-           - name: mssqllog
+           - name: {{ include "mssql-server.name" . }}log-volume
              mountPath: /var/opt/mssql/db/log
-           - name: mssqldump
+           - name: {{ include "mssql-server.name" . }}dump-volume
              mountPath: /var/opt/mssql/db/dump
-           - name: mssqlbackup
+           - name: {{ include "mssql-server.name" . }}backup-volume
              mountPath: /var/opt/mssql/db/basckup
-           - name: mssql-config-volume
+           - name: {{ include "mssql-server.name" . }}-config-volume
              mountPath: /var/opt/config
       volumes:
-       - name: mssqldata
+       - name: {{ include "mssql-server.name" . }}data-volume
          persistentVolumeClaim:
-           claimName: mssql-data
-       - name: mssqllog
+           claimName: {{ include "mssql-server.name" . }}-data
+       - name: {{ include "mssql-server.name" . }}log-volume
          persistentVolumeClaim:
-           claimName: mssql-log
-       - name: mssqldump
+           claimName: {{ include "mssql-server.name" . }}-log
+       - name: {{ include "mssql-server.name" . }}dump-volume
          persistentVolumeClaim:
-           claimName: mssql-dump
-       - name: mssqlbackup
+           claimName: {{ include "mssql-server.name" . }}-dump
+       - name: {{ include "mssql-server.name" . }}-backup-volume
          persistentVolumeClaim:
-           claimName: mssql-backup
-       - name: mssql-config-volume
+           claimName: {{ include "mssql-server.name" . }}-backup
+       - name: {{ include "mssql-server.name" . }}-config-volume
          configMap:
-          name: mssql-config
+          name: {{ include "mssql-server.name" . }}-config

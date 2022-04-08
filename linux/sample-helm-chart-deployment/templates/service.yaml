@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "mssql-latest.fullname" . }}
+  name: {{ include "mssql-server.fullname" . }}
   labels:
-    {{- include "mssql-latest.labels" . | nindent 4 }}
+    {{- include "mssql-server.labels" . | nindent 4 }}
   {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -15,4 +15,4 @@ spec:
       targetPort: {{ .Values.service.port }}
       protocol: TCP
   selector:
-    {{- include "mssql-latest.selectorLabels" . | nindent 4 }}
+    {{- include "mssql-server.selectorLabels" . | nindent 4 }}
