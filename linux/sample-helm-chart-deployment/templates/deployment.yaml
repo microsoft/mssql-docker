@@ -59,7 +59,7 @@ spec:
            - name: mssqldump
              mountPath: /var/opt/mssql/data/dump
            - name: mssqlbackup
-             mountPath: /var/opt/mssql/data/bckup
+             mountPath: /var/opt/mssql/data/basckup
            - name: mssql-config-volume
              mountPath: /var/opt/config
       volumes:
