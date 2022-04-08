@@ -1,0 +1,51 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-data
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass | quote }}
+spec:
+  accessModes:
+  - {{ .Values.pvc.dataaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.datasize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-log
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
+spec:
+  accessModes:
+   - {{ .Values.pvc.logaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.logsize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-dump
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
+spec:
+  accessModes:
+   - {{ .Values.pvc.dumpaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.dumpsize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-backup
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
+spec:
+  accessModes:
+  - {{ .Values.pvc.backupaccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.backupsize}}

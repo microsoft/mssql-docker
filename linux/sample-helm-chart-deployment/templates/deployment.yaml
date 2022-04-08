@@ -48,33 +48,33 @@ spec:
              value: "{{ .Values.MSSQL_AGENT_ENABLED.value}}"
            - name: SA_PASSWORD
              valueFrom:
-              secretKeyRef:
-               name: mssql-secret
-               key: {{  template "mssql.sapassword" . }}
+               secretKeyRef:
+                name: mssql-secret
+                key: {{  template "mssql.sapassword" . }}
           volumeMounts:
-           - name: mssqldb
-             mountPath: /var/opt/mssql
-           - name: mssqluserdb
-             mountPath: /var/opt/mssql/userdata
+           - name: mssqldata
+             mountPath: /var/opt/mssql/data/db
            - name: mssqllog
-             mountPath: /var/opt/mssql/userlog
-           - name: mssqltemp
-             mountPath: /var/opt/mssql/tempdb
+             mountPath: /var/opt/mssql/data/log
+           - name: mssqldump
+             mountPath: /var/opt/mssql/data/dump
+           - name: mssqlbackup
+             mountPath: /var/opt/mssql/data/bckup
            - name: mssql-config-volume
              mountPath: /var/opt/config
       volumes:
-       - name: mssqldb
+       - name: mssqldata
          persistentVolumeClaim:
-          claimName: mssql-data
-       - name: mssqluserdb
-         persistentVolumeClaim:
-          claimName: mssql-userdb
+           claimName: mssql-data
        - name: mssqllog
          persistentVolumeClaim:
-          claimName: mssql-log
-       - name: mssqltemp
+           claimName: mssql-log
+       - name: mssqldump
          persistentVolumeClaim:
-          claimName: mssql-temp          
+           claimName: mssql-dump
+       - name: mssqlbackup
+         persistentVolumeClaim:
+           claimName: mssql-backup
        - name: mssql-config-volume
          configMap:
           name: mssql-config

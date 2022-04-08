@@ -37,14 +37,14 @@ service:
   annotations: {}
 
 pvc:
- StorageClass: "azure-disk"
- userdbaccessMode: ReadWriteOnce
- userdbsize: 5Gi
- userlogaccessMode: ReadWriteOnce
- userlogsize: 5Gi
- tempdbaccessMode: ReadWriteOnce
- tempsize: 2Gi
- mssqldataaccessMode: ReadWriteOnce
- mssqldbsize: 2Gi
+ StorageClass: ""
+ dataaccessMode: ReadWriteOnce
+ datasize: 5Gi
+ logaccessMode: ReadWriteOnce
+ logsize: 5Gi
+ dumpaccessMode: ReadWriteOnce
+ dumpsize: 2Gi
+ backupaccessMode: ReadWriteOnce
+ backupsize: 2Gi
 
 
