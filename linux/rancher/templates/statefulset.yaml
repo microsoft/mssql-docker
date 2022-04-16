@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "sql-statefull-deploy.fullname" . }}
+  name: {{ include "sql-server-rancher.fullname" . }}
   labels:
-    {{- include "sql-statefull-deploy.labels" . | nindent 4 }}
+    {{- include "sql-server-rancher.labels" . | nindent 4 }}
 spec:
-  serviceName: {{ include "sql-statefull-deploy.fullname" . }}
+  serviceName: {{ include "sql-server-rancher.fullname" . }}
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      {{- include "sql-statefull-deploy.selectorLabels" . | nindent 6 }}
+      {{- include "sql-server-rancher.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,7 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "sql-statefull-deploy.selectorLabels" . | nindent 8 }}
+        {{- include "sql-server-rancher.selectorLabels" . | nindent 8 }}
     spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}

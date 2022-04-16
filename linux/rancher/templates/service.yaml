@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sql-statefull-deploy.fullname" . }}
+  name: {{ include "sql-server-rancher.fullname" . }}
   labels:
-    {{- include "sql-statefull-deploy.labels" . | nindent 4 }}
+    {{- include "sql-server-rancher.labels" . | nindent 4 }}
 spec:
   clusterIP: None
   ports:
@@ -11,4 +11,4 @@ spec:
       targetPort: http
       protocol: TCP
   selector:
-    {{- include "sql-statefull-deploy.selectorLabels" . | nindent 4 }}
+    {{- include "sql-server-rancher.selectorLabels" . | nindent 4 }}

@@ -68,7 +68,7 @@ After a few minutes this should deploy the SQL Server containers and you can see
 <br/>
 
 ```bash
-D:\helm-charts\sql-statefull-deploy>kubectl get all
+D:\helm-charts\sql-server-rancher>kubectl get all
 ```
 
 The output should look as shown below:
@@ -77,15 +77,15 @@ The output should look as shown below:
 
 ```bash
 NAME                               READY   STATUS    RESTARTS   AGE
-pod/mssql-sql-statefull-deploy-0   1/1     Running   0          12m
-pod/mssql-sql-statefull-deploy-1   1/1     Running   0          12m
-pod/mssql-sql-statefull-deploy-2   1/1     Running   0          12m
+pod/mssql-sql-server-rancher-0   1/1     Running   0          12m
+pod/mssql-sql-server-rancher-1   1/1     Running   0          12m
+pod/mssql-sql-server-rancher-2   1/1     Running   0          12m
 
 NAME                                   TYPE           CLUSTER-IP     EXTERNAL-IP       PORT(S)          AGE
-service/mssql-sql-statefull-deploy     ClusterIP      None           <none>            1433/TCP         16m
+service/mssql-sql-server-rancher     ClusterIP      None           <none>            1433/TCP         16m
 
 NAME                                          READY   AGE
-statefulset.apps/mssql-sql-statefull-deploy   3/3     16m
+statefulset.apps/mssql-sql-server-rancher   3/3     16m
 ```
 
 This chart also includes an extra folder called "services" this folder has two more manifest files as described below:
@@ -101,8 +101,8 @@ Once you deploy the above files as well, using the commands shown below, you sho
 
 
 ```bash
-D:\helm-charts\sql-statefull-deploy>kubectl apply -f "D:\helm-charts\sql-statefull-deploy\services\ex_service.yaml"
-D:\helm-charts\sql-statefull-deploy>kubectl apply -f "D:\helm-charts\sql-statefull-deploy\services\ag_endpoint.yaml"
+D:\helm-charts\sql-server-rancher>kubectl apply -f "D:\helm-charts\sql-server-rancher\services\ex_service.yaml"
+D:\helm-charts\sql-server-rancher>kubectl apply -f "D:\helm-charts\sql-server-rancher\services\ag_endpoint.yaml"
 ```
 
 
@@ -112,26 +112,26 @@ Finally, after all the deployments here are the resources that you should see:
 ```bash
 D:\>kubectl get all
 NAME                               READY   STATUS    RESTARTS   AGE
-pod/mssql-sql-statefull-deploy-0   1/1     Running   0          127m
-pod/mssql-sql-statefull-deploy-1   1/1     Running   0          126m
-pod/mssql-sql-statefull-deploy-2   1/1     Running   0          125m
+pod/mssql-sql-server-rancher-0   1/1     Running   0          127m
+pod/mssql-sql-server-rancher-1   1/1     Running   0          126m
+pod/mssql-sql-server-rancher-2   1/1     Running   0          125m
 
 NAME                                   TYPE           CLUSTER-IP     EXTERNAL-IP       PORT(S)          AGE
 service/kubernetes                     ClusterIP      10.0.0.1       <none>            443/TCP          220d
 service/mssql-mirror-0                 ClusterIP      10.0.148.0     <none>            5022/TCP         124m
 service/mssql-mirror-1                 ClusterIP      10.0.254.58    <none>            5022/TCP         124m
 service/mssql-mirror-2                 ClusterIP      10.0.196.129   <none>            5022/TCP         124m
-service/mssql-sql-statefull-deploy     ClusterIP      None           <none>            1433/TCP         127m
-service/mssql-sql-statefull-deploy-0   LoadBalancer   10.0.238.203   104.211.231.206   1433:30923/TCP   124m
-service/mssql-sql-statefull-deploy-1   LoadBalancer   10.0.96.108    104.211.203.78    1433:32695/TCP   124m
-service/mssql-sql-statefull-deploy-2   LoadBalancer   10.0.78.10     104.211.203.159   1433:31042/TCP   124m
+service/mssql-sql-server-rancher     ClusterIP      None           <none>            1433/TCP         127m
+service/mssql-sql-server-rancher-0   LoadBalancer   10.0.238.203   104.211.231.206   1433:30923/TCP   124m
+service/mssql-sql-server-rancher-1   LoadBalancer   10.0.96.108    104.211.203.78    1433:32695/TCP   124m
+service/mssql-sql-server-rancher-2   LoadBalancer   10.0.78.10     104.211.203.159   1433:31042/TCP   124m
 
 NAME                                          READY   AGE
-statefulset.apps/mssql-sql-statefull-deploy   3/3     127m
+statefulset.apps/mssql-sql-server-rancher   3/3     127m
 ```
 
 ## Connect to SQL Server
 
-Now you are ready to connect to the SQL Server using any of the familiar tools that you work with, like the [SSMS](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15) (SQL Server Management Studio) or [SQLCMD](https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15) or [ADS](https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15) (Azure Data Studio), etc. The IP address that you will use to connect is the External-IP address for the pod service which in this case one such example is: to connect to mssql-sql-statefull-deploy-0 SQL Server, the IP address 104.211.231.206 will be used in ssms or any other client.
+Now you are ready to connect to the SQL Server using any of the familiar tools that you work with, like the [SSMS](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15) (SQL Server Management Studio) or [SQLCMD](https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15) or [ADS](https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15) (Azure Data Studio), etc. The IP address that you will use to connect is the External-IP address for the pod service which in this case one such example is: to connect to mssql-sql-server-rancher-0 SQL Server, the IP address 104.211.231.206 will be used in ssms or any other client.
 
 For more details on the SQL Server deployment on AKS using manual method please refer [Deploy a SQL Server container in Kubernetes with Azure Kubernetes Services (AKS)](https://docs.microsoft.com/en-us/sql/linux/tutorial-sql-server-containers-kubernetes?view=sql-server-ver15).
