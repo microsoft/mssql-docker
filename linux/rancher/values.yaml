@@ -8,23 +8,20 @@ image:
   repository: mcr.microsoft.com/mssql/server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2019-latest"
+  tag: 2019-latest
 
-ACCEPT_EULA:
-    value: "y"
-MSSQL_PID:
-    value: "Developer"
-MSSQL_AGENT_ENABLED:
-    value: "false"
+ACCEPT_EULA: "Yes"
+MSSQL_PID: Developer
+MSSQL_AGENT_ENABLED: false
 
 containers:
   ports:
-      containerPort: 1433
+    containerPort: 1433
 
 podAnnotations: {}
 
 podSecurityContext:
-   fsGroup: 10001
+  fsGroup: 10001
 
 service:
   port: 1433
