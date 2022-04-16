@@ -1,0 +1,24 @@
+---
+
+replicas: 3
+
+image:
+  repository: mcr.microsoft.com/mssql/server
+  pullPolicy: IfNotPresent
+  tag: 2019-latest
+
+ACCEPT_EULA: "Yes"
+MSSQL_PID: Developer
+MSSQL_AGENT_ENABLED: false
+
+containers:
+  ports:
+    containerPort: 1433
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 10001
+
+service:
+  port: 1433

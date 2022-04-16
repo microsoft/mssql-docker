@@ -1,0 +1,103 @@
+questions:
+  - variable: ACCEPT_EULA
+    label: ACCEPT_EULA
+    # no current support for html
+    # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
+    description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
+    required: true
+    group: SQL Server options
+
+  - variable: USE_PRODUCT_KEY
+    label: Use a SQL Server Product Key
+    description: Enter a Product Key instead of choosing a SQL Server Edition
+    type: boolean
+    default: false
+    group: SQL Server options
+
+  - variable: MSSQL_PID
+    label: SQL Server Edition aka. MSSQL_PID
+    description: Select a SQL Server Edition
+    type: enum
+    options: 
+      - Evaluation
+      - Developer
+      - Express
+      - Web
+      - Standard
+      - Enterprise
+    required: true      
+    show_if: USE_PRODUCT_KEY=false
+    group: SQL Server options
+
+  - variable: MSSQL_PID
+    label: SQL Server License Key
+    description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
+    required: true
+    show_if: USE_PRODUCT_KEY=true    
+    group: SQL Server options
+
+  - variable: MSSQL_SA_PASSWORD
+    label: MSSQL SA user password
+    description: Sets the SA user password. Password requirements @ https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity
+    type: password
+    min: 8
+    max: 128
+    default: ""
+    valid_chars: a-zA-Z0-9(`~!@#$%^&*_-+=|\\{}[]:;\"'<>,.?)/
+    required: true
+    group: SQL Server options
+
+  - variable: MSSQL_AGENT_ENABLED
+    label: Enable SQL Server Agent
+    description: Enables the SQL Server Agent
+    type: boolean
+    group: SQL Server options
+
+  - variable: defaultContainerImage
+    label: Use default SQL Server container image
+    type: boolean
+    default: true
+    show_subquestion_if: false
+    group: Container Image Options
+    subquestions:
+      - variable: image.repository
+        default: mcr.microsoft.com/mssql/server
+        description: Image Repository
+        label: Image Repository
+      - variable: image.pullPolicy
+        default: IfNotPresent
+        label: Image Pull Policy
+        type: enum
+        options: 
+          - IfNotPresent
+          - Always
+          - Never
+      - variable: image.tag
+        default: 2019-latest
+        label: Image Tag
+
+  - variable: replicas
+    description: Replicas of the SQL Server StatefulSet
+    label: Replicas
+    type: int
+    group: Kubernetes StatefulSet options
+  
+  - variable: podSecurityContext.fsGroup
+    description: |
+      Specifies a supplementary group id for all processes of the container. 
+      See https://kubernetes.io/docs/tasks/configure-pod-container/security-context for 
+      additional details.
+    label: podSecurityContext.fsGroup
+    group: Kubernetes Pod options
+
+  - variable: containers.ports.containerPort
+    description: >
+      Specifies containerPort for SQL Server
+    label: SQL Server Container Port
+    group: Kubernetes Pod Options
+
+  - variable: service.port
+    description: Kubernetes service port for SQL Server
+    group: Kubernetes Service Options
+    label: Kubernetes Service Port
+    type: int
