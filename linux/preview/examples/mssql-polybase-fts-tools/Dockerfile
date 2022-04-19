@@ -13,4 +13,5 @@ EXPOSE 1433
 
 USER mssql
 
+# Run SQL Server process
 CMD ["/opt/mssql/bin/sqlservr"]
