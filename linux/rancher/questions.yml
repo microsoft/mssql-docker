@@ -1,6 +1,6 @@
 questions:
-  - variable: ACCEPT_EULA
-    label: ACCEPT_EULA
+  - variable: mssql.conf.eula.accepteula
+    label: mssql.conf.eula.accepteula
     # no current support for html
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
     description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
@@ -14,7 +14,7 @@ questions:
     default: false
     group: SQL Server options
 
-  - variable: MSSQL_PID
+  - variable: mssql.pid
     label: SQL Server Edition aka. MSSQL_PID
     description: Select a SQL Server Edition
     type: enum
@@ -29,7 +29,7 @@ questions:
     show_if: USE_PRODUCT_KEY=false
     group: SQL Server options
 
-  - variable: MSSQL_PID
+  - variable: mssql.pid
     label: SQL Server License Key
     description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
     required: true
@@ -47,7 +47,7 @@ questions:
     required: true
     group: SQL Server options
 
-  - variable: MSSQL_AGENT_ENABLED
+  - variable: mssql.conf.sqlagent.enabled
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
     type: boolean
@@ -75,12 +75,6 @@ questions:
       - variable: image.tag
         default: 2019-latest
         label: Image Tag
-
-  - variable: replicas
-    description: Replicas of the SQL Server StatefulSet
-    label: Replicas
-    type: int
-    group: Kubernetes StatefulSet options
   
   - variable: podSecurityContext.fsGroup
     description: |

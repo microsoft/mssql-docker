@@ -6,7 +6,7 @@ metadata:
     {{- include "sql-server-rancher.labels" . | nindent 4 }}
 spec:
   serviceName: {{ include "sql-server-rancher.fullname" . }}
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "sql-server-rancher.selectorLabels" . | nindent 6 }}
@@ -26,38 +26,36 @@ spec:
           command:
             - /bin/bash
             - -c
-            - cp /var/opt/config/mssql.conf /var/opt/mssql/mssql.conf && /opt/mssql/bin/sqlservr
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            - /opt/mssql/bin/sqlservr
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-           - containerPort: {{ .Values.containers.ports.containerPort }}
+            - containerPort: {{ .Values.containers.ports.containerPort }}
           env:
-           - name: MSSQL_PID
-             value: "{{ .Values.MSSQL_PID }}"
-           - name: ACCEPT_EULA
-             value: "{{ .Values.ACCEPT_EULA | upper }}"
-           - name: MSSQL_AGENT_ENABLED
-             value: "{{ .Values.MSSQL_AGENT_ENABLED }}"
-           - name: MSSQL_SA_PASSWORD
-             valueFrom:
-              secretKeyRef:
-               name: mssql-secret
-               key: mssql_sa_password 
+            # prefer mssql-config over env vars
+            - name: MSSQL_PID
+              value: {{ ".Values.mssql.pid" }}
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssql-secret
+                  key: mssql_sa_password 
           volumeMounts:
-           - name: mssql
-             mountPath: /var/opt/mssql
-           - name: mssql-config-volume
-             mountPath: /var/opt/config
+            - name: mssql
+              mountPath: /var/opt/mssql
+            - name: mssql-config
+              mountPath: /var/opt/mssql/mssql.conf
+              subPath: mssql.conf
       volumes:        
-      - name: mssql-config-volume
-        configMap:
-         name: mssql
+        - name: mssql-config
+          configMap:
+            name: mssql
   volumeClaimTemplates:
     - metadata:
-       name: mssql
+        name: mssql
       spec:
-       accessModes:
-       - ReadWriteOnce
-       resources:
-        requests:
-         storage: 8Gi
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi
