@@ -1,6 +1,6 @@
 questions:
   - variable: mssql.conf.eula.accepteula
-    label: mssql.conf.eula.accepteula
+    label: Accept the SQL Server EULA
     # no current support for html
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
     description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
@@ -14,7 +14,7 @@ questions:
     default: false
     group: SQL Server options
 
-  - variable: mssql.pid
+  - variable: "mssql.pid"
     label: SQL Server Edition aka. MSSQL_PID
     description: Select a SQL Server Edition
     type: enum
@@ -29,7 +29,7 @@ questions:
     show_if: USE_PRODUCT_KEY=false
     group: SQL Server options
 
-  - variable: mssql.pid
+  - variable: "mssql.pid"
     label: SQL Server License Key
     description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
     required: true
@@ -47,7 +47,7 @@ questions:
     required: true
     group: SQL Server options
 
-  - variable: mssql.conf.sqlagent.enabled
+  - variable: "mssql.conf.sqlagent.enabled"
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
     type: boolean

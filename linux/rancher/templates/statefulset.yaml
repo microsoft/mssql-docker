@@ -34,7 +34,7 @@ spec:
           env:
             # prefer mssql-config over env vars
             - name: MSSQL_PID
-              value: {{ ".Values.mssql.pid" }}
+              value: {{ index .Values "mssql.pid" }}
             - name: MSSQL_SA_PASSWORD
               valueFrom:
                 secretKeyRef:

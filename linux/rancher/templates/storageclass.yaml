@@ -1,17 +1,17 @@
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: custom-managed-premium
-provisioner: disk.csi.azure.com
-parameters:
-  storageAccountType: Standard_LRS
-  kind: managed
+# kind: StorageClass
+# apiVersion: storage.k8s.io/v1
+# metadata:
+#   name: custom-managed-premium
+# provisioner: disk.csi.azure.com
+# parameters:
+#   storageAccountType: Standard_LRS
+#   kind: managed
 
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: custom-managed-standard
-provisioner: disk.csi.azure.com
-parameters:
-  storageAccountType: Premium_LRS
-  kind: managed
+# kind: StorageClass
+# apiVersion: storage.k8s.io/v1
+# metadata:
+#   name: custom-managed-standard
+# provisioner: disk.csi.azure.com
+# parameters:
+#   storageAccountType: Premium_LRS
+#   kind: managed
