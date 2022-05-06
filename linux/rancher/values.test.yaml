@@ -1,2 +1,2 @@
 # since a default SA_PASSWORD is not set, this is used for helm lint and helm debug, otherwise unused
-MSSQL_SA_PASSWORD: Sfr9nxVVkbMVGTQweKmD
+mssql.sa.password: Sfr9nxVVkbMVGTQweKmD

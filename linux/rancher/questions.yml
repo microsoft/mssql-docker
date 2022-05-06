@@ -1,10 +1,11 @@
 questions:
-  - variable: mssql.conf.eula.accepteula
+  - variable: "mssql.conf.eula.accepteula"
     label: Accept the SQL Server EULA
     # no current support for html
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
     description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
     required: true
+    default: true
     group: SQL Server options
 
   - variable: USE_PRODUCT_KEY
@@ -25,7 +26,8 @@ questions:
       - Web
       - Standard
       - Enterprise
-    required: true      
+    required: true
+    default: Developer
     show_if: USE_PRODUCT_KEY=false
     group: SQL Server options
 
@@ -51,6 +53,7 @@ questions:
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
     type: boolean
+    default: true
     group: SQL Server options
 
   - variable: defaultContainerImage
