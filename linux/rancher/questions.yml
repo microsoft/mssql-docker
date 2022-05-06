@@ -36,7 +36,7 @@ questions:
     show_if: USE_PRODUCT_KEY=true    
     group: SQL Server options
 
-  - variable: MSSQL_SA_PASSWORD
+  - variable: "mssql.sa.password"
     label: MSSQL SA user password
     description: Sets the SA user password. Password requirements @ https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity
     type: password

@@ -1,6 +1,6 @@
 ---
 
-mssql.pid: Developer
+"mssql.pid": Developer
 mssql.conf.eula.accepteula: true
 mssql.conf.eula.accepteulaml: true
 mssql.conf.sqlagent.enabled: true
