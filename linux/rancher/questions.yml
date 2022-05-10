@@ -1,11 +1,11 @@
 questions:
-  - variable: 'mssql.conf.eula.accepteula'
+  - variable: "mssql.conf.eula.accepteula"
     label: Accept the SQL Server EULA
     # no current support for html
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
     description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
     required: true
-    # default: true
+    default: true
     group: SQL Server options
 
   - variable: USE_PRODUCT_KEY
@@ -100,21 +100,22 @@ questions:
     type: int
 
   - variable: "storageClass.provisioner"
-    description: Specifies storageClass provisioner for SQL Server
+    description: StorageClass provisioner for SQL Server
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Provisioner
     type: enum
-    default: ""
+    default: default
     options:
-      - aks-csi-disk
+      - default
+      - disk.csi.azure.com
       - ebs.csi.aws.com
-      - gke-csi-pd
+      - pd.csi.storage.gke.io
 
   - variable: "storageClass.type"
-    description: Specifies storageAccountType for Azure Disk CSI
+    description: StorageClass Type for Azure Disk CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: '"storageClass.provisioner"="disk.csi.azure.com"'
+    show_if: ("'storageClass.provisioner' = "disk.csi.azure.com")
     type: enum
     default: Standard_LRS
     options:
@@ -124,10 +125,10 @@ questions:
       - UltraSSD_LRS
 
   - variable: "storageClass.type"
-    description: Specifies storageAccountType for AWS EBS CSI
+    description: StorageClass Type for AWS EBS CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: '"storageClass.provisioner"="ebs.csi.aws.com"'
+    show_if: ("storageClass.provisioner"="ebs.csi.aws.com")
     type: enum
     default: standard
     options:
@@ -140,10 +141,10 @@ questions:
       - standard
   
   - variable: "storageClass.type"
-    description: Specifies storageAccountType for GCE PD CSI
+    description: StorageClass Type for GCE PD CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: '"storageClass.provisioner"="pd.csi.storage.gke.io'
+    show_if: ("storageClass.provisioner" = "pd.csi.storage.gke.io")
     type: enum
     default: pd-standard
     options:
