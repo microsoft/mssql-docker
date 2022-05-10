@@ -59,3 +59,4 @@ spec:
         resources:
           requests:
             storage: 8Gi
+        storageClassName: {{ index .Values "storageClass.provisioner" }}

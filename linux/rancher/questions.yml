@@ -1,11 +1,11 @@
 questions:
-  - variable: "mssql.conf.eula.accepteula"
+  - variable: 'mssql.conf.eula.accepteula'
     label: Accept the SQL Server EULA
     # no current support for html
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
     description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
     required: true
-    default: true
+    # default: true
     group: SQL Server options
 
   - variable: USE_PRODUCT_KEY
@@ -98,3 +98,56 @@ questions:
     group: Kubernetes Service Options
     label: Kubernetes Service Port
     type: int
+
+  - variable: "storageClass.provisioner"
+    description: Specifies storageClass provisioner for SQL Server
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Provisioner
+    type: enum
+    default: ""
+    options:
+      - aks-csi-disk
+      - ebs.csi.aws.com
+      - gke-csi-pd
+
+  - variable: "storageClass.type"
+    description: Specifies storageAccountType for Azure Disk CSI
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Type
+    show_if: '"storageClass.provisioner"="disk.csi.azure.com"'
+    type: enum
+    default: Standard_LRS
+    options:
+      - Standard_LRS
+      - Premium_LRS
+      - StandardSSD_LRS
+      - UltraSSD_LRS
+
+  - variable: "storageClass.type"
+    description: Specifies storageAccountType for AWS EBS CSI
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Type
+    show_if: '"storageClass.provisioner"="ebs.csi.aws.com"'
+    type: enum
+    default: standard
+    options:
+      - io1
+      - io2
+      - gp2
+      - gp3
+      - sc1
+      - st1
+      - standard
+  
+  - variable: "storageClass.type"
+    description: Specifies storageAccountType for GCE PD CSI
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Type
+    show_if: '"storageClass.provisioner"="pd.csi.storage.gke.io'
+    type: enum
+    default: pd-standard
+    options:
+      - pd-standard
+      - pd-balanced
+      - pd-ssd
+      - pd-extreme
