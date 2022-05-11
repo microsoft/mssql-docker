@@ -1,22 +1,22 @@
-{{- if index .Values "storageClass_provisioner" -}}
+{{- if .Values.storageClass.provisioner -}}
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: {{ index .Values "storageClass_provisioner" }}
-provisioner: {{ index .Values "storageClass_provisioner" }}
+  name: {{ .Values.storageClass.provisioner }}
+provisioner: {{ .Values.storageClass.provisioner }}
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 mountOptions:
   - noatime
 parameters:
-  {{- if eq (index .Values "storageClass_provisioner") "disk.csi.azure.com" }}
-  storageAccountType: {{ index .Values "storageClass.type" }}
+  {{- if eq .Values.storageClass.provisioner "disk.csi.azure.com" }}
+  storageAccountType: {{ .Values.storageClass.type }}
   fsType: xfs
-  {{- else if eq (index .Values "storageClass_provisioner") "ebs.csi.aws.com" }}
+  {{- else if eq .Values.storageClass.provisioner "ebs.csi.aws.com" }}
   csi.storage.k8s.io/fstype: xfs
-  type: {{ index .Values "storageClass.type" }}
-  {{- else if eq (index .Values "storageClass_provisioner") "pd.csi.storage.gke.io" }}
+  type: {{ .Values.storageClass.type }}
+  {{- else if eq .Values.storageClass.provisioner "pd.csi.storage.gke.io" }}
   csi.storage.k8s.io/fstype: xfs
-  type: {{ index .Values "storageClass.type" }}  
+  type: {{ .Values.storageClass.type }}  
   {{- end }}
 {{- end -}}

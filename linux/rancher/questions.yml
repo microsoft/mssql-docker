@@ -1,5 +1,5 @@
 questions:
-  - variable: "mssql.conf.eula.accepteula"
+  - variable: mssql.conf.eula.accepteula
     label: Accept the SQL Server EULA
     # no current support for html
     # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
@@ -15,7 +15,7 @@ questions:
     default: false
     group: SQL Server options
 
-  - variable: "mssql.pid"
+  - variable: mssql.pid
     label: SQL Server Edition aka. MSSQL_PID
     description: Select a SQL Server Edition
     type: enum
@@ -31,14 +31,14 @@ questions:
     show_if: USE_PRODUCT_KEY=false
     group: SQL Server options
 
-  - variable: "mssql.pid"
+  - variable: mssql.pid
     label: SQL Server License Key
     description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
     required: true
     show_if: USE_PRODUCT_KEY=true    
     group: SQL Server options
 
-  - variable: "mssql.sa.password"
+  - variable: mssql.sa.password
     label: MSSQL SA user password
     description: Sets the SA user password. Password requirements @ https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity
     type: password
@@ -49,7 +49,12 @@ questions:
     required: true
     group: SQL Server options
 
-  - variable: "mssql.conf.sqlagent.enabled"
+  - variable: mssql.conf.lcid
+    label: SQL Server Locale
+    description: Sets SQL Server Locale
+    group: SQL Server options
+
+  - variable: mssql.conf.sqlagent.enabled
     label: Enable SQL Server Agent
     description: Enables the SQL Server Agent
     type: boolean
@@ -63,43 +68,40 @@ questions:
     show_subquestion_if: false
     group: Container Image Options
     subquestions:
-      - variable: image.repository
-        default: mcr.microsoft.com/mssql/server
+      - variable: statefulset.template.spec.containers.sqlServer.image.repository
         description: Image Repository
         label: Image Repository
-      - variable: image.pullPolicy
-        default: IfNotPresent
+      - variable: statefulset.template.spec.containers.sqlServer.image.pullPolicy
         label: Image Pull Policy
         type: enum
         options: 
           - IfNotPresent
           - Always
           - Never
-      - variable: image.tag
-        default: 2019-latest
+      - variable: statefulset.template.spec.containers.sqlServer.image.tag
         label: Image Tag
   
-  - variable: podSecurityContext.fsGroup
+  - variable: statefulset.template.spec.securityContext.fsGroup
     description: |
-      Specifies a supplementary group id for all processes of the container. 
+      Specifies a supplementary group id for all pod processes
       See https://kubernetes.io/docs/tasks/configure-pod-container/security-context for 
       additional details.
-    label: podSecurityContext.fsGroup
-    group: Kubernetes Pod options
+    label: statefulset.template.spec.securityContext.fsGroup
+    group: Kubernetes Statefulset options
 
-  - variable: containers.ports.containerPort
+  - variable: statefulset.template.spec.containers.sqlServer.ports.databaseEngineContainerPort
     description: >
-      Specifies containerPort for SQL Server
-    label: SQL Server Container Port
-    group: Kubernetes Pod Options
+      Specifies containerPort for SQL Server Database Engine
+    label: SQL Server Database Engine Container Port
+    group: Kubernetes Statefulset Options
 
-  - variable: service.port
+  - variable: service.spec.ports.sqlServerDatabasePort
     description: Kubernetes service port for SQL Server
     group: Kubernetes Service Options
     label: Kubernetes Service Port
     type: int
 
-  - variable: storageClass_provisioner
+  - variable: storageClass.provisioner
     description: StorageClass provisioner for SQL Server
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Provisioner
@@ -111,11 +113,11 @@ questions:
       - ebs.csi.aws.com
       - pd.csi.storage.gke.io
 
-  - variable: "storageClass.type"
+  - variable: storageClass.type
     description: StorageClass Type for Azure Disk CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass_provisioner="disk.csi.azure.com"
+    show_if: storageClass_provisioner = "disk.csi.azure.com"
     type: enum
     default: Standard_LRS
     options:
@@ -128,7 +130,7 @@ questions:
     description: StorageClass Type for AWS EBS CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass_provisioner="ebs.csi.aws.com"
+    show_if: storageClass_provisioner = "ebs.csi.aws.com"
     type: enum
     default: standard
     options:
@@ -140,11 +142,11 @@ questions:
       - st1
       - standard
   
-  - variable: "storageClass.type"
+  - variable: storageClass.type
     description: StorageClass Type for GCE PD CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass_provisioner="pd.csi.storage.gke.io"
+    show_if: storageClass.provisioner = "pd.csi.storage.gke.io"
     type: enum
     default: pd-standard
     options:
@@ -152,3 +154,8 @@ questions:
       - pd-balanced
       - pd-ssd
       - pd-extreme
+
+  - variable: storage.size
+    description: Size for Storage Volume in Gibibytes (Gi)
+    group: Kubernetes Storage Options
+    label: Kubernetes Storage Size

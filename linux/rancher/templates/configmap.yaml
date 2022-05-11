@@ -5,8 +5,8 @@ metadata:
 data:
   mssql.conf: |
     [EULA]
-    accepteula = {{ index .Values "mssql.conf.eula.accepteula" }}
-    accepteulaml = {{ index .Values "mssql.conf.eula.accepteulaml" }}
+    accepteula = {{ .Values.mssql.conf.eula.accepteula }}
+    accepteulaml = {{ .Values.mssql.conf.eula.accepteulaml }}
     
     [coredump]
     captureminiandfull = true
@@ -16,10 +16,11 @@ data:
     hadrenabled = 1
     
     [language]
-    lcid = 1033
+    lcid = {{ .Values.mssql.conf.lcid }}
 
     [sqlagent]
-    enabled = {{ index .Values "mssql.conf.sqlagent.enabled" }}
+    enabled = {{ .Values.mssql.conf.sqlagent.enabled }}
+
 
 # control.alternatewritethrough                           Enable optimized write through flush for O_DSYNC requests
 # control.hestacksize                                     Host extension stack size in KB

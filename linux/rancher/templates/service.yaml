@@ -7,7 +7,7 @@ metadata:
 spec:
   clusterIP: None
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.service.spec.ports.sqlServerDatabasePort }}
       targetPort: http
       protocol: TCP
   selector:

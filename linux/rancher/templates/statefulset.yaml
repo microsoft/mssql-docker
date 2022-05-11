@@ -12,7 +12,7 @@ spec:
       {{- include "sql-server-rancher.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.statefulset.template.metadata.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -20,21 +20,21 @@ spec:
         {{- include "sql-server-rancher.selectorLabels" . | nindent 8 }}
     spec:
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.statefulset.template.spec.securityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           command:
             - /bin/bash
             - -c
             - /opt/mssql/bin/sqlservr
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ .Values.statefulset.template.spec.containers.sqlServer.image.repository }}:{{ .Values.statefulset.template.spec.containers.sqlServer.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.statefulset.template.spec.containers.sqlServer.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.containers.ports.containerPort }}
+            - containerPort: {{ .Values.statefulset.template.spec.containers.sqlServer.ports.databaseEngineContainerPort }}
           env:
-            # prefer mssql-config over env vars
+            # prefer mssql-config ConfigMap over env vars
             - name: MSSQL_PID
-              value: {{ index .Values "mssql.pid" }}
+              value: {{ .Values.mssql.pid }}
             - name: MSSQL_SA_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -58,5 +58,5 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 8Gi
-        storageClassName: {{ index .Values "storageClass_provisioner" | default "default" }}
+            storage: {{ .Values.storage.size }}Gi
+        storageClassName: {{ .Values.storageClass.provisioner | default "default" }}
