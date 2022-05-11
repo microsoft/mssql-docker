@@ -130,7 +130,7 @@ questions:
     description: StorageClass Type for AWS EBS CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass.provisioner="ebs.csi.aws.com"
+    show_if: storageClass.provisioner="ebs\.csi\.aws\.com"
     type: enum
     default: standard
     options:
