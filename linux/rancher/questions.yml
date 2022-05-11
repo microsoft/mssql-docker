@@ -109,7 +109,7 @@ questions:
     default: default
     options:
       - default
-      - disk-csi-azure-com # questions.yaml doesn't support periods in variables names
+      - disk.csi.azure.com # questions.yaml doesn't support periods in variables names
       - ebs-csi-aws-com
       - pd-csi-storage-gke-io
 
@@ -117,7 +117,7 @@ questions:
     description: StorageClass Type for Azure Disk CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass.provisioner='disk-csi-azure-com'
+    show_if: "storageClass.provisioner=disk.csi.azure.com"
     type: enum
     default: Standard_LRS
     options:
@@ -130,7 +130,7 @@ questions:
     description: StorageClass Type for AWS EBS CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass.provisioner="ebs-csi-aws-com"
+    show_if: "storageClass.provisioner=ebs-csi-aws-com"
     type: enum
     default: standard
     options:
