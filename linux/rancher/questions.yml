@@ -109,7 +109,7 @@ questions:
     default: default
     options:
       - default
-      - disk.csi.azure.com # questions.yaml doesn't support periods in variables names
+      - disk.csi.azure.com
       - ebs.csi.aws.com
       - pd.csi.storage.gke.io
 
