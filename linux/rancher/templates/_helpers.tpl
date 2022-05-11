@@ -40,7 +40,6 @@ helm.sh/chart: {{ include "sql-server-rancher.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/deploy-datetime: {{ now | date "2006-01-02T15-04-05-0700" }}
 {{- end }}
 
 {{/*
