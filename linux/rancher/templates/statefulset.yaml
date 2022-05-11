@@ -59,4 +59,4 @@ spec:
         resources:
           requests:
             storage: {{ .Values.storage.size }}Gi
-        storageClassName: {{ .Values.storageClass.provisioner | default "default" }}
+        storageClassName: {{ regexReplaceAll "-" .Values.storageClass.provisioner "" | default "default" }} # remove hypens from questions.yaml
