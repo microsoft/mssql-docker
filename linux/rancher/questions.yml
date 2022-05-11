@@ -117,7 +117,7 @@ questions:
     description: StorageClass Type for Azure Disk CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass.provisioner = "disk-csi-azure-com"
+    show_if: storageClass.provisioner="disk-csi-azure-com"
     type: enum
     default: Standard_LRS
     options:
@@ -130,7 +130,7 @@ questions:
     description: StorageClass Type for AWS EBS CSI
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
-    show_if: storageClass.provisioner = "ebs-csi-aws-com"
+    show_if: storageClass.provisioner = 'ebs-csi-aws-com'
     type: enum
     default: standard
     options:
