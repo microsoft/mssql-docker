@@ -127,7 +127,7 @@ questions:
       - UltraSSD_LRS
 
   - variable: storageClass.type
-    description: StorageClass Type for AWS EBS CSI
+    description: StorageClass Type for AWS EBS CSI. Install the csi driver on the target cluster first. https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi.html#adding-ebs-csi-eks-add-on
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Type
     show_if: "storageClass.provisioner=ebs.csi.aws.com"
