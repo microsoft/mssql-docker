@@ -34,5 +34,9 @@ service:
     ports:
       sqlServerDatabasePort: 1433
 
+storageClass:
+  provisioner: null
+  type: null
+
 storage:
   size: 8
