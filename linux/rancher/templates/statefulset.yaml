@@ -46,10 +46,16 @@ spec:
             - name: mssql-config
               mountPath: /var/opt/mssql/mssql.conf
               subPath: mssql.conf
+            {{- if .Values.statefulset.template.spec.containers.sqlServer.extraVolumeMounts }}
+            {{- toYaml .Values.statefulset.template.spec.containers.sqlServer.extraVolumeMounts | nindent 12 }}
+            {{- end }}
       volumes:        
         - name: mssql-config
           configMap:
             name: mssql
+        {{- if .Values.statefulset.template.spec.volumes.extraVolumes }}
+        {{- toYaml .Values.statefulset.template.spec.volumes.extraVolumes | nindent 8 }}
+        {{- end }}            
   volumeClaimTemplates:
     - metadata:
         name: mssql

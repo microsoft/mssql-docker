@@ -6,3 +6,21 @@ mssql:
 storageClass:
   provisioner: disk.csi.azure.com
   type: Standard_LRS
+
+statefulset:
+  template:
+    spec:
+      containers:
+        sqlServer:
+          extraVolumeMounts:
+            - name: secrets-store
+              mountPath: /mnt/secrets-store
+              readOnly: true
+      volumes:
+        extraVolumes:
+          - name: secrets-store
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: azure-sync

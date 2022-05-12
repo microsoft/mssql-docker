@@ -23,6 +23,9 @@ statefulset:
             tag: 2019-latest
           ports:
             databaseEngineContainerPort: 1433
+          extraVolumeMounts: []
+      volumes:
+        extraVolumes: []
       securityContext:
         fsGroup: 10001
 
