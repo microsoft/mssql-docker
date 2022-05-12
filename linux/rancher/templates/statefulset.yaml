@@ -65,4 +65,6 @@ spec:
         resources:
           requests:
             storage: {{ .Values.storage.size }}Gi
+        {{- if .Values.storageClass.provisioner }}
         storageClassName: {{ .Values.storageClass.provisioner }}
+        {{- end }}
