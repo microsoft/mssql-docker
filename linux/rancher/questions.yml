@@ -106,9 +106,7 @@ questions:
     group: Kubernetes Storage Options
     label: Kubernetes StorageClass Provisioner
     type: enum
-    default: default
     options:
-      - default
       - disk.csi.azure.com
       - ebs.csi.aws.com
       - pd.csi.storage.gke.io
