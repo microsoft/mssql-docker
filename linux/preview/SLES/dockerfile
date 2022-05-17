@@ -1,6 +1,9 @@
-## 
+#
+# Note: This image requires an active SLES15 subscription to build.
+# 
 # Thank you to our SUSE Partners for helping with this :)
-##Assumptions
+#
+# Assumptions
 # 1. use a matching version to the underlying build host
 # 2. ensure it is registered to have access to needed repos
 #	then leveraging container-suseconnect-zypp
@@ -12,50 +15,49 @@
 #	All repositories have been refreshed.
 # 3. minimize the layers by consolidating commands
 
-##
-# Base image
-##
-# Start with the appropriate base image
-FROM registry.suse.com/suse/sles12sp5
+FROM registry.suse.com/suse/sle15:15.3
 
-# add a needed (beyon minimal) dependency package this package is need so setcap can be used later on to provide the required privilages
-RUN zypper in --no-confirm libcap-progs
+ENV ADDITIONAL_MODULES=sle-module-legacy
 
-##
-# Install the latest SQL 2019 build on SLES
-##
-# Add product repos / packages
-#	zypper refresh && \
+RUN zypper install --no-confirm --no-recommends \
+    # install setcap to be used later
+    # remove openldap2 version lock when https://bugzilla.suse.com/show_bug.cgi?id=1199594 is fixed
+    # curl is needed for rpm import
+    libcap-progs openldap2-2.4.46-150200.14.5.1 curl && \
+    rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
+    zypper rm --no-confirm --clean-deps curl
 
-RUN zypper addrepo --no-gpgcheck --refresh --check https://packages.microsoft.com/config/sles/12/mssql-server-2019.repo && \
-	zypper --non-interactive install --no-confirm --auto-agree-with-licenses --auto-agree-with-product-licenses mssql-server
+# consider merging the two RUNs to save ~ 40mb at the cost of caching adding the signing key
 
-RUN zypper addrepo --no-gpgcheck --refresh --check https://packages.microsoft.com/config/sles/12/prod.repo && \
-        ACCEPT_EULA=Y zypper --non-interactive install  mssql-tools
+# add mssql-server repo
+RUN zypper addrepo --no-check https://packages.microsoft.com/config/sles/15/mssql-server-2019.repo && \
+    zypper refresh packages-microsoft-com-mssql-server-2019 && \
+    # install mssql-server
+    zypper install --no-confirm --auto-agree-with-licenses --no-recommends mssql-server && \
+    # add mssql-tools repo
+    zypper addrepo --check https://packages.microsoft.com/config/sles/15/prod.repo && \
+    zypper refresh packages-microsoft-com-prod && \
+    # install mssql-tools (consider removing to reduce size) Microsoft already maintains a separate mssql-tools image
+    ACCEPT_EULA=Y zypper install --no-confirm --no-recommends mssql-tools && \
+    zypper clean --all && \
+    # post installation of SQL Server the mssql user/group is created
+    # so set the right permissions to the msssql folder
+    mkdir -p -m 770 /var/opt/mssql && \
+    chown -R mssql /var/opt/mssql && \
+    # grant sql the permissions to connect to ports <1024 as a non-root user
+    setcap 'cap_net_bind_service+ep' /opt/mssql/bin/sqlservr && \
+    # allow dumps from the non-root process
+    setcap 'cap_sys_ptrace+ep' /opt/mssql/bin/paldumper && \        
+    setcap 'cap_sys_ptrace+ep' /usr/bin/gdb && \
+    # ldconfig file because setcap causes the os to remove LD_LIBRARY_PATH
+    # and other env variables that control dynamic linking
+    mkdir -p /etc/ld.so.conf.d && \
+    touch /etc/ld.so.conf.d/mssql.conf && \
+    echo -e "# mssql libs\n/opt/mssql/lib" >> /etc/ld.so.conf.d/mssql.conf && \
+    ldconfig
 
-# post the installation of SQL Server the mssql user/group is created
-# so set the right permissions to the msssql folder
-#
-RUN mkdir -p -m 770 /var/opt/mssql && chown -R mssql. /var/opt/mssql
- 
-# Grant sql the permissions to connect to ports <1024 as a non-root user
-#
-RUN setcap 'cap_net_bind_service+ep' /opt/mssql/bin/sqlservr
- 
-# Allow dumps from the non-root process
-#
-RUN setcap 'cap_sys_ptrace+ep' /opt/mssql/bin/paldumper
-RUN setcap 'cap_sys_ptrace+ep' /usr/bin/gdb
- 
-#ldconfig file because setcap causes the os to remove LD_LIBRARY_PATH
-# and other env variables that control dynamic linking
-#
-RUN mkdir -p /etc/ld.so.conf.d && touch /etc/ld.so.conf.d/mssql.conf
-RUN echo -e "# mssql libs\n/opt/mssql/lib" >> /etc/ld.so.conf.d/mssql.conf
-RUN ldconfig
- 
 EXPOSE 1433
- 
+
 USER mssql
- 
+
 CMD ["/opt/mssql/bin/sqlservr"]
