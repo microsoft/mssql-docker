@@ -1,6 +1,6 @@
 # How to build a SQL Server on SLES container image
 
-1. Ensure that host machine is running the same version of the SLES that you will build SQL Server 2019 container image, in this case we are using a host which is running SLES15 SP33 and building the SQL Server also on top of SLES15 SP3.
+1. Ensure that host machine is running the same version of the SLES that you will build SQL Server 2019 container image, in this case we are using a host which is running SLES15 SP3 and building the SQL Server also on top of SLES15 SP3.
 
 2. Please ensure the host machine is registered using the SUSEConnect command as documented here: https://www.suse.com/support/kb/doc/?id=000018564
 
