@@ -6,13 +6,13 @@ metadata:
     {{- include "sql-server-rancher.labels" . | nindent 4 }}
 spec:
   serviceName: {{ include "sql-server-rancher.fullname" . }}
-  replicas: {{ .Values.replicas }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "sql-server-rancher.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.statefulset.template.metadata.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -20,44 +20,51 @@ spec:
         {{- include "sql-server-rancher.selectorLabels" . | nindent 8 }}
     spec:
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.statefulset.template.spec.securityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           command:
             - /bin/bash
             - -c
-            - cp /var/opt/config/mssql.conf /var/opt/mssql/mssql.conf && /opt/mssql/bin/sqlservr
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+            - /opt/mssql/bin/sqlservr
+          image: {{ .Values.statefulset.template.spec.containers.sqlServer.image.repository }}:{{ .Values.statefulset.template.spec.containers.sqlServer.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.statefulset.template.spec.containers.sqlServer.image.pullPolicy }}
           ports:
-           - containerPort: {{ .Values.containers.ports.containerPort }}
+            - containerPort: {{ .Values.statefulset.template.spec.containers.sqlServer.ports.databaseEngineContainerPort }}
           env:
-           - name: MSSQL_PID
-             value: "{{ .Values.MSSQL_PID }}"
-           - name: ACCEPT_EULA
-             value: "{{ .Values.ACCEPT_EULA | upper }}"
-           - name: MSSQL_AGENT_ENABLED
-             value: "{{ .Values.MSSQL_AGENT_ENABLED }}"
-           - name: MSSQL_SA_PASSWORD
-             valueFrom:
-              secretKeyRef:
-               name: mssql-secret
-               key: mssql_sa_password 
+            # prefer mssql-config ConfigMap over env vars
+            - name: MSSQL_PID
+              value: {{ .Values.mssql.pid }}
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssql-secret
+                  key: mssql_sa_password 
           volumeMounts:
-           - name: mssql
-             mountPath: /var/opt/mssql
-           - name: mssql-config-volume
-             mountPath: /var/opt/config
+            - name: mssql
+              mountPath: /var/opt/mssql
+            - name: mssql-config
+              mountPath: /var/opt/mssql/mssql.conf
+              subPath: mssql.conf
+            {{- if .Values.statefulset.template.spec.containers.sqlServer.extraVolumeMounts }}
+            {{- toYaml .Values.statefulset.template.spec.containers.sqlServer.extraVolumeMounts | nindent 12 }}
+            {{- end }}
       volumes:        
-      - name: mssql-config-volume
-        configMap:
-         name: mssql
+        - name: mssql-config
+          configMap:
+            name: mssql
+        {{- if .Values.statefulset.template.spec.volumes.extraVolumes }}
+        {{- toYaml .Values.statefulset.template.spec.volumes.extraVolumes | nindent 8 }}
+        {{- end }}            
   volumeClaimTemplates:
     - metadata:
-       name: mssql
+        name: mssql
       spec:
-       accessModes:
-       - ReadWriteOnce
-       resources:
-        requests:
-         storage: 8Gi
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}Gi
+        {{- if .Values.storageClass.provisioner }}
+        storageClassName: {{ .Values.storageClass.provisioner }}
+        {{- end }}
