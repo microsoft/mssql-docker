@@ -1,7 +1,18 @@
 # SQL Server in Docker
 
-This GitHub repository aims to provide a centralized location for community engagement. In here you will find documentation, Dockerfiles and additional developer resources. 
+This is forked from [microsoft/mssql-docker](https://github.com/microsoft/mssql-docker), with the following modifications:
 
+* we've deleted the linux docker files (you should use the official ones instead)
+* we've deleted the `oss-drivers` folder - we dont really need php or node docker files
+* we deleted the developer and standard versions of the windows docker images (we only use express)
+* we modified the sql-express docker to use `mcr.microsoft.com/windows/servercore` rather than `microsoft/windowsservercore`
+* we modified the sql-express docker file to be able to build based on a specific base image (ie, `mcr.microsoft.com/windows/servercore:${OSVersion}` (where OSVersion is `1809` or similar)
+
+**Note** Microsoft doesn't support SQL Server on windows containers. Use at your own risk.
+
+_The below is verbatim from the upstream repo and doesn't necessarily apply anymore_
+
+---
 **SQL Server in Docker** comes in two different flavors:
 - [Linux-based containers](https://github.com/Microsoft/mssql-docker/tree/master/linux): This Docker image uses [SQL Server 2017 Developer Edition on Linux](https://docs.microsoft.com/en-us/sql/linux/) on top of an Ubuntu 16.04 base image. This is meant to be run on [Docker Engine](https://www.docker.com/products/overview) on its multiple platforms.  There are also Dockerfiles here for building [RHEL](linux/preview/RHEL/Dockerfile) & [CentOS](linux/preview/CentOS/Dockerfile) based images.
 - [Windows-based containers](https://github.com/Microsoft/mssql-docker/tree/master/windows): These Docker images use SQL Server 2017 Express Edition and SQL Server 2017 Developer Edition. Both images are based on Windows Container technology and can only be run using [Docker Engine for Windows Containers](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/docker/configure_docker_daemon). You can currently sign-up for SQL Server 2019 on Windows Containers available in our [Early Adopter Preview](https://cloudblogs.microsoft.com/sqlserver/2019/07/01/sql-server-2019-on-windows-containers-now-in-early-adopters-program/) program.
