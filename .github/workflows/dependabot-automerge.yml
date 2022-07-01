@@ -1,0 +1,27 @@
+name: "Dependabot Approve and Auto Merge"
+
+on:
+  pull_request:
+    branches: [ main ]
+
+# Increase the access for the GITHUB_TOKEN
+permissions:
+  # This Allows the GITHUB_TOKEN to approve pull requests
+  pull-requests: write
+  # This Allows the GITHUB_TOKEN to auto merge pull requests
+  contents: write
+
+env:
+  PR_URL: ${{github.event.pull_request.html_url}}
+  # By default, GitHub Actions workflows triggered by Dependabot get a GITHUB_TOKEN with read-only permissions.
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: ${{ (github.actor == 'dependabot[bot]') && (contains(github.head_ref, 'dependabot')) }}
+    steps:
+      - name: Approve a dependabot created PR
+        run: gh pr review --approve "$PR_URL"
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --squash "$PR_URL"
