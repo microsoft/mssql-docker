@@ -3,15 +3,15 @@
 # GitRepo: https://github.com/Microsoft/mssql-docker
 
 # Base OS layer: Latest Ubuntu LTS
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 # Install prerequistes since it is needed to get repo config for SQL server
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
-    apt-get install -yq curl apt-transport-https && \
+    apt-get install -yq curl apt-transport-https gnupg && \
     # Get official Microsoft repository configuration
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2017.list | tee /etc/apt/sources.list.d/mssql-server.list && \
+    curl https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2019.list | tee /etc/apt/sources.list.d/mssql-server.list && \
     apt-get update && \
     # Install SQL Server from apt
     apt-get install -y mssql-server && \
