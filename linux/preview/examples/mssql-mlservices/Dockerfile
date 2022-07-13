@@ -1,5 +1,5 @@
 # Maintainers: Microsoft Corporation 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # copy in supervisord conf file
 COPY ./supervisord.conf /usr/local/etc/supervisord.conf
