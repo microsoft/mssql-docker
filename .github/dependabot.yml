@@ -1,7 +1,0 @@
-version: 2
-updates:
-  - package-ecosystem: "docker"
-    directory: "/windows/mssql-server-windows-express/"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 1
