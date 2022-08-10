@@ -1,0 +1,16 @@
+# SQL Server Command Line Tools
+FROM redhat/ubi9
+
+LABEL maintainer="SQL Server Engineering Team"
+
+# adding custom MS repository
+RUN yum install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
+
+# install SQL Server drivers and tools
+RUN ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18
+
+# add the binary location to the $PATH
+RUN echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
+
+CMD /bin/bash 
