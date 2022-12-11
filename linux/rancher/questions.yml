@@ -1,0 +1,159 @@
+questions:
+  - variable: mssql.conf.eula.accepteula
+    label: Accept the SQL Server EULA
+    # no current support for html
+    # description: Accepts the SQL Server <a href="http://go.microsoft.com/fwlink/?LinkId=746388">EULA</a> (any value confirms acceptance).
+    description: Accepts the SQL Server EULA (any value confirms acceptance). The EULA is posted @ http://go.microsoft.com/fwlink/?LinkId=746388
+    required: true
+    default: true
+    group: SQL Server options
+
+  - variable: USE_PRODUCT_KEY
+    label: Use a SQL Server Product Key
+    description: Enter a Product Key instead of choosing a SQL Server Edition
+    type: boolean
+    default: false
+    group: SQL Server options
+
+  - variable: mssql.pid
+    label: SQL Server Edition aka. MSSQL_PID
+    description: Select a SQL Server Edition
+    type: enum
+    options: 
+      - Evaluation
+      - Developer
+      - Express
+      - Web
+      - Standard
+      - Enterprise
+    required: true
+    default: Developer
+    show_if: USE_PRODUCT_KEY=false
+    group: SQL Server options
+
+  - variable: mssql.pid
+    label: SQL Server License Key
+    description: Enter a Product Key of the format "#####-#####-#####-#####-#####"
+    required: true
+    show_if: USE_PRODUCT_KEY=true    
+    group: SQL Server options
+
+  - variable: mssql.sa.password
+    label: MSSQL SA user password
+    description: Sets the SA user password. Password requirements @ https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver15#password-complexity
+    type: password
+    min: 8
+    max: 128
+    default: ""
+    valid_chars: a-zA-Z0-9(`~!@#$%^&*_-+=|\\{}[]:;\"'<>,.?)/
+    required: true
+    group: SQL Server options
+
+  - variable: mssql.conf.lcid
+    label: SQL Server Locale
+    description: Sets SQL Server Locale
+    group: SQL Server options
+
+  - variable: mssql.conf.sqlagent.enabled
+    label: Enable SQL Server Agent
+    description: Enables the SQL Server Agent
+    type: boolean
+    default: true
+    group: SQL Server options
+
+  - variable: defaultContainerImage
+    label: Use default SQL Server container image
+    type: boolean
+    default: true
+    show_subquestion_if: false
+    group: Container Image Options
+    subquestions:
+      - variable: statefulset.template.spec.containers.sqlServer.image.repository
+        description: Image Repository
+        label: Image Repository
+      - variable: statefulset.template.spec.containers.sqlServer.image.pullPolicy
+        label: Image Pull Policy
+        type: enum
+        options: 
+          - IfNotPresent
+          - Always
+          - Never
+      - variable: statefulset.template.spec.containers.sqlServer.image.tag
+        label: Image Tag
+  
+  - variable: statefulset.template.spec.securityContext.fsGroup
+    description: |
+      Specifies a supplementary group id for all pod processes
+      See https://kubernetes.io/docs/tasks/configure-pod-container/security-context for 
+      additional details.
+    label: statefulset.template.spec.securityContext.fsGroup
+    group: Kubernetes Statefulset options
+
+  - variable: statefulset.template.spec.containers.sqlServer.ports.databaseEngineContainerPort
+    description: >
+      Specifies containerPort for SQL Server Database Engine
+    label: SQL Server Database Engine Container Port
+    group: Kubernetes Statefulset Options
+
+  - variable: service.spec.ports.sqlServerDatabasePort
+    description: Kubernetes service port for SQL Server
+    group: Kubernetes Service Options
+    label: Kubernetes Service Port
+    type: int
+
+  - variable: storageClass.provisioner
+    description: StorageClass provisioner for SQL Server
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Provisioner
+    type: enum
+    options:
+      - disk.csi.azure.com
+      - ebs.csi.aws.com
+      - pd.csi.storage.gke.io
+
+  - variable: storageClass.type
+    description: StorageClass Type for Azure Disk CSI. CSI Drivers are default after k8s v1.21
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Type
+    show_if: "storageClass.provisioner=disk.csi.azure.com"
+    type: enum
+    default: Standard_LRS
+    options:
+      - Standard_LRS
+      - Premium_LRS
+      - StandardSSD_LRS
+      - UltraSSD_LRS
+
+  - variable: storageClass.type
+    description: StorageClass Type for AWS EBS CSI. Install the csi driver on the target cluster first. https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi.html#adding-ebs-csi-eks-add-on
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Type
+    show_if: "storageClass.provisioner=ebs.csi.aws.com"
+    type: enum
+    default: standard
+    options:
+      - io1
+      - io2
+      - gp2
+      - gp3
+      - sc1
+      - st1
+      - standard
+  
+  - variable: storageClass.type
+    description: StorageClass Type for GCE PD CSI. CSI Driver are default after Linux clusters 1.18.10-gke.2100 or 1.19.3-gke.2100
+    group: Kubernetes Storage Options
+    label: Kubernetes StorageClass Type
+    show_if: "storageClass.provisioner=pd.csi.storage.gke.io"
+    type: enum
+    default: pd-standard
+    options:
+      - pd-standard
+      - pd-balanced
+      - pd-ssd
+      - pd-extreme
+
+  - variable: storage.size
+    description: Size for Storage Volume in Gibibytes (Gi)
+    group: Kubernetes Storage Options
+    label: Kubernetes Storage Size

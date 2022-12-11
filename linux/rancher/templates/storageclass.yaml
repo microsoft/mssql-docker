@@ -1,0 +1,23 @@
+{{- if .Values.storageClass.provisioner -}}
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: {{ .Values.storageClass.provisioner }}
+provisioner: {{ .Values.storageClass.provisioner }}
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+mountOptions:
+  - noatime
+parameters:
+  {{- if eq .Values.storageClass.provisioner "disk.csi.azure.com" }}
+  storageAccountType: {{ .Values.storageClass.type }}
+  fsType: xfs
+  {{- else if eq .Values.storageClass.provisioner "ebs.csi.aws.com" }}
+  csi.storage.k8s.io/fstype: xfs
+  type: {{ .Values.storageClass.type }}
+  {{- else if eq .Values.storageClass.provisioner "pd.csi.storage.gke.io" }}
+  csi.storage.k8s.io/fstype: xfs
+  type: {{ .Values.storageClass.type }}  
+  {{- end }}
+{{- end -}}
+

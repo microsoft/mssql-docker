@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "sql-server-rancher.fullname" . }}
+  labels:
+    {{- include "sql-server-rancher.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "sql-server-rancher.fullname" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "sql-server-rancher.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.statefulset.template.metadata.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sql-server-rancher.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.statefulset.template.spec.securityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          command:
+            - /bin/bash
+            - -c
+            - /opt/mssql/bin/sqlservr
+          image: {{ .Values.statefulset.template.spec.containers.sqlServer.image.repository }}:{{ .Values.statefulset.template.spec.containers.sqlServer.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.statefulset.template.spec.containers.sqlServer.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.statefulset.template.spec.containers.sqlServer.ports.databaseEngineContainerPort }}
+          env:
+            # prefer mssql-config ConfigMap over env vars
+            - name: MSSQL_PID
+              value: {{ .Values.mssql.pid }}
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssql-secret
+                  key: mssql_sa_password 
+          volumeMounts:
+            - name: mssql
+              mountPath: /var/opt/mssql
+            - name: mssql-config
+              mountPath: /var/opt/mssql/mssql.conf
+              subPath: mssql.conf
+            {{- if .Values.statefulset.template.spec.containers.sqlServer.extraVolumeMounts }}
+            {{- toYaml .Values.statefulset.template.spec.containers.sqlServer.extraVolumeMounts | nindent 12 }}
+            {{- end }}
+      volumes:        
+        - name: mssql-config
+          configMap:
+            name: mssql
+        {{- if .Values.statefulset.template.spec.volumes.extraVolumes }}
+        {{- toYaml .Values.statefulset.template.spec.volumes.extraVolumes | nindent 8 }}
+        {{- end }}            
+  volumeClaimTemplates:
+    - metadata:
+        name: mssql
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}Gi
+        {{- if .Values.storageClass.provisioner }}
+        storageClassName: {{ .Values.storageClass.provisioner }}
+        {{- end }}

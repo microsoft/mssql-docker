@@ -1,0 +1,26 @@
+# since a default SA_PASSWORD is not set, this is used for helm lint and helm debug, otherwise unused
+mssql:
+  sa:
+    password: Sfr9nxVVkbMVGTQweKmD
+
+storageClass:
+  provisioner: disk.csi.azure.com
+  type: Standard_LRS
+
+statefulset:
+  template:
+    spec:
+      containers:
+        sqlServer:
+          extraVolumeMounts:
+            - name: secrets-store
+              mountPath: /mnt/secrets-store
+              readOnly: true
+      volumes:
+        extraVolumes:
+          - name: secrets-store
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: azure-sync

@@ -1,6 +1,6 @@
 apiVersion: v2
-name: sql-statefull-deploy
-description: A Helm chart for Kubernetes
+name: sql-server-rancher
+description: A Helm chart for SQL Server on Rancher
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -15,12 +15,11 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.1
+version: 0.0.2
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: 1.16.0
+appVersion: 2019.cu15
 
-annotations:
-  catalog.cattle.io/hidden: "true" # hide from Rancher catalog
+icon: https://docs.microsoft.com/vi-vn/troubleshoot/media/hub-landing/sql-database-blue.svg

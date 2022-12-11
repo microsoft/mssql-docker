@@ -1,0 +1,42 @@
+---
+
+mssql:
+  pid: Developer
+  conf:
+    eula:
+      accepteula: true
+      accepteulaml: true
+    lcid: 1033 # english
+    sqlagent:
+      enabled: true
+
+statefulset:
+  template:
+    metadata:
+      annotations: {}
+    spec:
+      containers:
+        sqlServer:
+          image:
+            repository: mcr.microsoft.com/mssql/server
+            pullPolicy: IfNotPresent
+            tag: 2019-latest
+          ports:
+            databaseEngineContainerPort: 1433
+          extraVolumeMounts: []
+      volumes:
+        extraVolumes: []
+      securityContext:
+        fsGroup: 10001
+
+service:
+  spec:
+    ports:
+      sqlServerDatabasePort: 1433
+
+storageClass:
+  provisioner: null
+  type: null
+
+storage:
+  size: 8

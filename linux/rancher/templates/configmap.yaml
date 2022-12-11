@@ -1,0 +1,84 @@
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: mssql
+data:
+  mssql.conf: |
+    [EULA]
+    accepteula = {{ .Values.mssql.conf.eula.accepteula }}
+    accepteulaml = {{ .Values.mssql.conf.eula.accepteulaml }}
+    
+    [coredump]
+    captureminiandfull = true
+    coredumptype = full
+    
+    [hadr]
+    hadrenabled = 1
+    
+    [language]
+    lcid = {{ .Values.mssql.conf.lcid }}
+
+    [sqlagent]
+    enabled = {{ .Values.mssql.conf.sqlagent.enabled }}
+
+
+# control.alternatewritethrough                           Enable optimized write through flush for O_DSYNC requests
+# control.hestacksize                                     Host extension stack size in KB
+# control.stoponguestprocessfault                         Stops the process if any guest process reports unhandled exception
+# control.writethrough                                    Use O_DSYNC for file flag write through requests
+# coredump.captureminiandfull                             Capture both mini and full core dumps
+# coredump.coredumptype                                   Core dump type to capture: mini, miniplus, filtered, full
+# distributedtransaction.allowonlysecurerpccalls          Configure secure only rpc calls for distributed transactions
+# distributedtransaction.fallbacktounsecurerpcifnecessary Configure security only rpc calls for distributed transactions
+# distributedtransaction.maxlogsize                       DTC log file size in MB. Default is 64MB
+# distributedtransaction.memorybuffersize                 Circular buffer size in which traces are stored. This size is in MB and default is 10MB
+# distributedtransaction.servertcpport                    MSDTC rpc server port
+# distributedtransaction.trace_cm                         Traces in the connection manager
+# distributedtransaction.trace_contact                    Traces the contact pool and contacts
+# distributedtransaction.trace_gateway                    Traces Gateway source
+# distributedtransaction.trace_log                        Log tracing
+# distributedtransaction.trace_misc                       Traces that cannot be categorized into the other categories
+# distributedtransaction.trace_proxy                      Traces that are generated in the MSDTC proxy
+# distributedtransaction.trace_svc                        Traces service and .exe file startup
+# distributedtransaction.trace_trace                      The trace infrastructure itself
+# distributedtransaction.trace_util                       Traces utility routines that are called from multiple locations
+# distributedtransaction.trace_xa                         XA Transaction Manager (XATM) tracing source
+# distributedtransaction.tracefilepath                    Folder in which trace files should be stored
+# distributedtransaction.turnoffrpcsecurity               Enable or disable RPC security for distributed transactions
+# errorlog.numerrorlogs                                   Number of error log maintained before cycling the log.
+# extensibility.datadirectories                           Colon separated directory paths available to sp_execute_external_script
+# extensibility.outboundnetworkaccess                     Enable outbound network access for sp_execute_external_script
+# filelocation.defaultbackupdir                           Default directory for backup files
+# filelocation.defaultdatadir                             Default directory for data files
+# filelocation.defaultdumpdir                             Default directory for crash dump files
+# filelocation.defaultlogdir                              Default directory for log files
+# filelocation.errorlogfile                               Error log file location
+# filelocation.masterdatafile                             Master database data file location
+# filelocation.masterlogfile                              Master database log file location
+# hadr.hadrenabled                                        Allow SQL Server to use availability groups for high availability and disaster recovery
+# language.lcid                                           Locale identifier for SQL Server to use (e.g. 1033 for US - English)
+# memory.disablememorypressure                            SQL Server disable memory pressure
+# memory.memory_optimized                                 Enable or disable SQL Server memory optimized features - persistent memory file enlightenment, memory protection
+# memory.memorylimitmb                                    SQL Server memory limit (megabytes)
+# network.disablesssd                                     Disable querying SSSD for AD account information and default to LDAP calls
+# network.enablekdcfromkrb5conf                           Enable looking up KDC information from krb5.conf
+# network.forceencryption                                 Force encryption of incoming client connections
+# network.forcesecureldap                                 Force using LDAPS to contact domain controller
+# network.ipaddress                                       IP address for incoming connections
+# network.kerberoscredupdatefrequency                     Time in seconds between checks for kerberos credentials that need to be updated
+# network.kerberoskeytabfile                              Kerberos keytab file location
+# network.privilegedadaccount                             Privileged AD user to use for AD authentication
+# network.rpcport                                         TCP port for Rpc endpoint mapper
+# network.tcpport                                         TCP port for incoming connections
+# network.tlscert                                         Path to certificate file for encrypting incoming client connections
+# network.tlsciphers                                      TLS ciphers allowed for encrypted incoming client connections
+# network.tlskey                                          Path to private key file for encrypting incoming client connections
+# network.tlsprotocols                                    TLS protocol versions allowed for encrypted incoming client connections
+# sqlagent.databasemailprofile                            SQL Agent Database Mail profile name
+# sqlagent.enabled                                        Enable or disable SQLAgent
+# sqlagent.errorlogfile                                   SQL Agent log file path
+# sqlagent.errorlogginglevel                              SQL Agent logging level bitmask - 1=Errors, 2=Warnings, 4=Info
+# sqlagent.startupwaitforalldb                            Set to 1 (default) if SqlAgent should wait for all databases on startup; set to 0 to wait for MSDB only
+# telemetry.customerfeedback                              Telemetry status
+# telemetry.userrequestedlocalauditdirectory              Directory for telemetry local audit cache
+# uncmapping.                                             Maps UNC path to a local path. (e.g. ./mssql-conf set uncmapping //servername/sharename /tmp/folder)
