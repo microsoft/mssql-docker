@@ -54,19 +54,19 @@ spec:
           volumeMounts:
            - name: {{ include "mssql-server.name" . }}-data-volume
              mountPath: {{ .Values.pvc.dataMountPath }}
-           - name: {{ include "mssql-server.name" . }}-log-volume
+{{/*           - name: {{ include "mssql-server.name" . }}-log-volume
              mountPath: {{ .Values.pvc.logMountPath }}
            - name: {{ include "mssql-server.name" . }}-dump-volume
              mountPath: {{ .Values.pvc.dumpMountPath }}
            - name: {{ include "mssql-server.name" . }}-backup-volume
              mountPath: {{ .Values.pvc.backupMountPath }}
            - name: {{ include "mssql-server.name" . }}-config-volume
-             mountPath: /var/opt/config
+             mountPath: /var/opt/config */}}
       volumes:
        - name: {{ include "mssql-server.name" . }}-data-volume
          persistentVolumeClaim:
            claimName: {{ include "mssql-server.name" . }}-data
-       - name: {{ include "mssql-server.name" . }}-log-volume
+{{/*       - name: {{ include "mssql-server.name" . }}-log-volume
          persistentVolumeClaim:
            claimName: {{ include "mssql-server.name" . }}-log
        - name: {{ include "mssql-server.name" . }}-dump-volume
@@ -78,3 +78,4 @@ spec:
        - name: {{ include "mssql-server.name" . }}-config-volume
          configMap:
           name: {{ include "mssql-server.name" . }}-config
+*/}}
