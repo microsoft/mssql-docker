@@ -39,7 +39,10 @@ service:
   port: 1433
   annotations: {}
 
-externalService:
+ag_service:
+  enabled: true
+
+ex_service:
   enabled: true
 
 pvc:

@@ -1,4 +1,4 @@
-{{- if .Values.externalService.enabled }}
+{{- if .Values.ex_service.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
