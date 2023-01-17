@@ -10,12 +10,18 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "2019-latest"
 
+nodeSelector: {}
+
+tolerations: []
+
 ACCEPT_EULA:
     value: "y"
 MSSQL_PID:
     value: "Developer"
 MSSQL_AGENT_ENABLED:
     value: "false"
+
+sa_password: "Toughpass1!"
 
 containers:
   ports:
@@ -28,3 +34,8 @@ podSecurityContext:
 
 service:
   port: 1433
+
+pvc:
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 8Gi
