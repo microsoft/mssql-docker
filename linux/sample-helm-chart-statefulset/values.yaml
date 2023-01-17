@@ -35,6 +35,9 @@ podSecurityContext:
 service:
   port: 1433
 
+externalService:
+  enabled: true
+
 pvc:
   storageClass: ""
   accessMode: ReadWriteOnce
