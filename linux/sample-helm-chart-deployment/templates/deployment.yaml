@@ -53,8 +53,9 @@ spec:
                 key: {{  template "mssql-server.sapassword" . }}
           volumeMounts:
            - name: {{ include "mssql-server.name" . }}-data-volume
-             mountPath: {{ .Values.pvc.dataMountPath }}
-{{/*           - name: {{ include "mssql-server.name" . }}-log-volume
+             mountPath: "/var/opt/mssql"
+{{/*         mountPath: {{ .Values.pvc.dataMountPath }}
+           - name: {{ include "mssql-server.name" . }}-log-volume
              mountPath: {{ .Values.pvc.logMountPath }}
            - name: {{ include "mssql-server.name" . }}-dump-volume
              mountPath: {{ .Values.pvc.dumpMountPath }}
