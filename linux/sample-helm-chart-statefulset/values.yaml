@@ -4,6 +4,9 @@
 
 replicas: 3
 
+nameOverride: ''
+fullnameOverride: ''
+
 image:
   repository: mcr.microsoft.com/mssql/server
   pullPolicy: IfNotPresent
