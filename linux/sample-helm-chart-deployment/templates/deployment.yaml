@@ -53,13 +53,13 @@ spec:
                 key: {{  template "mssql-server.sapassword" . }}
           volumeMounts:
            - name: {{ include "mssql-server.name" . }}-data-volume
-             mountPath: /var/opt/mssql/db/data
+             mountPath: {{ .Values.pvc.dataMountPath }}
            - name: {{ include "mssql-server.name" . }}-log-volume
-             mountPath: /var/opt/mssql/db/log
+             mountPath: {{ .Values.pvc.logMountPath }}
            - name: {{ include "mssql-server.name" . }}-dump-volume
-             mountPath: /var/opt/mssql/db/dump
+             mountPath: {{ .Values.pvc.dumpMountPath }}
            - name: {{ include "mssql-server.name" . }}-backup-volume
-             mountPath: /var/opt/mssql/db/basckup
+             mountPath: {{ .Values.pvc.backupMountPath }}
            - name: {{ include "mssql-server.name" . }}-config-volume
              mountPath: /var/opt/config
       volumes:

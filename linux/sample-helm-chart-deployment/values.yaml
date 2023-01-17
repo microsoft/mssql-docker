@@ -43,11 +43,13 @@ pvc:
  StorageClass: ""
  dataaccessMode: ReadWriteOnce
  datasize: 5Gi
+ dataMountPath: /var/opt/mssql/db/data
  logaccessMode: ReadWriteOnce
  logsize: 5Gi
+ logMountPath: /var/opt/mssql/db/log
  dumpaccessMode: ReadWriteOnce
  dumpsize: 2Gi
+ dumpMountPath: /var/opt/mssql/db/dump
  backupaccessMode: ReadWriteOnce
  backupsize: 2Gi
-
-
+ backupMountPath: /var/opt/mssql/db/backup
