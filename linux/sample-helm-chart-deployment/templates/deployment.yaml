@@ -60,9 +60,9 @@ spec:
            - name: {{ include "mssql-server.name" . }}-dump-volume
              mountPath: {{ .Values.pvc.dumpMountPath }}
            - name: {{ include "mssql-server.name" . }}-backup-volume
-             mountPath: {{ .Values.pvc.backupMountPath }}
+             mountPath: {{ .Values.pvc.backupMountPath }} */}}
            - name: {{ include "mssql-server.name" . }}-config-volume
-             mountPath: /var/opt/config */}}
+             mountPath: /var/opt/config
       volumes:
        - name: {{ include "mssql-server.name" . }}-data-volume
          persistentVolumeClaim:
