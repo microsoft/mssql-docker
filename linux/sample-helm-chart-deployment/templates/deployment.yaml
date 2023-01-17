@@ -67,7 +67,7 @@ spec:
        - name: {{ include "mssql-server.name" . }}-data-volume
          persistentVolumeClaim:
            claimName: {{ include "mssql-server.name" . }}-data
-{{/*       - name: {{ include "mssql-server.name" . }}-log-volume
+{{/*   - name: {{ include "mssql-server.name" . }}-log-volume
          persistentVolumeClaim:
            claimName: {{ include "mssql-server.name" . }}-log
        - name: {{ include "mssql-server.name" . }}-dump-volume
@@ -75,8 +75,7 @@ spec:
            claimName: {{ include "mssql-server.name" . }}-dump
        - name: {{ include "mssql-server.name" . }}-backup-volume
          persistentVolumeClaim:
-           claimName: {{ include "mssql-server.name" . }}-backup
+           claimName: {{ include "mssql-server.name" . }}-backup */}}
        - name: {{ include "mssql-server.name" . }}-config-volume
          configMap:
           name: {{ include "mssql-server.name" . }}-config
-*/}}
