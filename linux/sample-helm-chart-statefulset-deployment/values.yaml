@@ -8,7 +8,7 @@ image:
   repository: mcr.microsoft.com/mssql/server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2019-latest"
+  tag: "2022-latest"
 
 ACCEPT_EULA:
     value: "y"
