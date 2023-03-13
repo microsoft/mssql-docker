@@ -16,7 +16,7 @@ while [[ $DBSTATUS -ne 0 ]] && [[ $i -lt 60 ]] && [[ $ERRCODE -ne 0 ]]; do
 	sleep 1
 done
 
-if [ $DBSTATUS -ne 0 ] OR [ $ERRCODE -ne 0 ]; then 
+if [ $DBSTATUS -ne 0 ] || [ $ERRCODE -ne 0 ]; then 
 	echo "SQL Server took more than 60 seconds to start up or one or more databases are not in an ONLINE state"
 	exit 1
 fi
