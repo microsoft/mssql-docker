@@ -11,50 +11,46 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mssql-data
-  annotations:
-    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass | quote }}
 spec:
   accessModes:
-  - {{ .Values.pvc.mssqldataaccessMode | quote}}
+    - {{ .Values.pvc.mssqldataaccessMode | quote}}
   resources:
     requests:
       storage: {{ .Values.pvc.mssqldbsize}}
+  storageClassName: {{ .Values.pvc.StorageClass | quote }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mssql-userdb
-  annotations:
-    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
 spec:
   accessModes:
-  - {{ .Values.pvc.userdbaccessMode | quote}}
+    - {{ .Values.pvc.userdbaccessMode | quote}}
   resources:
     requests:
       storage: {{ .Values.pvc.userdbsize}}
+  storageClassName: {{ .Values.pvc.StorageClass | quote }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mssql-log
-  annotations:
-    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
 spec:
   accessModes:
-   - {{ .Values.pvc.userlogaccessMode | quote}}
+    - {{ .Values.pvc.userlogaccessMode | quote}}
   resources:
     requests:
       storage: {{ .Values.pvc.userlogsize}}
+  storageClassName: {{ .Values.pvc.StorageClass | quote }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mssql-temp
-  annotations:
-    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.StorageClass}}
 spec:
   accessModes:
-   - {{ .Values.pvc.tempdbaccessMode | quote}}
+    - {{ .Values.pvc.tempdbaccessMode | quote}}
   resources:
     requests:
       storage: {{ .Values.pvc.tempsize}}
+  storageClassName: {{ .Values.pvc.StorageClass | quote }}
