@@ -13,7 +13,7 @@ while [[ $DBSTATUS -ne 0 ]] && [[ $i -lt $TRIES ]]; do
 	i=$((i+1))
 	DBSTATUS=$(/opt/mssql-tools/bin/sqlcmd -h -1 -t 1 -U sa -P $MSSQL_SA_PASSWORD -Q "SET NOCOUNT ON; Select SUM(state) from sys.databases" > /dev/null 2>&1) || DBSTATUS=1
 	
-	sleep 1
+	sleep 1s
 done
 
 if [ $DBSTATUS -ne 0 ]; then 
