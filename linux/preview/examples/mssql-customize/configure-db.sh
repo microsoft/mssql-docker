@@ -19,7 +19,7 @@ while [[ "1" == "1" ]]; do
 
 	if [[ "$DBSTATUS" != "" ]] && [[ $DBSTATUSSUM -eq 0 ]] && [[ $ERRCODE -eq 0 ]]; then
 		break
-	elif [[ $i -gte 60 ]]; then
+	elif [[ $i -ge 60 ]]; then
 		break
 	fi
 
