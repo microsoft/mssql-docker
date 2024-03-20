@@ -19,6 +19,14 @@ spec:
       labels:
         {{- include "sql-statefull-deploy.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 6 }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -41,7 +49,7 @@ spec:
            - name: SA_PASSWORD
              valueFrom:
               secretKeyRef:
-               name: mssql
+               name: {{ include "sql-statefull-deploy.name" . }}-secret
                key: SA_PASSWORD 
           volumeMounts:
            - name: mssql
@@ -57,7 +65,8 @@ spec:
        name: mssql
       spec:
        accessModes:
-       - ReadWriteOnce
+       - {{ .Values.pvc.accessMode }}
+       storageClassName: {{ .Values.pvc.storageClass }}
        resources:
         requests:
-         storage: 8Gi
+         storage: {{ .Values.pvc.size }}

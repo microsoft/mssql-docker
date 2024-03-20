@@ -1,0 +1,26 @@
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: {{ include "mssql-server.name" . }}-config
+data:
+  mssql.conf: |
+    [EULA]
+    accepteula = Y
+    accepteulaml = Y
+    
+    [coredump]
+    captureminiandfull = true
+    coredumptype = full
+    
+    [hadr]
+    hadrenabled = 1
+    
+    [language]
+    lcid = 1033
+{{/*    
+    [filelocation]
+{{- printf "defaultdatadir = %s" .Values.pvc.dataMountPath | nindent 4 -}}
+{{- printf "defaultlogdir = %s" .Values.pvc.logMountPath | nindent 4 -}}
+{{- printf "defaultdumpdir = %s" .Values.pvc.dumpMountPath | nindent 4 -}}
+{{- printf "defaultbackupdir = %s" .Values.pvc.backupMountPath | nindent 4 -}}
+*/}}
