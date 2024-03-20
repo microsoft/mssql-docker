@@ -10,7 +10,17 @@ param(
 [string]$ACCEPT_EULA,
 
 [Parameter(Mandatory=$false)]
-[string]$attach_dbs
+[string]$attach_dbs,
+
+[Parameter(Mandatory=$false)]
+[string]$restore_dbs,
+
+[Parameter(Mandatory=$false)]
+[string]$base_db_folder,
+
+[Parameter(Mandatory=$false)]
+[ValidateSet("true", "false")]
+[string]$use_hostname_folder
 )
 
 
@@ -21,10 +31,11 @@ if($ACCEPT_EULA -ne "Y" -And $ACCEPT_EULA -ne "y")
 
     exit 1 
 }
-
+$service = 'MSSQL$SQLEXPRESS'
+$passwordSecureString = ConvertTo-SecureString -String $sa_password -AsPlainText -Force;
 # start the service
 Write-Verbose "Starting SQL Server"
-start-service MSSQL`$SQLEXPRESS
+start-service $service
 
 if($sa_password -eq "_") {
     $secretPath = $env:sa_password_path
@@ -43,29 +54,35 @@ if($sa_password -ne "_")
     & sqlcmd -Q $sqlcmd
 }
 
-$attach_dbs_cleaned = $attach_dbs.TrimStart('\\').TrimEnd('\\')
-
-$dbs = $attach_dbs_cleaned | ConvertFrom-Json
-
-if ($null -ne $dbs -And $dbs.Length -gt 0)
+if (($attach_dbs) -and ($attach_dbs -ne ""))
 {
-    Write-Verbose "Attaching $($dbs.Length) database(s)"
-	    
-    Foreach($db in $dbs) 
-    {            
-        $files = @();
-        Foreach($file in $db.dbFiles)
-        {
-            $files += "(FILENAME = N'$($file)')";           
+    $attach_dbs_cleaned = $attach_dbs.TrimStart('\\').TrimEnd('\\')
+
+    $dbs = $attach_dbs_cleaned | ConvertFrom-Json
+
+    if ($null -ne $dbs -And $dbs.Length -gt 0)
+    {
+        Write-Verbose "Attaching $($dbs.Length) database(s)"
+            
+        Foreach($db in $dbs) 
+        {            
+            $files = @();
+            Foreach($file in $db.dbFiles)
+            {
+                $files += "(FILENAME = N'$($file)')";           
+            }
+
+            $files = $files -join ","
+            $sqlcmd = "IF EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = '" + $($db.dbName) + "') BEGIN EXEC sp_detach_db [$($db.dbName)] END;CREATE DATABASE [$($db.dbName)] ON $($files) FOR ATTACH;"
+
+            Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
+            & sqlcmd -Q $sqlcmd
         }
-
-        $files = $files -join ","
-        $sqlcmd = "IF EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = '" + $($db.dbName) + "') BEGIN EXEC sp_detach_db [$($db.dbName)] END;CREATE DATABASE [$($db.dbName)] ON $($files) FOR ATTACH;"
-
-        Write-Verbose "Invoke-Sqlcmd -Query $($sqlcmd)"
-        & sqlcmd -Q $sqlcmd
     }
 }
+
+. (Join-Path $PSScriptRoot scripts\Restore-SqlDatabases.ps1) -sql_server_instance 'localhost' -restore_dbs $restore_dbs -base_db_folder $base_db_folder `
+    -use_hostname_folder $use_hostname_folder -sql_login_name 'sa' -sql_login_password $passwordSecureString
 
 Write-Verbose "Started SQL Server."
 
