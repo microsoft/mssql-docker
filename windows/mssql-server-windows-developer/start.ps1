@@ -10,7 +10,10 @@ param(
 [string]$ACCEPT_EULA,
 
 [Parameter(Mandatory=$false)]
-[string]$attach_dbs
+[string]$attach_dbs,
+
+[Parameter(Mandatory=$false)]
+[string]$MSSQL_AGENT_ENABLED
 )
 
 
@@ -67,6 +70,12 @@ if ($null -ne $dbs -And $dbs.Length -gt 0)
 }
 
 Write-Verbose "Started SQL Server."
+
+if($MSSQL_AGENT_ENABLED -eq "true" -Or $MSSQL_AGENT_ENABLED -eq $true)
+{
+	Write-Verbose "Starting SQL Agent"
+	start-service SQLSERVERAGENT
+}
 
 $lastCheck = (Get-Date).AddSeconds(-2) 
 while ($true) 
