@@ -1,4 +1,4 @@
-# since a default SA_PASSWORD is not set, this is used for helm lint and helm debug, otherwise unused
+# since a default MSSQL_SA_PASSWORD is not set, this is used for helm lint and helm debug, otherwise unused
 mssql:
   sa:
     password: Sfr9nxVVkbMVGTQweKmD

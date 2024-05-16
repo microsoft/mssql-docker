@@ -17,7 +17,7 @@ MSSQL_PID:
 MSSQL_AGENT_ENABLED:
     value: "true"
 hostname: mssqllatest
-sa_password: "Toughpass1!"
+mssql_sa_password: "Toughpass1!"
 containers:
   ports:
       containerPort: 1433

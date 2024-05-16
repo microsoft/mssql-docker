@@ -66,5 +66,5 @@ Create the name of the service account to use
 Create the name for the SA password secret key.
 */}}
 {{- define "mssql.sapassword" -}}
-  sa_password
+  mssql_sa_password
 {{- end -}}

@@ -49,13 +49,13 @@ $ make run
 - At least 3.25 GB of RAM. Make sure to assign enough memory to the Docker VM if you're running on Docker for [Mac](https://docs.docker.com/docker-for-mac/#/general) or [Windows](https://docs.docker.com/docker-for-windows/#/advanced).
 - Requires the following environment flags
     - ACCEPT_EULA=Y
-    - SA_PASSWORD=<your_strong_password>
+    - MSSQL_SA_PASSWORD=<your_strong_password>
 - A strong system administrator (SA) password: At least 8 characters including uppercase, lowercase letters, base-10 digits and/or non-alphanumeric symbols.
 
 # How to use this image
 ---
 ##  Start a mssql-server instance
-> ``docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -d microsoft/mssql-server-linux``
+> ``docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -d microsoft/mssql-server-linux``
 
 ##  Connect to Microsoft SQL Server
 Starting with the CTP 1.4 (March 17, 2017) release the mssql-tools package including sqlcmd, bcp are included in the image.  You can connect to the SQL Server using the sqlcmd tool inside of the container by using the following command on the host:
@@ -69,7 +69,7 @@ You can connect to the SQL Server instance in the container from outside the con
 ## Environment variables
 
 - ACCEPT_EULA confirms acceptance of the [End-User Licensing Agreement](http://go.microsoft.com/fwlink/?LinkId=746388).
-- SA_PASSWORD is the database system administrator (userid = 'sa') password used to connect to SQL Server once the container is running.
+- MSSQL_SA_PASSWORD is the database system administrator (userid = 'sa') password used to connect to SQL Server once the container is running.
 
 Additional, optional environment variables are documented in the [product documentation](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-environment-variables).
 
@@ -87,7 +87,7 @@ Additional, optional environment variables are documented in the [product docume
 ---
 - **How do I map a volume using Docker for Windows?** Make sure to enable [shared drives in the settings menu](https://docs.docker.com/docker-for-windows/#shared-drives). After that, you can map a volume specifying the **Windows path:Linux path**. The following is an example of a command to map a Windows folder to the data directory in the container:
 
-> ``docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -v C:\MyWindowsVolume:/var/opt/mssql -d microsoft/mssql-server-linux``
+> ``docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=yourStrong(!)Password' -p 1433:1433 -v C:\MyWindowsVolume:/var/opt/mssql -d microsoft/mssql-server-linux``
 
 # Further reading
 ---
