@@ -11,5 +11,8 @@ EXPOSE 1433
 # Copy all SQL Server runtime files from build drop into image.
 COPY ./install /
 
+# Configure PATH
+ENV PATH /opt/mssql-tools/bin:$PATH
+
 # Run SQL Server process.
 CMD /opt/mssql/bin/sqlservr
