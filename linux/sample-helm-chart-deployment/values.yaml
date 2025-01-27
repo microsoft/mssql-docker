@@ -1,14 +1,21 @@
-# Default values for mssql-latest.
+# Default values for mssql-server.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicas: 1
+
+nameOverride: ''
+fullnameOverride: ''
 
 image:
   repository: mcr.microsoft.com/mssql/server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "2019-latest"
+
+nodeSelector: {}
+
+tolerations: []
 
 ACCEPT_EULA:
     value: "y"
@@ -30,16 +37,19 @@ podSecurityContext:
 service:
   type: LoadBalancer
   port: 1433
+  annotations: {}
 
 pvc:
- StorageClass: "azure-disk"
- userdbaccessMode: ReadWriteOnce
- userdbsize: 5Gi
- userlogaccessMode: ReadWriteOnce
- userlogsize: 5Gi
- tempdbaccessMode: ReadWriteOnce
- tempsize: 2Gi
- mssqldataaccessMode: ReadWriteOnce
- mssqldbsize: 2Gi
-
-
+  storageClass: ""
+  dataAccessMode: ReadWriteOnce
+  dataSize: 5Gi
+# dataMountPath: /var/opt/mssql/db/data
+# logAccessMode: ReadWriteOnce
+# logSize: 5Gi
+# logMountPath: /var/opt/mssql/db/log
+# dumpAccessMode: ReadWriteOnce
+# dumpSize: 2Gi
+# dumpMountPath: /var/opt/mssql/db/dump
+# backupAccessMode: ReadWriteOnce
+# backupSize: 2Gi
+# backupMountPath: /var/opt/mssql/db/backup

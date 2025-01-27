@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mssql-server.name" . }}
+  labels:
+    {{- include "mssql-server.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas}}
+  selector:
+    matchLabels:
+      {{- include "mssql-server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mssql-server.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 6 }}
+      {{- end }}
+      hostname: {{ .Values.hostname}}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          command:
+            - /bin/bash
+            - -c
+            - cp /var/opt/config/mssql.conf /var/opt/mssql/mssql.conf && /opt/mssql/bin/sqlservr
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.containers.ports.containerPort}}
+          env:
+           - name: MSSQL_PID
+             value: "{{ .Values.MSSQL_PID.value}}"
+           - name: ACCEPT_EULA
+             value: "{{ .Values.ACCEPT_EULA.value | upper}}"
+           - name: MSSQL_AGENT_ENABLED
+             value: "{{ .Values.MSSQL_AGENT_ENABLED.value}}"
+           - name: SA_PASSWORD
+             valueFrom:
+               secretKeyRef:
+                name: {{ include "mssql-server.name" . }}-secret
+                key: {{  template "mssql-server.sapassword" . }}
+          volumeMounts:
+           - name: {{ include "mssql-server.name" . }}-data-volume
+             mountPath: "/var/opt/mssql"
+{{/*         mountPath: {{ .Values.pvc.dataMountPath }}
+           - name: {{ include "mssql-server.name" . }}-log-volume
+             mountPath: {{ .Values.pvc.logMountPath }}
+           - name: {{ include "mssql-server.name" . }}-dump-volume
+             mountPath: {{ .Values.pvc.dumpMountPath }}
+           - name: {{ include "mssql-server.name" . }}-backup-volume
+             mountPath: {{ .Values.pvc.backupMountPath }} */}}
+           - name: {{ include "mssql-server.name" . }}-config-volume
+             mountPath: /var/opt/config
+      volumes:
+       - name: {{ include "mssql-server.name" . }}-data-volume
+         persistentVolumeClaim:
+           claimName: {{ include "mssql-server.name" . }}-data
+{{/*   - name: {{ include "mssql-server.name" . }}-log-volume
+         persistentVolumeClaim:
+           claimName: {{ include "mssql-server.name" . }}-log
+       - name: {{ include "mssql-server.name" . }}-dump-volume
+         persistentVolumeClaim:
+           claimName: {{ include "mssql-server.name" . }}-dump
+       - name: {{ include "mssql-server.name" . }}-backup-volume
+         persistentVolumeClaim:
+           claimName: {{ include "mssql-server.name" . }}-backup */}}
+       - name: {{ include "mssql-server.name" . }}-config-volume
+         configMap:
+          name: {{ include "mssql-server.name" . }}-config
