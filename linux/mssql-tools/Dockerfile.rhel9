@@ -3,14 +3,14 @@ FROM redhat/ubi9
 
 LABEL maintainer="SQL Server Engineering Team"
 
-# adding custom MS repository
-RUN yum install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
+RUN echo "Adding custom MS repository" \
+    && yum install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm && \
 
-# install SQL Server drivers and tools
-RUN ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18
+    echo "Installing SQL Server drivers and tools" \
+    && ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18 && \
 
-# add the binary location to the $PATH
-RUN echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
-RUN /bin/bash -c "source ~/.bashrc"
+    echo "Adding the binary location to the $PATH" \
+    && echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc \
+    && /bin/bash -c "source ~/.bashrc"
 
-CMD /bin/bash 
+CMD ["/bin/bash"]
