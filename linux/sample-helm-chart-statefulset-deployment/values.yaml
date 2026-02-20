@@ -16,6 +16,8 @@ MSSQL_PID:
     value: "Developer"
 MSSQL_AGENT_ENABLED:
     value: "false"
+sa_password: "Toughpass1!" #default SA Password
+
 
 containers:
   ports:

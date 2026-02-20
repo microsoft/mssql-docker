@@ -32,6 +32,7 @@ On the client machine where you have the Helm tools installed, download the char
 |     Values.podSecurityContext.fsgroup        |     Security   context at the pod level.                                                                                                                                         |     10001                              |
 |     Values.service.port                      |     The   service port number.                                                                                                                                                   |     1433                               |
 |     Values.replicas                          |     This value controls the number of SQL Server deployments that would be done, consider this as the number of SQL Server instances that will run.                              |     3                                  |
+| Values.sa_password  | This sets the initial SA Password when pods bootup | Toughpass1!
 
 <br/>
 
@@ -51,6 +52,7 @@ In this scenario, I am deploying three SQL Server containers on a Azure Kubernet
 | mssqlconfig.yaml | SQL server   mssql.conf file and its content that you would like to mount to the SQL Server container. For parameters that you can pass in this file please refer mssql.conf documentation. To modify the mssql.conf settings please modify this file. |
 | sc.yaml | A manifest file that describes the storage class (SC) to be deployed. To make any changes to the sc please modify this file accordingly. |
 | service.yaml | A manifest file that defines the kubernetes service type and port. Because this is a statefulset deployment, this manifest files helps in creating the headless service. Please modify this for any service modification that is needed. |
+| secret.yaml | A manifest file that defines the secret, SA_PASSWORD which will be initially set as password for mssql. Please modify this after initial bootup to secure your setup. |
 
 <br/>
 
