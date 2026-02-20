@@ -14,9 +14,9 @@
 3. Start SQL Server with PolyBase feature.
    - Use `docker run` command to run /opt/mssql/bin/sqlservr in an isolated container.
    - On bash shell (Linux/macOS/Windows GitBash):
-     - `$ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=YourStrong!Passw0rd' -p 1433:1433 -d mssql-polybase-preview`
+     - `$ docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=YourStrong!Passw0rd' -p 1433:1433 -d mssql-polybase-preview`
    - On elevated PowerShell command prompt:
-     - `PS> docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong!Passw0rd" -p 1433:1433 -d mssql-polybase-preview`
+     - `PS> docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourStrong!Passw0rd" -p 1433:1433 -d mssql-polybase-preview`
 
 4. Enable PolyBase feature.
    - After SQL Server is started with `docker run` command, PolyBase must be enabled to access its features.
