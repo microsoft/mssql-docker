@@ -1,0 +1,56 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "mssql-server.name" . }}-data
+#  annotations:
+#    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.storageClass | quote }}
+spec:
+  storageClassName: {{ .Values.pvc.storageClass | quote }}
+  accessModes:
+  - {{ .Values.pvc.dataAccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.dataSize}}
+{{/*---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "mssql-server.name" . }}-log
+#  annotations:
+#    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.storageClass}}
+spec:
+  storageClassName: {{ .Values.pvc.storageClass | quote }}
+  accessModes:
+   - {{ .Values.pvc.logAccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.logSize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "mssql-server.name" . }}-dump
+#  annotations:
+#    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.storageClass}}
+spec:
+  storageClassName: {{ .Values.pvc.storageClass | quote }}
+  accessModes:
+   - {{ .Values.pvc.dumpAccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.dumpSize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "mssql-server.name" . }}-backup
+#  annotations:
+#    volume.beta.kubernetes.io/storage-class: {{ .Values.pvc.storageClass}}
+spec:
+  storageClassName: {{ .Values.pvc.storageClass | quote }}
+  accessModes:
+  - {{ .Values.pvc.backupAccessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.pvc.backupSize}}
+*/}}

@@ -4,6 +4,10 @@ metadata:
   name: {{ include "sql-statefull-deploy.fullname" . }}
   labels:
     {{- include "sql-statefull-deploy.labels" . | nindent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   clusterIP: None
   ports:
