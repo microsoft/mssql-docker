@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2017-latest
+FROM mcr.microsoft.com/mssql/server:2022-latest
 
 # Create a config directory
 RUN mkdir -p /usr/config
