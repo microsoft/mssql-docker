@@ -31,7 +31,7 @@ You can run the container with the following command.
 (Note the you'll need Windows Server 2016 or Windows 10)
 
 ````
-docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="<DB-JSON-CONFIG>" microsoft/mssql-server-windows-express
+docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="<DB-JSON-CONFIG>" -e restore_dbs="<REST-DB-JSON-CONFIG>" -e base_db_folder=<DEST_REST_PATH> microsoft/mssql-server-windows-express
 ````
 
 - **-p HostPort:containerPort** is for port-mapping a container network port to a host port.
@@ -78,11 +78,43 @@ The image provides two environment variables to optionally set: </br>
 	The path has double backslashes for escaping!
 	The path refers to files **within the container**. So make sure to include them in the image or mount them via **-v**!
 
+- **restore_dbs**: The configuration to restore custom DB backups (.bak files).
+
+This should be a JSON string, in the following format (note the use of SINGLE quotes!)
+  ```
+  [
+	{
+		'dbName': 'RestoredDbNo1',
+		'bckFile': 'C:\\temp\\DbToRestoreNo1.bak'
+	},
+	{
+		'dbName': 'RestoredDbNo2',
+		'bckFile': 'C:\\temp\\DbToRestoreNo2.bak'
+	}
+  ]
+  ```
+
+  This is an array of database backups, which can have zero to N database backup files.
+
+  Each consisting of:
+  - **dbName**: The name of the restored database.
+  - **bckFile**: Absolute path to the .BAK file.
+
+	**Note:**
+	The path has double backslashes for escaping!
+	The path refers to files **within the container**. So make sure to include them in the image or mount them via **-v**!
+
+- **base_db_folder**: This parameter is necessary when **restore_dbs** is being provided. It indicates what destination master path will be used for restored database files. In the master path will be automatically created *DATA* folder and all databases will be actually placed here). In case of any restart of the container the data files from the folder will be attached automatically at first and then will restarted also the restoration process but this will skip all databases attached automatically before (anyone won\`t be replaced).
+
+	**Note:**
+	You can choose two different approaches here:
+	- You can point into any *unmapped* folder. In this case the data will be persistent between every restart of the container but once killed you will lose all DB changes since the backup was restored.
+	- You can point into any *mapped*/*mounted* folder via **-v** parameter. In this case the data will be persistent also in the case the container will be killed and created and started from scratch.
 
 This example shows all parameters in action:
 ```
 docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD> -e ACCEPT_EULA=Y -e attach_dbs="[{'dbName':'SampleDB','dbFiles':['C:\\temp\\sampledb.mdf','C:\\temp\\sampledb_log.
-ldf']}]" microsoft/mssql-server-windows-express
+ldf']}]" -e restore_dbs="[{'dbName':'RestoredDb','bckFile':'C:\\temp\\DbToRestore.bak'}]" -e base_db_folder="C:\\DB\\" "microsoft/mssql-server-windows-express
 ```
 
 <a name=sample-details></a>
