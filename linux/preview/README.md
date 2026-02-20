@@ -100,4 +100,4 @@ Additional, optional environment variables are documented in the [product docume
 + Latest *Released Version* of SQL Server *Express* Edition for Windows Containers: [microsoft/mssql-server-windows-express](https://hub.docker.com/r/microsoft/mssql-server-windows-express/)
 
 **Note:** Developer Edition is a full-featured version of SQL Server without resource limits, but can only be used in dev/test.  Express Edition is a resource-limited edition of SQL Server that can be used in production.
-Get more information on [SQL Server Editions](https://www.microsoft.com/en-us/sql-server/sql-server-editions).
+Get more information on [SQL Server Editions](https://www.microsoft.com/en-us/sql-server/sql-server-2017-editions).
