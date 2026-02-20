@@ -28,3 +28,6 @@ podSecurityContext:
 
 service:
   port: 1433
+
+pvc:
+ StorageClass: "azure-disk"
